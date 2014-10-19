@@ -7,6 +7,7 @@ Gamebuino gb;
 
 #include "CoreGame.h";
 #include "CoreExplore.h"
+#include "Constante.cpp"
 
 CoreGame petitMonstreGame;
 
@@ -17,7 +18,7 @@ void setup()
   gb.begin();
   //display the main menu:
   gb.titleScreen(F("les petits monstres"));
-  gb.popup(F("lets go go go!!"), 100);
+  //gb.popup(F("lets go go go!!"), 100);
   
   petitMonstreGame.Init();
  

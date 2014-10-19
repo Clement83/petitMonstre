@@ -20,25 +20,64 @@
     }
 
     this->nbFrameAnnim--;
-    isWhite = !isWhite;
+    
+    if(this->nbFrameAnnim%3 ==0)
+    {
+      isWhite = !isWhite;
+    }
   }
   void  AnnimStartFight::Draw(Gamebuino gb)
   {
-    if(isWhite)
+    
+    //#define LCDWIDTH 48
+    //#define LCDHEIGHT 84
+    
+    for(int i=0;i<15;i++)
     {
-      /*gb.display.setColor(INVERT);
-      gb.display.fillRect(x_screen, y_screen, s, s);
-      gb.display.setColor(BLACK);*/
-      gb.display.println(F("White"));
-      
-    }
-    else 
-    {
-      //gb.display.setColor(INVERT);
-      /*gb.display.fillRect(x_screen, y_screen, s, s);
-      gb.display.setColor(BLACK);*/
-      gb.display.println(F("Black?"));
-      
+      for(int y=0;y<15;y++)
+      {
+        if(isWhite)
+        {
+            if(y%2 == 0)
+            {
+              if(i%2 == 0)
+              {
+                gb.display.fillRect(i*4, y*7, 4, 7);
+                gb.display.setColor(BLACK);
+              }
+            }
+            else 
+            {
+              if(i%2 != 0)
+              {
+                gb.display.fillRect(i*4, y*7, 4, 7);
+                gb.display.setColor(BLACK);
+              }
+            }
+          
+        }
+        else 
+        {
+          
+            if(y%2 == 0)
+            {
+              if(i%2 != 0)
+              {
+                gb.display.fillRect(i*4, y*7, 4, 7);
+                gb.display.setColor(BLACK);
+              }
+            }
+            else 
+            {
+              if(i%2 == 0)
+              {
+                gb.display.fillRect(i*4, y*7, 4, 7);
+                gb.display.setColor(BLACK);
+              }
+            }
+          
+        }
+      }
     }
   }
   bool  AnnimStartFight::NeedChangeState()
