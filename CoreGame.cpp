@@ -2,6 +2,7 @@
 #include "CoreExplore.h"
 #include "ICoreGame.h"
 #include <Gamebuino.h>
+#include "IContexte.h"
 
 void CoreGame::Init()
 {
@@ -13,9 +14,9 @@ void CoreGame::Init()
    this->currentCoreState = cexp;
 }
 
-IContexte CoreGame::Update(Gamebuino gb, IContexte *ctx)
+IContexte * CoreGame::Update(Gamebuino gb, IContexte *ctx)
 {
-  this->currentCoreState->Update(gb);
+  this->currentCoreState->Update(gb,ctx);
 
    if(this->currentCoreState->NeedChangeState())
   {
@@ -29,5 +30,5 @@ void CoreGame::Draw(Gamebuino gb, IContexte *ctx)
 {
   //gb.display.println(F("CoreGame : Hello World!"));
   //Draw all link object
-  this->currentCoreState->Draw(gb);
+  this->currentCoreState->Draw(gb,ctx);
 }

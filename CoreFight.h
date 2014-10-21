@@ -4,6 +4,7 @@
 #include "ICoreGame.h"
 #include "IFightState.h"
 #include <Gamebuino.h>
+#include "IContexte.h"
 
 class CoreFight : public ICoreGame
 {

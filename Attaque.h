@@ -1,15 +1,14 @@
 #if !defined (Attaque_H)
 #define Attaque_H
 
-
-#include "IGameObject.h"
-#include <Gamebuino.h>
-
 class Attaque 
 {
   public:
+  Attaque();
     int Type;//type attaque eau feux terre
     int Force;
+    int Numero;//Numeros de l'attaque parmis toutes
+    int Index;
 };
 
 #endif 

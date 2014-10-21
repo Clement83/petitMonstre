@@ -1,5 +1,6 @@
 #include "ICoreGame.h"
 #include <Gamebuino.h>
+#include "IContexte.h"
 
 void ICoreGame::Init()
 {
@@ -7,7 +8,7 @@ void ICoreGame::Init()
   //this->isChangeState = false;
 }
 
-IContexte ICoreGame::Update(Gamebuino gb, IContexte *ctx)
+IContexte * ICoreGame::Update(Gamebuino gb, IContexte *ctx)
 {
   gb.display.println(F("ICoreGame : Update"));
 }

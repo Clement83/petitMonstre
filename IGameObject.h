@@ -2,6 +2,7 @@
 #define IGameObject_H
 
 #include <Gamebuino.h>
+#include "IContexte.h"
 
 class IGameObject
 {

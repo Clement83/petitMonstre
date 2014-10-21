@@ -4,6 +4,7 @@
 
 #include "ICoreGame.h"
 #include <Gamebuino.h>
+#include "IContexte.h"
 
 class CoreExplore : public ICoreGame
 {

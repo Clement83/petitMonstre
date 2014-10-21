@@ -4,6 +4,7 @@
 
 #include "IFightState.h"
 #include <Gamebuino.h>
+#include "IContexte.h"
 
 
 class AnnimStartFight : public IFightState

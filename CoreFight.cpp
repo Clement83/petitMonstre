@@ -2,6 +2,7 @@
 #include "AnnimStartFight.h"
 #include "IFightState.h"
 #include <Gamebuino.h>
+#include "IContexte.h"
 
 
 void CoreFight::Init()
@@ -17,7 +18,7 @@ void CoreFight::Init()
 
 IContexte * CoreFight::Update(Gamebuino gb, IContexte *ctx)
 {
-  this->currentCoreState->Update(gb);
+  this->currentCoreState->Update(gb,ctx);
   if(this->currentCoreState->NeedChangeState())
   {
       //on passe au choix du monster 
@@ -25,13 +26,9 @@ IContexte * CoreFight::Update(Gamebuino gb, IContexte *ctx)
   }
 }
 
-<<<<<<< HEAD
 void CoreFight::Draw(Gamebuino gb, IContexte *ctx)
-=======
-void CoreFight::Draw(Gamebuino gb, IContexte ctx)
->>>>>>> origin/master
 {
-  this->currentCoreState->Draw(gb);
+  this->currentCoreState->Draw(gb,ctx);
 }
 
 bool CoreFight::NeedChangeState()

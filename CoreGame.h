@@ -5,6 +5,7 @@
 #include "IGameObject.h"
 #include "ICoreGame.h"
 #include <Gamebuino.h>
+#include "IContexte.h"
 
 class CoreGame : public IGameObject
 {

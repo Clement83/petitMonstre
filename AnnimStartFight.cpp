@@ -1,6 +1,7 @@
 
 #include "AnnimStartFight.h"
 #include "Choicemonster.h"
+#include "IContexte.h"
 
 #include <Gamebuino.h>
 

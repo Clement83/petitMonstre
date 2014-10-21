@@ -3,6 +3,7 @@
 
 #include <Gamebuino.h>
 #include "IGameObject.h"
+#include "IContexte.h"
 
 class IFightState : public IGameObject
 {

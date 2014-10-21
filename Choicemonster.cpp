@@ -3,6 +3,7 @@
 #include "Choicemonster.h"
 #include "Constante.cpp"
 #include <Gamebuino.h>
+#include "IContexte.h"
 
   void  ChoiceMonster::Init()
   {
@@ -14,9 +15,9 @@
     //Recherche des monstre du joueur 
     //Creation du menu grace a ça 
     const char* const menu[MENUMAXLENGTHCHOIXMONSTER] = {
-      strMonster1,
-      strMonster2,
-      strMonster3,
+      StrLesMonstres[1],
+      StrLesMonstres[2],
+      StrLesMonstres[3],
     };
 
     switch(gb.menu(menu, MENUMAXLENGTHCHOIXMONSTER)){

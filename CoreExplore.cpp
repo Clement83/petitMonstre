@@ -1,6 +1,7 @@
 #include "CoreFight.h"
 #include "CoreExplore.h"
 #include <Gamebuino.h>
+#include "IContexte.h"
     
 
 void CoreExplore::Init()

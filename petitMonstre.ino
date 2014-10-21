@@ -8,9 +8,10 @@ Gamebuino gb;
 #include "CoreGame.h";
 #include "CoreExplore.h"
 #include "Constante.cpp"
+#include "IContexte.h"
 
 CoreGame petitMonstreGame;
-
+IContexte * ctx;
 void setup()
 {
   
@@ -18,22 +19,19 @@ void setup()
   gb.begin();
   //display the main menu:
   gb.titleScreen(F("les petits monstres"));
-  //gb.popup(F("lets go go go!!"), 100);
-  
   petitMonstreGame.Init();
- 
-
+  ctx = new IContexte();
+  //TODO recherche de l user
 }
 
 void loop()
 {
   //returns true when it's time to render a new frame (20 times/second)
-  if(gb.update()){
+  if(gb.update())
+  {
     gb.battery.show = false;
-    petitMonstreGame.Update(gb);
-    petitMonstreGame.Draw(gb);
-    
-    //gb.popup(F("gogogo"), 100);
+    petitMonstreGame.Update(gb,ctx);
+    petitMonstreGame.Draw(gb,ctx);
+    //if multiplayer refresh ctx in I2C
   }
-  
 }
