@@ -2,22 +2,27 @@
 #define Monster_H
 
 #include "Attaque.h"
-#include "IGameObject.h"
-#include <Gamebuino.h>
 
 class Monster 
 {
   public:
+        Monster();
   	int Vie;
   	int Force;
   	int Vitesse;
   	int Type;
-  	char[] name;
+  	char* name;
   	int Numero;//permet de savoir a quel monstre on a affaire
-
-  	void AddAttaque(Attaque atta)
-  private:
-  	Attaque[] Attaques;
+    int Index;//index dans le tableau des monstre du joueur
+    void AddAttaque(Attaque atta);
+    void RemoveAttaque(Attaque atta);
+    Attaque* ListAttaque();
+    Attaque UseAttaque(int index);
+    bool IsFull();
+  protected:
+   static int const maxAttaque = 4;
+    int nbAttaque;
+  	Attaque* Attaques;
 };
 
 

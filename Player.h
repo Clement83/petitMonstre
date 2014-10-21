@@ -1,15 +1,26 @@
 #if !defined (Player_H)
 #define Player_H
 
-#include "IGameObject.h"
-#include <Gamebuino.h>
-
-class Player : public IGameObject
+#include "Monster.h"
+class Player
 {
   public:
-    virtual void Init();
-    virtual IContexte * Update(Gamebuino gb, IContexte *ctx);
-    virtual void Draw(Gamebuino gb, IContexte *ctx);
+      Player();
+  	int PosX;
+  	int PosY;
+  	int Area;
+    bool IsMonster;//permet de savoir si on est sur un monstre seul ou un dresseur
+    //Objet[] Inventaire;
+    //liste des chose a dire
+    void AddMonster(Monster monster);
+    void Remove(Monster monster);
+    Monster GetMonster(int index);
+    Monster* ListeMonster();
+    bool IsFull();
+  protected:
+  	static int const maxMonster = 3;
+  	int nbMonstre;
+  	Monster *Monsters;
 };
 
 #endif
