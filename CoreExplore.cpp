@@ -8,12 +8,12 @@ void CoreExplore::Init()
   ICoreGame::Init();
 }
 
-void CoreExplore::Draw(Gamebuino gb)
+void CoreExplore::Draw(Gamebuino gb, IContexte ctx)
 {
   gb.display.println(F("Press A"));
 }
 
-void CoreExplore::Update(Gamebuino gb)
+IContexte CoreExplore::Update(Gamebuino gb, IContexte ctx)
 {
   if(gb.buttons.pressed(BTN_A))
   {
