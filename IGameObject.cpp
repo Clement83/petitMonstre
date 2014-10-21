@@ -10,7 +10,7 @@ void IGameObject::Init()
 }
 
 
-void IGameObject::Update(Gamebuino gb)
+void IGameObject::Update(Gamebuino gb,)
 {
 }
 

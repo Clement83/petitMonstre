@@ -5,12 +5,11 @@
 #include "IGameObject.h"
 #include <Gamebuino.h>
 
-class Attaque : public IGameObject
+class Attaque 
 {
   public:
-    virtual void Init();
-    virtual void Update(Gamebuino gb);
-    virtual void Draw(Gamebuino gb);
+    int Type;//type attaque eau feux terre
+    int Force;
 };
 
 #endif 

@@ -1,15 +1,23 @@
 #if !defined (Monster_H)
 #define Monster_H
 
+#include "Attaque.h"
 #include "IGameObject.h"
 #include <Gamebuino.h>
 
-class Monster : public IGameObject
+class Monster 
 {
   public:
-    virtual void Init();
-    virtual void Update(Gamebuino gb);
-    virtual void Draw(Gamebuino gb);
+  	int Vie;
+  	int Force;
+  	int Vitesse;
+  	int Type;
+  	char[] name;
+  	int Numero;//permet de savoir a quel monstre on a affaire
+
+  	void AddAttaque(Attaque atta)
+  private:
+  	Attaque[] Attaques;
 };
 
 
