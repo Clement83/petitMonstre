@@ -9,7 +9,7 @@ class ICoreGame : public IGameObject
 {
   public:
     virtual void Init();
-    virtual void Update(Gamebuino gb);
+    virtual IContexte Update(Gamebuino gb, IContexte ctx);
     virtual void Draw(Gamebuino gb);
     virtual bool NeedChangeState();
     virtual ICoreGame * NewState();
