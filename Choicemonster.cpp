@@ -9,7 +9,11 @@
       this->isChangeState=false;
   }
   
+<<<<<<< HEAD
   IContexte * ChoiceMonster::Update(Gamebuino gb, IContexte *ctx)
+=======
+  IContexte  ChoiceMonster::Update(Gamebuino gb, IContexte ctx)
+>>>>>>> origin/master
   {
     //Recherche des monstre du joueur 
     //Creation du menu grace a ça 
