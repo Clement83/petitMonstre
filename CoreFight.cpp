@@ -15,7 +15,7 @@ void CoreFight::Init()
 
 }
 
-void CoreFight::Update(Gamebuino gb)
+IContexte * CoreFight::Update(Gamebuino gb, IContexte *ctx)
 {
   this->currentCoreState->Update(gb);
   if(this->currentCoreState->NeedChangeState())
@@ -25,7 +25,7 @@ void CoreFight::Update(Gamebuino gb)
   }
 }
 
-void CoreFight::Draw(Gamebuino gb)
+void CoreFight::Draw(Gamebuino gb, IContexte *ctx)
 {
   this->currentCoreState->Draw(gb);
 }

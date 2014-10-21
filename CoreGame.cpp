@@ -13,7 +13,7 @@ void CoreGame::Init()
    this->currentCoreState = cexp;
 }
 
-void CoreGame::Update(Gamebuino gb)
+IContexte CoreGame::Update(Gamebuino gb, IContexte *ctx)
 {
   this->currentCoreState->Update(gb);
 
@@ -25,7 +25,7 @@ void CoreGame::Update(Gamebuino gb)
   }
 }
 
-void CoreGame::Draw(Gamebuino gb)
+void CoreGame::Draw(Gamebuino gb, IContexte *ctx)
 {
   //gb.display.println(F("CoreGame : Hello World!"));
   //Draw all link object

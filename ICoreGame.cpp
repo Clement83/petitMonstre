@@ -7,13 +7,12 @@ void ICoreGame::Init()
   //this->isChangeState = false;
 }
 
-
-void ICoreGame::Update(Gamebuino gb)
+IContexte ICoreGame::Update(Gamebuino gb, IContexte *ctx)
 {
   gb.display.println(F("ICoreGame : Update"));
 }
 
-void ICoreGame::Draw(Gamebuino gb)
+void ICoreGame::Draw(Gamebuino gb, IContexte *ctx)
 {
   gb.display.println(F("ICoreGame : Draw"));
 }

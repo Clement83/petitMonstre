@@ -9,12 +9,11 @@ void IGameObject::Init()
 
 }
 
-
-void IGameObject::Update(Gamebuino gb,)
+IContexte * IGameObject::Update(Gamebuino gb, IContexte *ctx)
 {
 }
 
-void IGameObject::Draw(Gamebuino gb)
+void IGameObject::Draw(Gamebuino gb, IContexte *ctx)
 {
 
 }

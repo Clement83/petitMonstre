@@ -9,7 +9,7 @@
       this->isChangeState=false;
   }
   
-  void  ChoiceMonster::Update(Gamebuino gb)
+  IContexte * ChoiceMonster::Update(Gamebuino gb, IContexte *ctx)
   {
     //Recherche des monstre du joueur 
     //Creation du menu grace a ça 
@@ -34,7 +34,7 @@
       }
   }
   
-  void  ChoiceMonster::Draw(Gamebuino gb)
+  void  ChoiceMonster::Draw(Gamebuino gb, IContexte *ctx)
   {
 
   }

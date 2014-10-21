@@ -9,7 +9,7 @@
     this->nbFrameAnnim = 20;//20 frame = 1 seconde 
       this->isChangeState=false;
   }
-  void  AnnimStartFight::Update(Gamebuino gb)
+  IContexte * AnnimStartFight::Update(Gamebuino gb, IContexte *ctx)
   {
     int currentFrame = gb.frameCount;
     //l'animation sera de faire passer l'ecran du noir au blanc 
@@ -26,7 +26,7 @@
       isWhite = !isWhite;
     }
   }
-  void  AnnimStartFight::Draw(Gamebuino gb)
+  void  AnnimStartFight::Draw(Gamebuino gb, IContexte *ctx)
   {
     
     //#define LCDWIDTH 48
