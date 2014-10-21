@@ -15,11 +15,7 @@ void CoreFight::Init()
 
 }
 
-<<<<<<< HEAD
 IContexte * CoreFight::Update(Gamebuino gb, IContexte *ctx)
-=======
-IContexte CoreFight::Update(Gamebuino gb, IContexte ctx)
->>>>>>> origin/master
 {
   this->currentCoreState->Update(gb);
   if(this->currentCoreState->NeedChangeState())

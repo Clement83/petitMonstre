@@ -9,11 +9,8 @@
     this->nbFrameAnnim = 20;//20 frame = 1 seconde 
       this->isChangeState=false;
   }
-<<<<<<< HEAD
+  
   IContexte * AnnimStartFight::Update(Gamebuino gb, IContexte *ctx)
-=======
-  IContexte  AnnimStartFight::Update(Gamebuino gb, IContexte ctx)
->>>>>>> origin/master
   {
     int currentFrame = gb.frameCount;
     //l'animation sera de faire passer l'ecran du noir au blanc 
