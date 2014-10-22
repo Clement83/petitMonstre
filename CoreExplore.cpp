@@ -37,3 +37,4 @@ ICoreGame * CoreExplore::NewState()
   coreFight->Init();
   return coreFight;
 }
+

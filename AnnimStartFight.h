@@ -24,3 +24,4 @@ class AnnimStartFight : public IFightState
 
 };
 #endif 
+

@@ -8,7 +8,7 @@
 class IContexte 
 {
   public:
-      IContexte();
+      //IContexte();
   	Player Joueur;
   	Player Monster;
   	Player Dresseur;
@@ -16,3 +16,4 @@ class IContexte
   	int TypeAdversaire;//0 Monster, 1 Dresseur, 2 Joueur2
 };
 #endif 
+

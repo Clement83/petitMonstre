@@ -17,3 +17,4 @@ class CoreExplore : public ICoreGame
   	virtual ICoreGame * NewState();
 };
 #endif
+

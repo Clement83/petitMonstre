@@ -4,3 +4,4 @@ Attaque::Attaque()
 {
   this->Index=0;
 }
+

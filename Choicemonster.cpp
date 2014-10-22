@@ -1,9 +1,7 @@
-
-
 #include "Choicemonster.h"
-#include "Constante.cpp"
 #include <Gamebuino.h>
 #include "IContexte.h"
+#include "Constante.h"
 
   void  ChoiceMonster::Init()
   {
@@ -13,14 +11,16 @@
   IContexte * ChoiceMonster::Update(Gamebuino gb, IContexte *ctx)
   {
     //Recherche des monstre du joueur 
-    //Creation du menu grace a ça 
-    const char* const menu[MENUMAXLENGTHCHOIXMONSTER] = {
-      StrLesMonstres[1],
-      StrLesMonstres[2],
-      StrLesMonstres[3],
-    };
+    //Creation du menu grace a ca 
+    int nbMonstre = ctx->Joueur.NbMonstre();
+    char* menu[nbMonstre];
 
-    switch(gb.menu(menu, MENUMAXLENGTHCHOIXMONSTER)){
+    for(int i=0;i<nbMonstre;i++)
+    {
+      menu[i] =  ctx->Joueur.GetMonster(i).Name;
+    }
+
+    switch(gb.menu(menu, nbMonstre)){
     case 0: //display system info
         gb.popup(F("monstre 1"), 100);
       break;
@@ -33,6 +33,8 @@
     default:
       break;
       }
+      
+      return ctx;
   }
   
   void  ChoiceMonster::Draw(Gamebuino gb, IContexte *ctx)
@@ -53,3 +55,4 @@
     return fightNext;
   }
   
+

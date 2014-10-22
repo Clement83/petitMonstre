@@ -4,6 +4,7 @@
 
 #include "IGameObject.h"
 #include <Gamebuino.h>
+#include "IContexte.h"
 
 class ICoreGame : public IGameObject
 {
@@ -18,3 +19,4 @@ class ICoreGame : public IGameObject
 
 };
 #endif 
+

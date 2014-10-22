@@ -17,3 +17,4 @@ class CoreGame : public IGameObject
   	ICoreGame *currentCoreState;// Game mode; fight mode, ....
 };
 #endif 
+

@@ -40,6 +40,11 @@
 //		throw 101;
     }
 
+    int Player::NbMonstre()
+    {
+        return this->nbMonstre;
+    }
+
     Monster* Player::ListeMonster()
     {
     	Monster *lesMonstres = new Monster[this->nbMonstre];
@@ -49,3 +54,4 @@
     	}
     	return lesMonstres; 
     }
+

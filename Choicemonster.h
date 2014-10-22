@@ -20,3 +20,4 @@ class ChoiceMonster : public IFightState
 
 };
 #endif 
+

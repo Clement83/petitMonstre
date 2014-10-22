@@ -11,7 +11,7 @@ class Monster
   	int Force;
   	int Vitesse;
   	int Type;
-  	char* name;
+  	char* Name;
   	int Numero;//permet de savoir a quel monstre on a affaire
     int Index;//index dans le tableau des monstre du joueur
     void AddAttaque(Attaque atta);
@@ -27,3 +27,4 @@ class Monster
 
 
 #endif
+

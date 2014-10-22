@@ -18,3 +18,4 @@ void IGameObject::Draw(Gamebuino gb, IContexte *ctx)
 {
 
 }
+

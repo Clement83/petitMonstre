@@ -30,3 +30,4 @@ ICoreGame * ICoreGame::NewState()
   icg->Init();
   return icg;
 }
+

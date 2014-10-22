@@ -18,3 +18,4 @@ class IFightState : public IGameObject
 
 };
 #endif 
+

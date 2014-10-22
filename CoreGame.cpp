@@ -32,3 +32,4 @@ void CoreGame::Draw(Gamebuino gb, IContexte *ctx)
   //Draw all link object
   this->currentCoreState->Draw(gb,ctx);
 }
+

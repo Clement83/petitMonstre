@@ -93,3 +93,4 @@
     fightNext->Init();
     return fightNext;
   }
+

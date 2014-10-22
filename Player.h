@@ -17,6 +17,7 @@ class Player
     Monster GetMonster(int index);
     Monster* ListeMonster();
     bool IsFull();
+    int NbMonstre();
   protected:
   	static int const maxMonster = 3;
   	int nbMonstre;
@@ -24,3 +25,4 @@ class Player
 };
 
 #endif
+

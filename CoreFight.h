@@ -18,3 +18,4 @@ class CoreFight : public ICoreGame
     IFightState *currentCoreState;
 };
 #endif
+
