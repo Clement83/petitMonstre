@@ -13,6 +13,7 @@ class IFightState : public IGameObject
     virtual void Draw(Gamebuino gb, IContexte *ctx);
     virtual bool NeedChangeState();
     virtual IFightState * NewState();
+  	  bool IsFinish;
   protected:
   	bool isChangeState;
 

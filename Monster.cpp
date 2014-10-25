@@ -2,6 +2,7 @@
     Monster::Monster()
     {
       this->nbAttaque = 0;
+      this->selectedAttaque = -1;
     }
     void Monster::AddAttaque(Attaque atta)
     {
@@ -17,11 +18,15 @@
     {
     	return this->nbAttaque >= this->maxAttaque;
     }
+    bool Monster::IsAlive()
+    {
+        return this->Vie >0;
+    }
 
     void Monster::RemoveAttaque(Attaque atta)
     {
 		this->nbAttaque--;
-		for (int i = atta.Index; i < this->nbAttaque; i++)
+		for (uint8_t i = atta.Index; i < this->nbAttaque; i++)
 		{
 			this->Attaques[i] = this->Attaques[i + 1];
 		} 
@@ -30,19 +35,33 @@
     Attaque* Monster::ListAttaque()
     {
     	Attaque* lesAttaques = new Attaque[this->nbAttaque];
-    	for(int i=0;i<this->nbAttaque;i++)
+    	for(uint8_t i=0;i<this->nbAttaque;i++)
     	{
           lesAttaques[i] = this->Attaques[i];
     	}
     	return lesAttaques; 
     }
 
-    Attaque Monster::UseAttaque(int index)
+    Attaque Monster::UseAttaque(uint8_t index)
     {
 		//if(index<this->nbAttaque)
 		//{
 			return this->Attaques[index];
 		//}
 		//throw 100;
+    }
+
+
+    bool Monster::IsSelectedAttack()
+    {
+        return this->selectedAttaque>-1;
+    }
+    void Monster::SetSelectedAttack(uint8_t num)
+    {
+        this->selectedAttaque = num;
+    }
+    Attaque Monster::GetSelectedAttack()
+    {
+        return this->Attaques[this->selectedAttaque];
     }
 

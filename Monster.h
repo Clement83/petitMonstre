@@ -7,22 +7,29 @@ class Monster
 {
   public:
         Monster();
-  	int Vie;
-  	int Force;
-  	int Vitesse;
-  	int Type;
+  	uint8_t Vie;
+    uint8_t Force;
+    uint8_t Defence;
+  	uint8_t Vitesse;
+  	uint8_t Type;
   	char* Name;
-  	int Numero;//permet de savoir a quel monstre on a affaire
-    int Index;//index dans le tableau des monstre du joueur
+  	uint8_t Numero;//permet de savoir a quel monstre on a affaire
+    uint8_t Index;//index dans le tableau des monstre du joueur
     void AddAttaque(Attaque atta);
     void RemoveAttaque(Attaque atta);
     Attaque* ListAttaque();
-    Attaque UseAttaque(int index);
+    Attaque UseAttaque(uint8_t index);
     bool IsFull();
+    bool IsAlive();
+    bool IsSelectedAttack();
+    void SetSelectedAttack(uint8_t num);
+    Attaque GetSelectedAttack();
   protected:
-   static int const maxAttaque = 4;
-    int nbAttaque;
+   static uint8_t const maxAttaque = 4;
+    uint8_t nbAttaque;
   	Attaque* Attaques;
+    uint8_t selectedAttaque;
+
 };
 
 

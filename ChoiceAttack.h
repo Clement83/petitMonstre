@@ -1,5 +1,5 @@
-#if !defined (AnnimStartFight_H)
-#define AnnimStartFight_H
+#if !defined (ChoiceAttack_H)
+#define ChoiceAttack_H
 
 
 #include "IFightState.h"
@@ -7,20 +7,17 @@
 #include "IContexte.h"
 
 
-class AnnimStartFight : public IFightState
+class ChoiceAttack : public IFightState
 {
   public:
     virtual void Init();
     virtual IContexte * Update(Gamebuino gb, IContexte * ctx);
     virtual void Draw(Gamebuino gb, IContexte * ctx);
-
     virtual bool NeedChangeState();
     virtual IFightState * NewState();
   protected:
   	bool isChangeState;
-  private:
-   uint8_t nbFrameAnnim;
-   bool isWhite;
+  	bool isAttack;
 
 };
 #endif 

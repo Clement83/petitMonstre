@@ -2,6 +2,8 @@
 #include <Gamebuino.h>
 #include "IContexte.h"
 #include "Constante.h"
+#include "AllMonsterName.h"
+#include "ChoiceAttack.h"
 
   void  ChoiceMonster::Init()
   {
@@ -10,31 +12,32 @@
   
   IContexte * ChoiceMonster::Update(Gamebuino gb, IContexte *ctx)
   {
-    //Recherche des monstre du joueur 
-    //Creation du menu grace a ca 
-    int nbMonstre = ctx->Joueur.NbMonstre();
-    char* menu[nbMonstre];
+    /*
+    uint8_t nbMonstre = ctx->Joueur.NbMonstre();
+    const char*  monMenu[nbMonstre] PROGMEM;
 
-    for(int i=0;i<nbMonstre;i++)
+    for(uint8_t i=0;i<nbMonstre;i++)
     {
-      menu[i] =  ctx->Joueur.GetMonster(i).Name;
+      monMenu[i] = allMonsters[ctx->Joueur.GetMonster(i).Numero];
+       //gb.display.println(ctx->Joueur.GetMonster(i).Name);
     }
 
-    switch(gb.menu(menu, nbMonstre)){
-    case 0: //display system info
-        gb.popup(F("monstre 1"), 100);
-      break;
-    case 1: //change game
-        gb.popup(F("monstre 2"), 100);
-      break;
-    case 2: //change game
-        gb.popup(F("monstre 3"), 100);
-      break;
-    default:
-      break;
-      }
-      
-      return ctx;
+*/
+    if(!ctx->Joueur.IsSelectedMonster())
+    {
+      ctx->Joueur.SelectMonster(gb.menu(allMonsters, 4));
+    }
+    
+    if(ctx->Adversaire.IsSelectedMonster())
+    {
+        this->isChangeState = true;
+    }
+    else 
+    {
+      //TODO : Attente de la selection d'un monster
+    }
+
+    return ctx;
   }
   
   void  ChoiceMonster::Draw(Gamebuino gb, IContexte *ctx)
@@ -50,7 +53,7 @@
   IFightState *  ChoiceMonster::NewState()
   {
     IFightState *fightNext;
-    fightNext = new ChoiceMonster();
+    fightNext = new ChoiceAttack();
     fightNext->Init();
     return fightNext;
   }

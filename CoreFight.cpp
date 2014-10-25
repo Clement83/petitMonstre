@@ -3,6 +3,7 @@
 #include "IFightState.h"
 #include <Gamebuino.h>
 #include "IContexte.h"
+#include "CoreExplore.h"
 
 
 void CoreFight::Init()
@@ -23,26 +24,34 @@ IContexte * CoreFight::Update(Gamebuino gb, IContexte *ctx)
   {
       //on passe au choix du monster 
     this->currentCoreState = this->currentCoreState->NewState();
+
+    if(this->currentCoreState->IsFinish)
+    {
+      this->isChangeState = true;
+    }
   }
 }
 
 void CoreFight::Draw(Gamebuino gb, IContexte *ctx)
 {
-  this->currentCoreState->Draw(gb,ctx);
+    this->currentCoreState->Draw(gb,ctx);
+  
+  if(ctx->Joueur.IsSelectedMonster())
+    {
+       gb.display.print("vie : ");
+       gb.display.print(ctx->Adversaire.GetSelectedMonster().Vie);
+    }
 }
 
 bool CoreFight::NeedChangeState()
 {
-  return false;
+  return this->isChangeState;
 }
 
 ICoreGame * CoreFight::NewState()
 {
-
-  //choix du mode combat
-  //Create engine fight
   ICoreGame *coreFight;
-  coreFight = new CoreFight();
+  coreFight = new CoreExplore();
   coreFight->Init();
   return coreFight;
 }

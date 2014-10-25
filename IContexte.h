@@ -13,7 +13,9 @@ class IContexte
   	Player Monster;
   	Player Dresseur;
   	Player Joueur2;
-  	int TypeAdversaire;//0 Monster, 1 Dresseur, 2 Joueur2
+  	Player Adversaire;
+  	uint8_t TypeAdversaire;//0 Monster, 1 Dresseur, 2 Joueur2
+  	bool IsMaster;
 };
 #endif 
 
