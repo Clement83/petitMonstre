@@ -34,6 +34,7 @@
       }
       default : 
       {
+        ctx->Joueur.GetSelectedMonster()->SetSelectedAttack(selectedAttak);
         isAttack = true;
       }
     };

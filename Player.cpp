@@ -4,7 +4,7 @@
     Player::Player()
     {
         this->nbMonstre = 0;
-        this->SelectedMonster = -1;
+        this->SelectedMonster = 255;
         this->Monsters = new Monster[this->maxMonster];
     }
     
@@ -28,7 +28,7 @@
     }
     void  Player::UnSelectMonster()
     {
-        this->SelectedMonster = -1;
+        this->SelectedMonster = 255;
     }
 
     void Player::SelectMonster(uint8_t num)
@@ -43,7 +43,7 @@
 
     bool Player::IsSelectedMonster()
     {
-        return this->SelectedMonster > -1;
+        return this->SelectedMonster< 255;
     }
     
     uint8_t Player::GetSelectNumMonster()
@@ -56,9 +56,9 @@
         return this->Monsters[index];
     }
 
-    Monster Player::GetSelectedMonster()
+    Monster* Player::GetSelectedMonster()
     {
-        return this->Monsters[this->SelectedMonster ];
+        return &this->Monsters[this->SelectedMonster];
     }
 
     uint8_t Player::NbMonstre()

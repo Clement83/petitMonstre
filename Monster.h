@@ -24,6 +24,7 @@ class Monster
     bool IsSelectedAttack();
     void SetSelectedAttack(uint8_t num);
     Attaque GetSelectedAttack();
+    void UnSelectedAttack();
   protected:
    static uint8_t const maxAttaque = 4;
     uint8_t nbAttaque;

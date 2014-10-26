@@ -64,12 +64,12 @@ void setup()
 
    Player *adv = new Player();
    ctx->Adversaire = *adv;
-
+   ctx->IsMaster = true;
 
    Monster *m5 = new Monster();
    m5->Numero = 1;
    m5->Force = 2;
-   m5->Vie = 10;
+   m5->Vie = 15;
    m5->Vitesse = 3;
    m5->Defence = 1;
    /*Monster *m6= new Monster();
@@ -92,6 +92,7 @@ void setup()
    m4->Defence = 1;*/
   //All player have 4 monster because the menu is static
    ctx->Adversaire.AddMonster(*m5);
+   ctx->Adversaire.SelectMonster(0);
   //TODO recherche de l user
 }
 
@@ -101,20 +102,25 @@ void loop()
   if(gb.update())
   {
     gb.battery.show = false;
-    // gb.display.print("nb : ");
-    // gb.display.print(ctx->Joueur.NbMonstre());
+   // ctx->Joueur.SelectMonster(1);
+    //gb.display.print("nb : ");
+    //gb.display.print(ctx->Adversaire.NbMonstre());
+     //gb.display.print(ctx->IsMaster);
     
     petitMonstreGame.Update(gb,ctx);
     petitMonstreGame.Draw(gb,ctx);
     //if multiplayer refresh ctx in I2C
-  
+    
     //TODO mettre ça ou il faut IA plus que basic
-   if(ctx->Joueur.IsSelectedMonster())
+   // if(ctx->Joueur.IsSelectedMonster())
     {
-       ctx->Adversaire.SelectMonster(0);
-       if(ctx->Joueur.GetSelectedMonster().IsSelectedAttack())
+        //gb.display.print("J2 select M");
+       // if(!ctx->Adversaire.IsSelectedMonster())
+       //if(ctx->Joueur.GetSelectedMonster().IsSelectedAttack())
         {
-          ctx->Adversaire.GetSelectedMonster().SetSelectedAttack(0);
+                    //gb.display.print("J2 select A");
+         //   if(!ctx->Adversaire.GetSelectedMonster().IsSelectedAttack())
+              ctx->Adversaire.GetSelectedMonster()->SetSelectedAttack(0);
         } 
     }
 

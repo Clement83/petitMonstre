@@ -25,16 +25,20 @@
 */
     if(!ctx->Joueur.IsSelectedMonster())
     {
-      ctx->Joueur.SelectMonster(gb.menu(allMonsters, 4));
+      uint8_t choix = gb.menu(allMonsters, 4);
+      ctx->Joueur.SelectMonster(choix);
     }
-    
-    if(ctx->Adversaire.IsSelectedMonster())
+   else
     {
-        this->isChangeState = true;
-    }
-    else 
-    {
-      //TODO : Attente de la selection d'un monster
+      if(ctx->Adversaire.IsSelectedMonster())
+      {
+          this->isChangeState = true;
+      }
+      else
+      {
+        //TODO : Attente de la selection d'un monster
+        gb.display.print("Attente j2");
+      }
     }
 
     return ctx;

@@ -19,7 +19,9 @@ class ResolutionAttack : public IFightState
   	bool isChangeState;
   private : 
   	void ResolutionOfAttack(IContexte *ctx);
-      void Attack(Monster att, Monster def);
+      void Attack(Monster *att, Monster *def);
+      uint8_t nbFrameAnnim;
+      bool attackOk;
 
 };
 #endif 

@@ -23,8 +23,9 @@ IContexte * CoreFight::Update(Gamebuino gb, IContexte *ctx)
   if(this->currentCoreState->NeedChangeState())
   {
       //on passe au choix du monster 
-    this->currentCoreState = this->currentCoreState->NewState();
-
+    IFightState *newState =  this->currentCoreState->NewState();
+    delete this->currentCoreState;
+    this->currentCoreState = newState;
     if(this->currentCoreState->IsFinish)
     {
       this->isChangeState = true;
@@ -38,8 +39,13 @@ void CoreFight::Draw(Gamebuino gb, IContexte *ctx)
   
   if(ctx->Joueur.IsSelectedMonster())
     {
-       gb.display.print("vie : ");
-       gb.display.print(ctx->Adversaire.GetSelectedMonster().Vie);
+       gb.display.print("vie 1: ");
+       gb.display.println(ctx->Joueur.GetSelectedMonster()->Vie);
+    }
+  if(ctx->Adversaire.IsSelectedMonster())
+    {
+       gb.display.print("vie 2: ");
+       gb.display.println(ctx->Adversaire.GetSelectedMonster()->Vie);
     }
 }
 

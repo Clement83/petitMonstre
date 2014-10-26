@@ -2,7 +2,7 @@
     Monster::Monster()
     {
       this->nbAttaque = 0;
-      this->selectedAttaque = -1;
+      this->selectedAttaque = 255;
     }
     void Monster::AddAttaque(Attaque atta)
     {
@@ -54,7 +54,7 @@
 
     bool Monster::IsSelectedAttack()
     {
-        return this->selectedAttaque>-1;
+        return this->selectedAttaque<255;
     }
     void Monster::SetSelectedAttack(uint8_t num)
     {
@@ -63,5 +63,9 @@
     Attaque Monster::GetSelectedAttack()
     {
         return this->Attaques[this->selectedAttaque];
+    }
+    void Monster::UnSelectedAttack()
+    {
+        this->selectedAttaque=255;
     }
 

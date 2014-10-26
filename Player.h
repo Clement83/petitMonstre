@@ -16,18 +16,18 @@ class Player
     void Remove(Monster monster);
     Monster GetMonster(uint8_t index);
     void  UnSelectMonster();
-    Monster GetSelectedMonster();
+    Monster *GetSelectedMonster();
     Monster* ListeMonster();
     bool IsFull();
     bool IsSelectedMonster();
     uint8_t NbMonstre();
     void SelectMonster(uint8_t num);
     uint8_t GetSelectNumMonster();
+    uint8_t SelectedMonster;
   protected:
   	static uint8_t const maxMonster = 3;
   	uint8_t nbMonstre;
   	Monster *Monsters;
-    uint8_t SelectedMonster;
 };
 
 #endif
