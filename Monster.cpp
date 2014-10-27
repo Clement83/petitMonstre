@@ -69,3 +69,8 @@
         this->selectedAttaque=255;
     }
 
+    uint8_t Monster::GetPourcentVieRestant()
+    {
+        return this->Vie*100 / this->VieMax;
+    }
+

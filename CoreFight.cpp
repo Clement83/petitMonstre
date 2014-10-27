@@ -17,7 +17,7 @@ void CoreFight::Init()
 
 }
 
-IContexte * CoreFight::Update(Gamebuino gb, IContexte *ctx)
+void CoreFight::Update(Gamebuino gb, IContexte *ctx)
 {
   this->currentCoreState->Update(gb,ctx);
   if(this->currentCoreState->NeedChangeState())
@@ -26,27 +26,16 @@ IContexte * CoreFight::Update(Gamebuino gb, IContexte *ctx)
     IFightState *newState =  this->currentCoreState->NewState();
     delete this->currentCoreState;
     this->currentCoreState = newState;
-    if(this->currentCoreState->IsFinish)
+    /*if(this->currentCoreState->IsFinish)
     {
       this->isChangeState = true;
-    }
+    }*/
   }
 }
 
 void CoreFight::Draw(Gamebuino gb, IContexte *ctx)
 {
     this->currentCoreState->Draw(gb,ctx);
-  
-  if(ctx->Joueur.IsSelectedMonster())
-    {
-       gb.display.print("vie 1: ");
-       gb.display.println(ctx->Joueur.GetSelectedMonster()->Vie);
-    }
-  if(ctx->Adversaire.IsSelectedMonster())
-    {
-       gb.display.print("vie 2: ");
-       gb.display.println(ctx->Adversaire.GetSelectedMonster()->Vie);
-    }
 }
 
 bool CoreFight::NeedChangeState()

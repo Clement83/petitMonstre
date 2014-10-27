@@ -10,7 +10,7 @@ void IGameObject::Init()
 
 }
 
-IContexte * IGameObject::Update(Gamebuino gb, IContexte *ctx)
+void IGameObject::Update(Gamebuino gb, IContexte *ctx)
 {
 }
 

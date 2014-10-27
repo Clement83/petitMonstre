@@ -11,7 +11,7 @@
       this->isChangeState=false;
   }
   
-  IContexte * ChoiceAttack::Update(Gamebuino gb, IContexte *ctx)
+  void ChoiceAttack::Update(Gamebuino gb, IContexte *ctx)
   {
     /*
     uint8_t nbMonstre = ctx->Joueur.NbMonstre();
@@ -40,7 +40,6 @@
     };
     this->isChangeState = true;
 
-    return ctx;
   }
   
   void  ChoiceAttack::Draw(Gamebuino gb, IContexte *ctx)

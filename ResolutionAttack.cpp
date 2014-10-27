@@ -4,6 +4,8 @@
 #include "Constante.h"
 #include "AllMonsterName.h"
 #include "ChoiceAttack.h"
+#include "InterfaceCombatSprite.h"
+#include "AllMonstersSprite.h"
 
   void  ResolutionAttack::Init()
   {
@@ -13,7 +15,7 @@
       this->attackOk = false;
   }
   
-  IContexte * ResolutionAttack::Update(Gamebuino gb, IContexte *ctx)
+  void ResolutionAttack::Update(Gamebuino gb, IContexte *ctx)
   {
     
     if(!this->attackOk)
@@ -47,20 +49,42 @@
        this->isChangeState = true;
     }
     this->nbFrameAnnim--;
-    
-    return ctx;
   }
   
   void  ResolutionAttack::Draw(Gamebuino gb, IContexte *ctx)
   {
     if(this->attackOk)
     {
-      gb.display.print("C'est la guerre!");
+    /*
+      if(ctx->Joueur.IsSelectedMonster())
+        {
+           gb.display.print("vie 1: ");
+           gb.display.println(ctx->Joueur.GetSelectedMonster()->Vie);
+        }
+      if(ctx->Adversaire.IsSelectedMonster())
+        {
+           gb.display.print("vie 2: ");
+           gb.display.println(ctx->Adversaire.GetSelectedMonster()->Vie);
+        }
+    */
+        gb.display.drawBitmap(2, 0, sprBarreViej2);
+        gb.display.drawBitmap(60, 0, allSpriteMonstersFront[ctx->Adversaire.GetSelectedMonster()->Numero]);
+        gb.display.fillRect(3, 1,this->GetWidthBarreVie(ctx->Adversaire.GetSelectedMonster()->GetPourcentVieRestant() ,22), 5);
+
+
+        gb.display.drawBitmap(60, 48, sprBarreViej1);
+        gb.display.drawBitmap(2, 40, allSpriteMonstersBack[ctx->Joueur.GetSelectedMonster()->Numero]);
+        gb.display.fillRect(61, 49, this->GetWidthBarreVie(ctx->Joueur.GetSelectedMonster()->GetPourcentVieRestant() ,22), 5);
     }
     else 
     {
        gb.display.print("c'est pas wait!");
     }
+  }
+
+  int8_t ResolutionAttack::GetWidthBarreVie(uint8_t pourcentVie, uint8_t tailleMaxPx)
+  {
+    return pourcentVie * tailleMaxPx / 100;
   }
   
   bool  ResolutionAttack::NeedChangeState()
@@ -72,6 +96,7 @@
   {
     //TODO uniquement pour test
     this->Attack(ctx->Joueur.GetSelectedMonster(),ctx->Adversaire.GetSelectedMonster());
+    this->Attack(ctx->Adversaire.GetSelectedMonster(),ctx->Joueur.GetSelectedMonster());
     //ctx->Adversaire.GetSelectedMonster()->Vie = 2;
     /*if(ctx->Joueur.GetSelectedMonster().Vitesse > ctx->Adversaire.GetSelectedMonster().Vitesse)
     {

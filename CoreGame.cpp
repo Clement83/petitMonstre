@@ -1,5 +1,6 @@
 #include "CoreGame.h"
 #include "CoreExplore.h"
+#include "CoreFight.h"
 #include "ICoreGame.h"
 #include <Gamebuino.h>
 #include "IContexte.h"
@@ -10,25 +11,29 @@ void CoreGame::Init()
 
   ICoreGame *cexp;
   cexp = new CoreExplore();
+  //cexp = new CoreFight();
   cexp->Init();
    this->currentCoreState = cexp;
 }
 
-IContexte * CoreGame::Update(Gamebuino gb, IContexte *ctx)
+void CoreGame::Update(Gamebuino gb, IContexte *ctx)
 {
   this->currentCoreState->Update(gb,ctx);
 
    if(this->currentCoreState->NeedChangeState())
   {
-    gb.display.println(F("CoreGame : Change state"));
+    //gb.display.println(F("CoreGame : Change state"));
     //Todo peut etre qu'il faut detruire l'object precedent? memory leek m'entend tu?
-    this->currentCoreState = this->currentCoreState->NewState();
+    ICoreGame *newState = this->currentCoreState->NewState();
+    delete this->currentCoreState;
+    this->currentCoreState = newState;
+    
+//    this->currentCoreState =this->currentCoreState->NewState();
   }
 }
 
 void CoreGame::Draw(Gamebuino gb, IContexte *ctx)
 {
-  //gb.display.println(F("CoreGame : Hello World!"));
   //Draw all link object
   this->currentCoreState->Draw(gb,ctx);
 }

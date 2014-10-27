@@ -8,7 +8,7 @@ void ICoreGame::Init()
   //this->isChangeState = false;
 }
 
-IContexte * ICoreGame::Update(Gamebuino gb, IContexte *ctx)
+void ICoreGame::Update(Gamebuino gb, IContexte *ctx)
 {
   gb.display.println(F("ICoreGame : Update"));
 }

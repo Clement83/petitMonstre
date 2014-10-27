@@ -10,7 +10,7 @@
       this->isChangeState=false;
   }
   
-  IContexte * ChoiceMonster::Update(Gamebuino gb, IContexte *ctx)
+  void ChoiceMonster::Update(Gamebuino gb, IContexte *ctx)
   {
     /*
     uint8_t nbMonstre = ctx->Joueur.NbMonstre();
@@ -41,12 +41,11 @@
       }
     }
 
-    return ctx;
   }
   
   void  ChoiceMonster::Draw(Gamebuino gb, IContexte *ctx)
   {
-
+      gb.display.print("Choice monster");
   }
   
   bool  ChoiceMonster::NeedChangeState()

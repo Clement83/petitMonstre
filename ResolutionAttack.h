@@ -11,7 +11,7 @@ class ResolutionAttack : public IFightState
 {
   public:
     virtual void Init();
-    virtual IContexte * Update(Gamebuino gb, IContexte * ctx);
+    virtual void Update(Gamebuino gb, IContexte * ctx);
     virtual void Draw(Gamebuino gb, IContexte * ctx);
     virtual bool NeedChangeState();
     virtual IFightState * NewState();
@@ -22,6 +22,7 @@ class ResolutionAttack : public IFightState
       void Attack(Monster *att, Monster *def);
       uint8_t nbFrameAnnim;
       bool attackOk;
+      int8_t GetWidthBarreVie(uint8_t pourcentVie, uint8_t tailleMaxPx);
 
 };
 #endif 

@@ -10,7 +10,7 @@ class CoreFight : public ICoreGame
 {
   public:
     virtual void Init();
-    virtual IContexte * Update(Gamebuino gb, IContexte *ctx);
+    virtual void Update(Gamebuino gb, IContexte *ctx);
     virtual void Draw(Gamebuino gb, IContexte *ctx);
     virtual bool NeedChangeState();
     virtual ICoreGame * NewState();

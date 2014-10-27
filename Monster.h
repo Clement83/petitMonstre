@@ -7,10 +7,14 @@ class Monster
 {
   public:
         Monster();
-  	uint8_t Vie;
+    uint8_t Vie;
     uint8_t Force;
     uint8_t Defence;
-  	uint8_t Vitesse;
+    uint8_t Vitesse;
+    uint8_t VieMax;
+    uint8_t ForceMax;
+    uint8_t DefenceMax;
+    uint8_t VitesseMax;
   	uint8_t Type;
   	char* Name;
   	uint8_t Numero;//permet de savoir a quel monstre on a affaire
@@ -25,6 +29,7 @@ class Monster
     void SetSelectedAttack(uint8_t num);
     Attaque GetSelectedAttack();
     void UnSelectedAttack();
+    uint8_t GetPourcentVieRestant();
   protected:
    static uint8_t const maxAttaque = 4;
     uint8_t nbAttaque;

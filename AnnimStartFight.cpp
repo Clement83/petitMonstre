@@ -11,7 +11,7 @@
       this->isChangeState=false;
   }
   
-  IContexte * AnnimStartFight::Update(Gamebuino gb, IContexte *ctx)
+  void AnnimStartFight::Update(Gamebuino gb, IContexte *ctx)
   {
     uint8_t currentFrame = gb.frameCount;
     //l'animation sera de faire passer l'ecran du noir au blanc 
@@ -33,7 +33,7 @@
     
     //#define LCDWIDTH 48
     //#define LCDHEIGHT 84
-    
+    /*
     for(uint8_t i=0;i<15;i++)
     {
       for(uint8_t y=0;y<15;y++)
@@ -80,7 +80,8 @@
           
         }
       }
-    }
+    }*/
+    //gb.display.print(this->nbFrameAnnim);
   }
   bool  AnnimStartFight::NeedChangeState()
   {
