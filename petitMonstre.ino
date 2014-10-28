@@ -113,7 +113,7 @@ void loop()
  // gb.display.print(F("Update"));
   //gb.display.println(cpt);
     petitMonstreGame.Update(gb,ctx);
-    petitMonstreGame.Draw(gb,ctx);
+    //petitMonstreGame.Draw(gb,ctx);
   //gb.display.print(F("advMonster : "));
   //gb.display.println(ctx->Adversaire.GetSelectedMonster()->Numero);
   

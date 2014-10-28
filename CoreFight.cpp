@@ -1,5 +1,6 @@
 #include "CoreFight.h"
 #include "AnnimStartFight.h"
+#include "ChoiceMonster.h"
 #include "IFightState.h"
 #include <Gamebuino.h>
 #include "IContexte.h"
@@ -26,16 +27,20 @@ void CoreFight::Update(Gamebuino gb, IContexte *ctx)
     IFightState *newState =  this->currentCoreState->NewState();
     delete this->currentCoreState;
     this->currentCoreState = newState;
-    /*if(this->currentCoreState->IsFinish)
+    if(this->currentCoreState->IsFinish)
     {
       this->isChangeState = true;
-    }*/
+    }
+  }
+  else
+  {
+    this->currentCoreState->Draw(gb,ctx);
   }
 }
 
 void CoreFight::Draw(Gamebuino gb, IContexte *ctx)
 {
-    this->currentCoreState->Draw(gb,ctx);
+   this->currentCoreState->Draw(gb,ctx);
 }
 
 bool CoreFight::NeedChangeState()
