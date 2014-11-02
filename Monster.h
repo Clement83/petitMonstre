@@ -7,7 +7,7 @@ class Monster
 {
   public:
         Monster();
-    uint8_t Vie;
+    int8_t Vie;
     uint8_t Force;
     uint8_t Defence;
     uint8_t Vitesse;
@@ -17,7 +17,7 @@ class Monster
     uint8_t VitesseMax;
   	uint8_t Type;
   	char* Name;
-  	uint8_t Numero;//permet de savoir a quel monstre on a affaire
+  	int Numero;//permet de savoir a quel monstre on a affaire
     uint8_t Index;//index dans le tableau des monstre du joueur
     void AddAttaque(Attaque atta);
     void RemoveAttaque(Attaque atta);

@@ -2,7 +2,6 @@
 #define IContexte_H
 
 #include <Gamebuino.h>
-#include "IGameObject.h"
 #include "Player.h"
 
 class IContexte 

@@ -1,16 +1,17 @@
-#include <SPI.h>
+//#include <SPI.h>
 
-#define MENUMAXLENGTHCHOIXMONSTER 3
+//#define MENUMAXLENGTHCHOIXMONSTER 3
 
 
 /**
 Liste des noms de tous les monstre de l'appli
 **/
+/*
 char *StrLesMonstres[4] PROGMEM = { 
 "MecheBizard", 
 "Flottille", 
 "ChampiFort", 
-"TerraBaffle"};
+"TerraBaffle"};*/
 
 /*
 const char strMonster1[] PROGMEM = "MecheBizard";
