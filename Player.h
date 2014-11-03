@@ -22,10 +22,11 @@ class Player
     bool IsSelectedMonster();
     uint8_t NbMonstre();
     void SelectMonster(uint8_t num);
+    void ClearMonster();
     uint8_t GetSelectNumMonster();
     uint8_t SelectedMonster;
   protected:
-  	static uint8_t const maxMonster = 3;
+  	static uint8_t const maxMonster = 4;
   	uint8_t nbMonstre;
   	Monster *Monsters;
 };

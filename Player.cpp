@@ -30,7 +30,12 @@
     {
         this->SelectedMonster = 255;
     }
-
+    
+    void Player::ClearMonster()
+    {
+      this->nbMonstre=0;
+    }
+    
     void Player::SelectMonster(uint8_t num)
     {
         this->SelectedMonster = num;
