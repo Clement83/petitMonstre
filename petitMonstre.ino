@@ -9,6 +9,7 @@ Gamebuino gb;
 
 #include "InterfaceCombatSprite.h"
 #include "AllMonstersSprite.h"
+//#include "AllWorldSprite.h"
 #include "AllMonsterName.h"
 #include "IContexte.h"
 #include "Player.h"
@@ -31,6 +32,7 @@ void setup()
   gb.begin();
   //display the main menu:
   gb.titleScreen(F("les petits monstres"));
+  gb.pickRandomSeed();
   //petitMonstreGame.Init();
   
    ctx = new IContexte();
@@ -41,8 +43,8 @@ void setup()
    m1->Numero = 0;
    m1->Force = 2;
    m1->ForceMax = 2;
-   m1->Vie = 10;
-   m1->VieMax = 10;
+   m1->Vie = 30;
+   m1->VieMax = 30;
    m1->Vitesse = 5;
    m1->VitesseMax = 5;
    m1->Defence = 1;
@@ -52,8 +54,8 @@ void setup()
    m2->Numero = 1;
    m2->Force = 3;
    m2->ForceMax = 3;
-   m2->Vie = 10;
-   m2->VieMax = 10;
+   m2->Vie = 30;
+   m2->VieMax = 30;
    m2->Vitesse = 5;
    m2->VitesseMax = 5;
    m2->Defence = 1;
@@ -63,8 +65,8 @@ void setup()
    m3->Numero = 2;
    m3->Force = 4;
    m3->ForceMax = 4;
-   m3->Vie = 10;
-   m3->VieMax = 10;
+   m3->Vie = 30;
+   m3->VieMax = 30;
    m3->Vitesse = 5;
    m3->VitesseMax = 5;
    m3->Defence = 1;
@@ -74,8 +76,8 @@ void setup()
    m4->Numero = 3;
    m4->Force = 5;
    m4->ForceMax = 5;
-   m4->Vie = 10;
-   m4->VieMax = 10;
+   m4->Vie = 30;
+   m4->VieMax = 30;
    m4->Vitesse = 5;
    m4->VitesseMax = 5;
    m4->Defence = 1;
@@ -106,6 +108,7 @@ void setup()
    m5->DefenceMax = m5->Defence;
    ctx->Adversaire.AddMonster(*m5);
    ctx->Adversaire.SelectMonster(0); */
+  initGame();
 }
 
 void loop()
@@ -134,12 +137,11 @@ void loop()
 
 uint8_t UpdateModeExploration()
 {
-  if(gb.buttons.pressed(BTN_A))
+  /*if(gb.buttons.pressed(BTN_A))
   {
    Player *adv = new Player();
    ctx->Adversaire = *adv;
-
-   Monster *m5 = new Monster();
+Monster *m5 = new Monster();
    m5->Numero = random(0,4);
    m5->Force = random(1,4);
    m5->ForceMax = m5->Force;
@@ -154,8 +156,8 @@ uint8_t UpdateModeExploration()
 
     return 1;
   }
-  gb.display.println(F("Press A"));
-  return 0;
+  gb.display.println(F("Press A")); */
+  return ExplorationUpdate();
   
   //gb.display.println(F("CoreExplore : update!"));
 }
