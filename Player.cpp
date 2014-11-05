@@ -40,6 +40,19 @@
     {
         this->SelectedMonster = num;
     }
+    
+    bool  Player::HaveMonsterOk()
+    {
+        for (uint8_t i = 0; i < this->nbMonstre; i++)
+        {
+            if(this->Monsters[i].Vie>0)
+            {
+              return true;
+            };
+        } 
+        
+        return false;
+    }
 
     bool Player::IsFull()
     {

@@ -9,8 +9,9 @@ Gamebuino gb;
 
 #include "InterfaceCombatSprite.h"
 #include "AllMonstersSprite.h"
-//#include "AllWorldSprite.h"
+#include "AllWorldSprite.h"
 #include "AllMonsterName.h"
+#include "AllPersoSprite.h"
 #include "IContexte.h"
 #include "Player.h"
 #include "Monster.h"
@@ -24,14 +25,18 @@ IContexte * ctx;
 
 
 uint8_t state;
+unsigned  int cptArea; 
+unsigned int cptKill; 
 
 void setup()
 {
+  cptArea= 0;
+  cptKill = 0;
  state = 0; 
  // initialize the Gamebuino object
   gb.begin();
   //display the main menu:
-  gb.titleScreen(F("les petits monstres"));
+  gb.titleScreen(F("Futuromon"));
   gb.pickRandomSeed();
   //petitMonstreGame.Init();
   
@@ -129,6 +134,11 @@ void loop()
       break;
     }
     gb.battery.show = false;
+    
+        gb.display.print("Area : ");
+    gb.display.print(cptArea);
+        gb.display.print(". Kill : ");
+        gb.display.print(cptKill);
 
 
   }

@@ -79,7 +79,7 @@
   {
     
     uint8_t nbFrame = 60;
-    gb.popup(F("Un guinomon sauvage!"),60);
+    gb.popup(F("Un spacemon attaque!"),60);
     while(true)
     {
       if(gb.update())
@@ -105,13 +105,13 @@
   
    void CombatChoiceMonster()
   {
-    
-    
       if(!ctx->Joueur.IsSelectedMonster())
       {
-        uint8_t choix = gb.menu(allMonsters, 4);
-        ctx->Joueur.SelectMonster(choix);
-      
+        do
+        {
+          uint8_t choix = gb.menu(allMonsters, 4);
+          ctx->Joueur.SelectMonster(choix);
+        }while(ctx->Joueur.GetSelectedMonster()->Vie <= 0);
       
         uint8_t nbFrame = 60;
         gb.popup(F("En avant!"),60);
@@ -132,15 +132,10 @@
                 }
               }
               nbFrame--;
-              gb.display.drawBitmap(2, 0, sprBarreViej2);
               gb.display.drawBitmap(60, 0, GetSpriteMonsterByNumero(ctx->Adversaire.GetSelectedMonster()->Numero, true));//allSpriteMonstersFront[ctx->Adversaire.GetSelectedMonster()->Numero]);
-              gb.display.fillRect(3, 1,GetWidthBarreVie(ctx->Adversaire.GetSelectedMonster()->GetPourcentVieRestant() ,22), 6);
-      
-              gb.display.drawBitmap(60, 32, sprBarreViej1);
               gb.display.drawBitmap(xpos, 24, GetSpriteMonsterByNumero(ctx->Joueur.GetSelectedMonster()->Numero, false));
-              uint8_t wdBarrevie = GetWidthBarreVie(ctx->Joueur.GetSelectedMonster()->GetPourcentVieRestant() ,22);
-              gb.display.fillRect(61 + (22 - wdBarrevie), 41,wdBarrevie, 6);
-               
+      
+               drawHud();
           }
         }
       }
@@ -187,16 +182,28 @@
   ///// RESOLUTION du combat 
   bool ResolutionCombat()
   {
-    
     if(ctx->Adversaire.IsSelectedMonster() && ctx->Joueur.IsSelectedMonster())
     {
           CombatResolutionOfAttack();
           CombatResolutionAttackAnnimation();
-          if(ctx->Joueur.GetSelectedMonster()->Vie == 0 || ctx->Adversaire.GetSelectedMonster()->Vie == 0)
-            return false;
-         return true;
+          if(!ctx->Adversaire.HaveMonsterOk())
+          {
+            cptKill++;
+          }
+          if(ctx->Joueur.HaveMonsterOk() && ctx->Adversaire.HaveMonsterOk())
+            return true;
+         return false;
     }
     return true;
+  }
+  
+  void drawHud()
+  {
+        gb.display.drawBitmap(2, 0, sprBarreViej2);
+        gb.display.fillRect(3, 1,GetWidthBarreVie(ctx->Adversaire.GetSelectedMonster()->GetPourcentVieRestant() ,43), 6);
+        gb.display.drawBitmap(39, 32, sprBarreViej1);
+        uint8_t wdBarrevie = GetWidthBarreVie(ctx->Joueur.GetSelectedMonster()->GetPourcentVieRestant() ,43);
+        gb.display.fillRect(40 + (43 - wdBarrevie), 41,wdBarrevie, 6);
   }
   
   void  CombatResolutionAttackAnnimation()
@@ -207,12 +214,7 @@
       if(gb.update())
       {
           
-          gb.display.drawBitmap(2, 0, sprBarreViej2);
-          gb.display.fillRect(3, 1,GetWidthBarreVie(ctx->Adversaire.GetSelectedMonster()->GetPourcentVieRestant() ,22), 6);
-          gb.display.drawBitmap(60, 32, sprBarreViej1);
-          uint8_t wdBarrevie = GetWidthBarreVie(ctx->Joueur.GetSelectedMonster()->GetPourcentVieRestant() ,22);
-          gb.display.fillRect(61 + (22 - wdBarrevie), 41,wdBarrevie, 6);
-          
+       drawHud();
         if(nbFrame<50 && nbFrame%3==0 && nbFrame>30 )
         {
           //clignotement apres attaque
