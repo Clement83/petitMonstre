@@ -173,7 +173,7 @@ bool updateCursor(){
   
   if(spriteID == 1)
   {
-    //if(random(0,100)==0)
+    if(random(0,100)==0)
     {
       return false;
     }
