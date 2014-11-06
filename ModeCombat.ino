@@ -155,6 +155,7 @@
           {
             //isAttack = false;
             ctx->Joueur.UnSelectMonster();
+            break;
           }
           default : 
           {
@@ -190,8 +191,21 @@
           {
             cptKill++;
           }
+         
           if(ctx->Joueur.HaveMonsterOk() && ctx->Adversaire.HaveMonsterOk())
+          {
+             if(ctx->Adversaire.GetSelectedMonster()->Vie == 0)
+             {
+              ctx->Adversaire.UnSelectMonster();
+             }
+             if(ctx->Joueur.GetSelectedMonster()->Vie <= 0)
+             {
+                ctx->Joueur.UnSelectMonster();
+             }
+         
             return true;
+          }
+         
          return false;
     }
     return true;

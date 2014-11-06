@@ -46,47 +46,47 @@ void setup()
 
    Monster *m1 = new Monster();
    m1->Numero = 0;
-   m1->Force = 2;
-   m1->ForceMax = 2;
+   m1->Force = 5;
+   m1->ForceMax = m1->Force;
    m1->Vie = 30;
-   m1->VieMax = 30;
+   m1->VieMax = m1->Vie;
    m1->Vitesse = 5;
-   m1->VitesseMax = 5;
+   m1->VitesseMax = m1->Vitesse;
    m1->Defence = 1;
-   m1->DefenceMax = 1;
+   m1->DefenceMax = m1->Defence;
 
    Monster *m2= new Monster();
    m2->Numero = 1;
-   m2->Force = 3;
-   m2->ForceMax = 3;
+   m2->Force = 8;
+   m2->ForceMax = m2->Force;
    m2->Vie = 30;
-   m2->VieMax = 30;
+   m2->VieMax = m2->Vie;
    m2->Vitesse = 5;
-   m2->VitesseMax = 5;
+   m2->VitesseMax = m2->Vitesse;
    m2->Defence = 1;
-   m2->DefenceMax = 1;
+   m2->DefenceMax = m2->Defence;
    
    Monster *m3 = new Monster();
    m3->Numero = 2;
-   m3->Force = 4;
-   m3->ForceMax = 4;
+   m3->Force = 12;
+   m3->ForceMax = m3->Force;
    m3->Vie = 30;
-   m3->VieMax = 30;
+   m3->VieMax = m3->Vie;
    m3->Vitesse = 5;
-   m3->VitesseMax = 5;
+   m3->VitesseMax = m3->Vitesse;
    m3->Defence = 1;
-   m3->DefenceMax = 1;
+   m3->DefenceMax = m3->Defence;
    
    Monster *m4 = new Monster();
    m4->Numero = 3;
-   m4->Force = 5;
-   m4->ForceMax = 5;
-   m4->Vie = 30;
-   m4->VieMax = 30;
+   m4->Force = 2;
+   m4->ForceMax = m4->Force;
+   m4->Vie = 5;
+   m4->VieMax = m4->Vie;
    m4->Vitesse = 5;
-   m4->VitesseMax = 5;
+   m4->VitesseMax = m4->Vitesse;
    m4->Defence = 1;
-   m4->DefenceMax = 1;
+   m4->DefenceMax = m4->Defence;
   //All player have 4 monster because the menu is static
    ctx->Joueur.AddMonster(*m1);
    ctx->Joueur.AddMonster(*m2);

@@ -35,7 +35,7 @@ uint8_t ExplorationUpdate(){
     else 
     {
       Monster *m5 = new Monster();
-     m5->Numero = random(0,4);
+     m5->Numero = random(0,11);
      m5->Force = random(1,4);
      m5->ForceMax = m5->Force;
      m5->Vie = random(10,20);
@@ -68,7 +68,7 @@ void initGame(){
 
 void initWorld(){
   cptArea++;
-  byte add = random(0,2) * 4;
+  byte add = random(0,5) * 4;
   for(byte y = 0; y < WORLD_H; y++){
     setTile(0, y, 3+add, random(0,4)); 
     setTile(WORLD_W-1, y, 3+add, random(0,4)); 
@@ -81,7 +81,7 @@ void initWorld(){
    byte spId = random(0,2)+add;
   for(byte y = 1; y < WORLD_H-1; y++){
     for(byte x = 1; x < WORLD_W-1; x++){
-      if(random(0,7)==0)
+      if( y>1 && y<WORLD_H-2 && x>1 && x<WORLD_W-2 &&  random(0,5)==0)
       {
         setTile(x, y, 3+add, 0);
       }
@@ -101,8 +101,8 @@ void initWorld(){
 
 void initialiseNbChance()
 {
-        NbChanceAppearMonster = random(1000,2500);
-        NbChanceAppearMonster -= cptArea* cptArea;
+        NbChanceAppearMonster = random(50,500);
+        // NbChanceAppearMonster -= cptArea* cptArea;
 }
 
 void drawWorld(){
@@ -130,7 +130,6 @@ void drawWorld(){
 
 bool updatePerso(){
   
-  
   if(isMove)
   {
     if(cursor_x != cursor_x_T*8)
@@ -154,14 +153,15 @@ bool updatePerso(){
       {
         cursor_y--;
       }
-  
     }
-    else 
+    
+    if(cursor_y == cursor_y_T*8 && cursor_x == cursor_x_T*8)
     {
       isMove = false;
     }
   }
-  else
+  
+  if(!isMove)
   {
     int last_cursor_x = cursor_x_T;
     int last_cursor_y = cursor_y_T;
@@ -188,7 +188,7 @@ bool updatePerso(){
     }
     byte spriteID = getSpriteID(cursor_x_T,cursor_y_T);
     
-    if(spriteID == 3||spriteID == 7)
+    if((spriteID+1) %4 == 0)
     {
       //rocher deplacement impossible
       cursor_x_T= last_cursor_x;
@@ -201,7 +201,7 @@ bool updatePerso(){
     {
       isMove = true;
       //si je suis en mouvement
-      if(spriteID==2||spriteID==4)
+      if((spriteID+2)%4 == 0)
       {
         gb.popup(F("Mais que ! ..."),60);
         initWorld();
