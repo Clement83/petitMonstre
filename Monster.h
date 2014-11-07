@@ -12,6 +12,7 @@ class Monster
     uint8_t Defence;
     uint8_t Vitesse;
     uint8_t VieMax;
+    uint8_t OldVie;
     uint8_t ForceMax;
     uint8_t DefenceMax;
     uint8_t VitesseMax;

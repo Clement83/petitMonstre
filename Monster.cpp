@@ -71,6 +71,6 @@
 
     uint8_t Monster::GetPourcentVieRestant()
     {
-        return this->Vie*100 / this->VieMax;
+        return this->OldVie*100 / this->VieMax;
     }
 

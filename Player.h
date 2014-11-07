@@ -12,7 +12,7 @@ class Player
     bool IsMonster;//permet de savoir si on est sur un monstre seul ou un dresseur
     //Objet[] Inventaire;
     //liste des chose a dire
-    void AddMonster(Monster monster);
+    void AddMonster(uint8_t numero, uint8_t vie,uint8_t vitesse,uint8_t force,uint8_t defence);
     void Remove(Monster monster);
     Monster GetMonster(uint8_t index);
     void  UnSelectMonster();
@@ -29,7 +29,7 @@ class Player
   protected:
   	static uint8_t const maxMonster = 4;
   	uint8_t nbMonstre;
-  	Monster *Monsters;
+  	Monster Monsters[4];
 };
 
 #endif

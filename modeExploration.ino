@@ -34,17 +34,13 @@ uint8_t ExplorationUpdate(){
     }
     else 
     {
-      Monster *m5 = new Monster();
-     m5->Numero = random(0,11);
-     m5->Force = random(1,4);
-     m5->ForceMax = m5->Force;
-     m5->Vie = random(10,20);
-     m5->VieMax = m5->Vie;
-     m5->Vitesse = random(1,5);
-     m5->VitesseMax = m5->Vitesse;
-     m5->Defence = random(1,5);
-     m5->DefenceMax = m5->Defence;
-     ctx->Adversaire.AddMonster(*m5);
+      int numM = random(0,Nb_MONSTERS);
+    if(!monsterVue[numM])
+    {  
+      monsterVue[numM] = true;
+      nbVue++;
+    }
+     ctx->Adversaire.AddMonster(numM,random(cptArea,cptArea+5),random(cptArea,cptArea+5),random(cptArea,cptArea+5),random(cptArea,cptArea+5));
      ctx->Adversaire.SelectMonster(0);
         //New monster !
       return 1;
@@ -68,7 +64,7 @@ void initGame(){
 
 void initWorld(){
   cptArea++;
-  byte add = random(0,5) * 4;
+  byte add = random(0,NB_THEMES) * 4;
   for(byte y = 0; y < WORLD_H; y++){
     setTile(0, y, 3+add, random(0,4)); 
     setTile(WORLD_W-1, y, 3+add, random(0,4)); 
@@ -93,9 +89,9 @@ void initWorld(){
   }
   //les sorties
   setTile(WORLD_W/2, 0, 2, 0);
-  setTile(WORLD_W/2, WORLD_H-1, 2, 1);
-  setTile(0, WORLD_H/2, 2, 2);
-  setTile(WORLD_W-1, WORLD_H/2, 2, 3);
+  setTile(WORLD_W/2, WORLD_H-1, 2, 0);
+  setTile(0, WORLD_H/2, 2, 1);
+  setTile(WORLD_W-1, WORLD_H/2, 2, 1);
    initialiseNbChance();
 }
 
@@ -126,6 +122,17 @@ void drawWorld(){
       gb.display.drawBitmap(x_screen, y_screen, sprites[spriteID], rotation, 0);
     }
   }
+  
+    gb.display.setFont(font3x3);
+        gb.display.print("Area:");
+    gb.display.print(cptArea);
+        gb.display.print(".Kill:");
+        gb.display.print(cptKill);
+        gb.display.print(".Vue:");
+        gb.display.print(nbVue);
+    gb.display.setFont(font3x5);
+    
+    
 }
 
 bool updatePerso(){
