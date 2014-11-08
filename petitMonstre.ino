@@ -53,9 +53,9 @@ void setup()
 
   //All player have 4 monster because the menu is static
    ctx->Joueur.AddMonster(0,35,5,15,27);
-   ctx->Joueur.AddMonster(0,20,9,25,17);
-   ctx->Joueur.AddMonster(0,24,15,10,8);
-   ctx->Joueur.AddMonster(0,10,2,3,4);
+   ctx->Joueur.AddMonster(1,20,9,25,17);
+   ctx->Joueur.AddMonster(2,24,15,10,8);
+   ctx->Joueur.AddMonster(3,10,2,3,4);
    
    ctx->IsMaster = true;
    
@@ -92,29 +92,7 @@ void loop()
 
 uint8_t UpdateModeExploration()
 {
-  /*if(gb.buttons.pressed(BTN_A))
-  {
-   Player *adv = new Player();
-   ctx->Adversaire = *adv;
-Monster *m5 = new Monster();
-   m5->Numero = random(0,4);
-   m5->Force = random(1,4);
-   m5->ForceMax = m5->Force;
-   m5->Vie = random(10,20);
-   m5->VieMax = m5->Vie;
-   m5->Vitesse = random(1,5);
-   m5->VitesseMax = m5->Vitesse;
-   m5->Defence = random(1,5);
-   m5->DefenceMax = m5->Defence;
-   ctx->Adversaire.AddMonster(*m5);
-   ctx->Adversaire.SelectMonster(0);
-
-    return 1;
-  }
-  gb.display.println(F("Press A")); */
   return ExplorationUpdate();
-  
-  //gb.display.println(F("CoreExplore : update!"));
 }
 
   uint8_t CombatMonste()
