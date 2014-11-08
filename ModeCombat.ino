@@ -177,7 +177,10 @@ void  CombatFinCombat()
 {
 
   int cptFrame = 35;
-  gb.popup(F("C'est gagné!"),cptFrame);
+  if(ctx->Joueur.HaveMonsterOk())
+    gb.popup(F("C'est gagne!"),cptFrame);
+  else 
+    gb.popup(F("Perdu..."),cptFrame);
   while(cptFrame>0)
   {
     if(gb.update())
@@ -248,13 +251,11 @@ void  CombatResolutionAttackAnnimation()
     Player2AnnimCombat();
     if(isPNonInitiativeAlive)
       Player1AnnimCombat();
-    else
-      Player1AnnimMortCombat();
   }
     if(!ctx->Adversaire.GetSelectedMonster()->IsAlive())
       Player2AnnimMortCombat();
-    if(!ctx->Joueur.GetSelectedMonster()->IsAlive())
-      Player1AnnimMortCombat();
+    else if(!ctx->Joueur.GetSelectedMonster()->IsAlive())
+        Player1AnnimMortCombat();
   
   //on deselectionne les attaques
     ctx->Joueur.GetSelectedMonster()->UnSelectedAttack();

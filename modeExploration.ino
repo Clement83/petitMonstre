@@ -21,7 +21,6 @@ int cursor_x, cursor_y,cursor_x_T, cursor_y_T;
 int camera_x, camera_y;
 byte directionPerso;
 bool isMove;
-bool isPlus1;
 int NbChanceAppearMonster;
 
 uint8_t ExplorationUpdate(){
@@ -57,7 +56,6 @@ void initGame(){
     cursor_y = cursor_y_T*8;
   directionPerso = 0;//0bas , 1 droite , 2 haut , 3 gauche
       isMove = false;
-      isPlus1 = false;
       NbChanceAppearMonster = 500;
   //gb.popup(F("\25:change \26:rotate"),60);
 }
@@ -65,6 +63,8 @@ void initGame(){
 void initWorld(){
   cptArea++;
   byte add = random(0,NB_THEMES) * 4;
+  
+  //Contour
   for(byte y = 0; y < WORLD_H; y++){
     setTile(0, y, 3+add, random(0,4)); 
     setTile(WORLD_W-1, y, 3+add, random(0,4)); 
@@ -73,12 +73,14 @@ void initWorld(){
       setTile(x, 0, 3+add, random(0,4));
       setTile(x, WORLD_H-1, 3+add, random(0,4)); 
     }
-  
+  //Choix du sol
    byte spId = random(0,2)+add;
+  //on pose le sol
   for(byte y = 1; y < WORLD_H-1; y++){
     for(byte x = 1; x < WORLD_W-1; x++){
       if( y>1 && y<WORLD_H-2 && x>1 && x<WORLD_W-2 &&  random(0,5)==0)
       {
+        //de temps a autre on pause un block
         setTile(x, y, 3+add, 0);
       }
       else 
@@ -124,11 +126,11 @@ void drawWorld(){
   }
   
     gb.display.setFont(font3x3);
-        gb.display.print("Area:");
+        gb.display.print(F("Area:"));
     gb.display.print(cptArea);
-        gb.display.print(".Kill:");
+        gb.display.print(F(".Kill:"));
         gb.display.print(cptKill);
-        gb.display.print(".Vue:");
+        gb.display.print(F(".Vue:"));
         gb.display.print(nbVue);
     gb.display.setFont(font3x5);
     
