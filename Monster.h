@@ -9,7 +9,7 @@ class Monster
 {
   public:
     Monster();
-    uint8_t Vie;
+    int8_t Vie;
     uint8_t Force;
     uint8_t Defence;
     uint8_t Vitesse;
@@ -31,6 +31,7 @@ class Monster
     bool IsAlive();
     bool IsSelectedAttack();
     void SetSelectedAttack(uint8_t num);
+    uint8_t SetSelectedAttack();
     void UnSelectedAttack();
     uint8_t GetPourcentVieRestant();
   protected:

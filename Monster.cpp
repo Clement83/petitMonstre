@@ -31,6 +31,11 @@ void Monster::SetSelectedAttack(uint8_t num)
   this->selectedAttaque = num;
 }
 
+uint8_t Monster::SetSelectedAttack()
+{
+  return this->selectedAttaque;
+}
+
 void Monster::UnSelectedAttack()
 {
   this->selectedAttaque=255;

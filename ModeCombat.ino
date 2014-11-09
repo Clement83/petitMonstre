@@ -168,7 +168,7 @@ void CombatChoiceAttack()
 
 void CombatChoiceAttackAdversaire()
 {
-  ctx->Adversaire.GetSelectedMonster()->SetSelectedAttack(0);
+  ctx->Adversaire.GetSelectedMonster()->SetSelectedAttack(random(0,NB_MAX_NUM_ATTAQUE_BY_IA));
 
 }
 
@@ -300,21 +300,11 @@ void Player1AnnimCombat()
 
       }
       gb.display.drawBitmap(2, 24, GetSpriteMonsterByNumero(ctx->Joueur.GetSelectedMonster()->Numero, false));
-
-      if(nbFrame>30)
+      
+      ResolutionAttaqueAnimation(ctx->Joueur.GetSelectedMonster()->SetSelectedAttack(),ctx->Joueur.GetSelectedMonster()->GetPatternAttaque(),true,nbFrame);
+      if(nbFrame <= 0)
       {
-        uint8_t nbframe1 =  45 - nbFrame;
-        gb.display.setColor(INVERT);
-        gb.display.drawBitmap(58 + nbframe1,  10 - nbframe1,attaqueGriffe );
-        gb.display.setColor(BLACK);
-      }
-      else
-      {
-
-        if(nbFrame <= 0)
-        {
-          break;
-        }
+        break;
       }
       decrementOldVie(ctx->Adversaire.GetSelectedMonster(),nbFrame);
       nbFrame--;
@@ -342,20 +332,12 @@ void Player2AnnimCombat()
       }
       gb.display.drawBitmap(60, 0, GetSpriteMonsterByNumero(ctx->Adversaire.GetSelectedMonster()->Numero, true));
 
-      if(nbFrame>30)
+      ResolutionAttaqueAnimation(ctx->Adversaire.GetSelectedMonster()->SetSelectedAttack(),ctx->Adversaire.GetSelectedMonster()->GetPatternAttaque(),false,nbFrame);
+      if(nbFrame <= 0)
       {
-        uint8_t nbframe1 =  45 - nbFrame;
-        gb.display.setColor(INVERT);
-        gb.display.drawBitmap(30 - nbframe1,  18 + nbframe1,attaqueGriffe );
-        gb.display.setColor(BLACK);
+        break;
       }
-      else
-      {
-        if(nbFrame <= 0)
-        {
-          break;
-        }
-      }
+      
       decrementOldVie(ctx->Joueur.GetSelectedMonster(),nbFrame);
       nbFrame--;
     }
@@ -415,7 +397,9 @@ void CombatAttack(Monster *att, Monster *def)
 {
   //TODO faire avec le choix des attaque !
   def->OldVie = def->Vie;
-  def->Vie = def->Vie - att->Force;
+  int8_t dmg = (att->Force - def->Defence);
+  if(dmg<=0) dmg = 1;
+  def->Vie = def->Vie - dmg;
   if(def->Vie<0) def->Vie = 0;
 }
 void CombatResolutionOfAttack()
