@@ -30,7 +30,6 @@ const char* const menu[STARTMENULENGTH] PROGMEM = {
 #include "IContexte.h"
 #include "Player.h"
 #include "Monster.h"
-#include "AllAttakName.h"
 
 extern const byte font3x3[]; //a really tiny font
 extern const byte font3x5[]; //a small but efficient font (default)
@@ -89,7 +88,7 @@ void InitialisationGame()
    for(uint8_t i=0;i<4;i++)
    {
       Monster *m = ctx->Joueur.GetMonster(i);
-      GenerateMonsterByLvl(m, 3, i);
+      GenerateMonsterByLvl(m, 5, i);
    }
    
   initGame();

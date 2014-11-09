@@ -15,6 +15,15 @@ void GenerateMonsterByLvl(Monster *monsterAgenerer, uint8_t lvl, uint8_t numero)
     monsterAgenerer->Niveau = lvl;
     monsterAgenerer->NextNiveau = (lvl*lvl)/2;
     monsterAgenerer->Xp = 0;
+    
+    if(numero<4)
+    {
+      monsterAgenerer->SetPatternAttaque(numero);
+    }
+    else
+    {
+      monsterAgenerer->SetPatternAttaque(numero%5);
+    }
 }
 
 void LevelUpMonster(Monster *monsterAgenerer)

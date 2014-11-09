@@ -148,7 +148,7 @@ void CombatChoiceMonsterAdversaire()
 
 void CombatChoiceAttack()
 {
-  uint8_t selectedAttak =  gb.menu(GetAttakByNumero(ctx->Joueur.GetSelectedMonster()->Numero), 4);
+  uint8_t selectedAttak =  gb.menu(GetAttakByPatternNumero(ctx->Joueur.GetSelectedMonster()->GetPatternAttaque()), 4);
   switch(selectedAttak)
   {
   case 3 :
