@@ -14,7 +14,6 @@ void DysplayEtatFuturomon()
       if(offset>0)offset -= 3;
       
       gb.display.println(F(""));
-      gb.display.println(F(""));
       gb.display.print(F("Vie:"));
       gb.display.print(ctx->Joueur.GetSelectedMonster()->Vie);
       gb.display.print(F("/"));
@@ -34,7 +33,13 @@ void DysplayEtatFuturomon()
       gb.display.print(ctx->Joueur.GetSelectedMonster()->Defence);
       gb.display.print(F("/"));
       gb.display.println(ctx->Joueur.GetSelectedMonster()->DefenceMax);
-
+      gb.display.print(F("LvL:"));
+      gb.display.println(ctx->Joueur.GetSelectedMonster()->Niveau);
+      gb.display.print(F("XP :"));
+      gb.display.print(ctx->Joueur.GetSelectedMonster()->Xp);
+      gb.display.print(F("/"));
+      gb.display.println(ctx->Joueur.GetSelectedMonster()->NextNiveau);
+      
       if(gb.buttons.pressed(BTN_A))
       {
         cptMonster++;

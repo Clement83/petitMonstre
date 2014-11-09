@@ -15,11 +15,10 @@ Player::Player()
   }*/
 }
 
-void Player::AddMonster(uint8_t numero, uint8_t vie,uint8_t vitesse,uint8_t force,uint8_t defence)
+void Player::AddMonster(uint8_t numero, uint8_t vie,uint8_t vitesse,uint8_t force,uint8_t defence,uint8_t lvl,int nextlvl,int xp)
 {
   if(!this->IsFull())
   {
-
     Monster *m1 = &this->Monsters[this->nbMonstre];
     m1->Numero = numero;
     m1->Force = force;
@@ -31,6 +30,11 @@ void Player::AddMonster(uint8_t numero, uint8_t vie,uint8_t vitesse,uint8_t forc
     m1->VitesseMax = m1->Vitesse;
     m1->Defence = defence;
     m1->DefenceMax = m1->Defence;
+    
+    m1->Niveau;
+    m1->NextNiveau;
+    m1->Xp;
+    
     this->nbMonstre++;
   }
 }
@@ -97,9 +101,9 @@ uint8_t Player::GetSelectNumMonster()
   return this->SelectedMonster;
 }
 
-Monster Player::GetMonster(uint8_t index)
+Monster* Player::GetMonster(uint8_t index)
 {
-  return this->Monsters[index];
+  return &this->Monsters[index];
 }
 
 Monster* Player::GetSelectedMonster()

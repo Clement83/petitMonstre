@@ -39,8 +39,11 @@ uint8_t ExplorationUpdate(){
       monsterVue[numM] = true;
       nbVue++;
     }
-     ctx->Adversaire.AddMonster(numM,random(cptArea,cptArea+5),random(cptArea,cptArea+5),random(cptArea,cptArea+5),random(cptArea,cptArea+5));
+     ctx->Adversaire.AddMonster(0,10,5,3,7,2,2,2);
      ctx->Adversaire.SelectMonster(0);
+     
+      Monster *m = ctx->Adversaire.GetSelectedMonster();
+      GenerateMonsterByLvl(m, cptArea, numM);
         //New monster !
       return 1;
     }

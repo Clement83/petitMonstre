@@ -5,7 +5,6 @@ void AnimationDebutCombat()
   bool isWhite = false;
   while(true)
   {
-
     if(gb.update())
     {
       if(nbFrameAnnim >0)
@@ -205,10 +204,20 @@ bool ResolutionCombat()
     {
       cptKill++;
     }
+    if(ctx->Adversaire.GetSelectedMonster()->Vie <= 0 && ctx->Joueur.GetSelectedMonster()->Vie>0)
+    {
+      /*
+    unsigned int NextNiveau;
+    unsigned int Xp
+    */
+      ctx->Joueur.GetSelectedMonster()->Xp += 2  * ctx->Adversaire.GetSelectedMonster()->Niveau;
+      if(ctx->Joueur.GetSelectedMonster()->Xp>ctx->Joueur.GetSelectedMonster()->NextNiveau)
+        LevelUpMonster(ctx->Joueur.GetSelectedMonster());
+    }
 
     if(ctx->Joueur.HaveMonsterOk() && ctx->Adversaire.HaveMonsterOk())
     {
-      if(ctx->Adversaire.GetSelectedMonster()->Vie == 0)
+      if(ctx->Adversaire.GetSelectedMonster()->Vie <= 0)
       {
         ctx->Adversaire.UnSelectMonster();
       }

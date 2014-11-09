@@ -39,6 +39,8 @@ extern const byte font5x7[]; //a large, comfy font
 //Prototype
 void CombatAttack(Monster *att, Monster *def);
 void decrementOldVie(Monster *m,int nbframe);
+void GenerateMonsterByLvl(Monster *monsterAgenerer, uint8_t lvl, uint8_t numero);
+void LevelUpMonster(Monster *monsterAgenerer);
 
 //CoreGame petitMonstreGame;
 IContexte * ctx;
@@ -79,10 +81,16 @@ void InitialisationGame()
   cptKill = 0;
    state = 0; 
    //numero vie vitesse force defence
-   ctx->Joueur.AddMonster(0,10,5,3,7);
-   ctx->Joueur.AddMonster(1,10,9,3,7);
-   ctx->Joueur.AddMonster(2,10,15,3,8);
-   ctx->Joueur.AddMonster(3,10,2,3,4);
+   ctx->Joueur.AddMonster(0,10,5,3,7,2,2,2);
+   ctx->Joueur.AddMonster(1,10,9,3,7,2,2,2);
+   ctx->Joueur.AddMonster(2,10,15,3,8,2,2,2);
+   ctx->Joueur.AddMonster(3,10,2,3,4,2,2,2);
+   
+   for(uint8_t i=0;i<4;i++)
+   {
+      Monster *m = ctx->Joueur.GetMonster(i);
+      GenerateMonsterByLvl(m, 3, i);
+   }
    
   initGame();
 }

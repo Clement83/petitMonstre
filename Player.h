@@ -12,9 +12,9 @@ class Player
     bool IsMonster;//permet de savoir si on est sur un monstre seul ou un dresseur
     //Objet[] Inventaire;
     //liste des chose a dire
-    void AddMonster(uint8_t numero, uint8_t vie,uint8_t vitesse,uint8_t force,uint8_t defence);
+    void AddMonster(uint8_t numero, uint8_t vie,uint8_t vitesse,uint8_t force,uint8_t defence,uint8_t lvl,int nextlvl,int xp);
     void Remove(Monster monster);
-    Monster GetMonster(uint8_t index);
+    Monster * GetMonster(uint8_t index);
     void  UnSelectMonster();
     Monster *GetSelectedMonster();
     Monster* ListeMonster();

@@ -16,6 +16,9 @@ class Monster
     uint8_t ForceMax;
     uint8_t DefenceMax;
     uint8_t VitesseMax;
+    uint8_t Niveau;
+    unsigned int NextNiveau;
+    unsigned int Xp;
   	uint8_t Type;
   	char* Name;
   	int Numero;//permet de savoir a quel monstre on a affaire
