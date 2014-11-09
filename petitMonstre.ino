@@ -88,7 +88,7 @@ void InitialisationGame()
    for(uint8_t i=0;i<4;i++)
    {
       Monster *m = ctx->Joueur.GetMonster(i);
-      GenerateMonsterByLvl(m, 5, i);
+      GenerateMonsterByLvl(m, 6-i, i);
    }
    
   initGame();
