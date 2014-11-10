@@ -7,7 +7,7 @@
 Gamebuino gb;
 
 
-
+#define NB_DRESSEUR_THEME 2
 ////declare all the variables needed to make a menu
 //number of items in the menu
 #define STARTMENULENGTH 3
@@ -43,6 +43,7 @@ void decrementOldVie(Monster *m,int nbframe);
 void GenerateMonsterByLvl(Monster *monsterAgenerer, uint8_t lvl, uint8_t numero);
 void LevelUpMonster(Monster *monsterAgenerer);
 void DysplayEtatFuturomon(Monster monster);
+void DysplayFuturoDex(Monster monster);
 void AddMonster(Player *p, Monster m, uint8_t pos);
 
 //CoreGame petitMonstreGame;
@@ -53,6 +54,10 @@ unsigned int cptKill;
 bool monsterVue[Nb_MONSTERS];
 uint8_t nbVue; 
 bool MonsterCatch[Nb_MONSTERS];
+uint8_t nbCatch; 
+
+byte DresseurByTheme[NB_THEMES];
+byte currentTheme;
 
 void setup()
 {
@@ -92,6 +97,11 @@ void InitialisationGame()
       ctx->Joueur.AddMonster(0,0,0,0,0,0,0,0);
       Monster *m = ctx->Joueur.GetMonster(i);
       GenerateMonsterByLvl(m, 6-i, i);
+        
+     monsterVue[i] = true;
+     MonsterCatch[i] = true;
+     nbVue++; 
+      nbCatch++;
    }
    
   initGame();
@@ -148,14 +158,7 @@ uint8_t GameOverScreen()
   
       gb.display.setFont(font5x7);
       gb.display.println(F("Game over"));
-  
-      gb.display.setFont(font3x5);
-      gb.display.print(F("Area :"));
-      gb.display.println(cptArea);
-      gb.display.print(F("Kill :"));
-      gb.display.println(cptKill);
-      gb.display.print(F("Vue  :"));
-      gb.display.println(nbVue);
+  DisplayEtatgame();
       
       gb.display.print(F("Press :"));
       gb.display.print(F("\25"));

@@ -23,6 +23,7 @@ byte directionPerso;
 bool isMove;
 int NbChanceAppearMonster;
 
+bool isDresseur=false;
 uint8_t ExplorationUpdate(){
 
     if(updatePerso())
@@ -33,18 +34,33 @@ uint8_t ExplorationUpdate(){
     }
     else 
     {
-      int numM = random(0,Nb_MONSTERS);
-    if(!monsterVue[numM])
-    {  
-      monsterVue[numM] = true;
-      nbVue++;
-    }
-     ctx->Adversaire.AddMonster(0,10,5,3,7,2,2,2);
-     ctx->Adversaire.SelectMonster(0);
-     
-      Monster *m = ctx->Adversaire.GetSelectedMonster();
-      GenerateMonsterByLvl(m, cptArea, numM);
-        //New monster !
+      if(!isDresseur)
+      {
+        int numM = random(0,Nb_MONSTERS);
+        /*if(!monsterVue[numM])
+        {  
+          monsterVue[numM] = true;
+          nbVue++;
+        }*/
+       ctx->Adversaire.AddMonster(0,0,0,0,0,0,0,0);
+       ctx->Adversaire.SelectMonster(0);
+       (&ctx->Adversaire)->IsMonster = true;
+        Monster *m = ctx->Adversaire.GetSelectedMonster();
+        GenerateMonsterByLvl(m, random(cptArea/2,cptArea+cptArea/2), numM);
+          //New monster !
+      }
+      else 
+      {
+           (&ctx->Adversaire)->IsMonster = false;
+        for(int i=0;i<4;i++)
+        {
+            int numM = random(0,Nb_MONSTERS);
+           ctx->Adversaire.AddMonster(0,0,0,0,0,0,0,0);
+            Monster *m = ctx->Adversaire.GetMonster(i);
+            GenerateMonsterByLvl(m, random(cptArea/2,cptArea+cptArea/2), numM);
+        }
+       ctx->Adversaire.SelectMonster(0 );
+      }
       return 1;
     }
 }
@@ -65,7 +81,8 @@ void initGame(){
 
 void initWorld(){
   cptArea++;
-  byte add = random(0,NB_THEMES) * 4;
+  currentTheme  = random(0,NB_THEMES);
+  byte add = currentTheme * 4;
   
   //Contour
   for(byte y = 0; y < WORLD_H; y++){
@@ -215,7 +232,6 @@ bool updatePerso(){
       //si je suis en mouvement
       if((spriteID+2)%4 == 0)
       {
-        gb.popup(F("Mais que ! ..."),60);
         initWorld();
         if(cursor_x_T == 0)
         {
@@ -242,7 +258,28 @@ bool updatePerso(){
   if(random(0,NbChanceAppearMonster)==0)
   {
     initialiseNbChance();
+    //isDresseur = true;
     return false;
+  }
+  else if(random(0,NbChanceAppearMonster*2)==0)
+  {
+    //Bonnus
+    gb.popup(F("Ho vie max!"),60);
+    for(byte i=0;i<ctx->Joueur.NbMonstre();i++)
+    {
+      ctx->Joueur.GetMonster(i)->Vie = ctx->Joueur.GetMonster(i)->VieMax;
+    }
+  }
+  else if(random(0,NbChanceAppearMonster*3)==0)
+  {
+    if(DresseurByTheme[currentTheme]<NB_DRESSEUR_THEME)
+    {
+      //Dresseur
+      isDresseur = true;
+      initialiseNbChance();
+      DresseurByTheme[currentTheme]++;
+      return false;
+    }
   }
   else 
   {

@@ -3,29 +3,30 @@ bool isCaptureMode=false;
 bool isCatch=false;
 
 
-  uint8_t CombatMonste()
+uint8_t CombatMonste()
+{
+  AnimationDebutCombat();
+  //TODO attention si pas sauvage peut etre pas de monstre !
+  CombatArriverMonsterSauvage();
+  ctx->Joueur.UnSelectMonster();
+  do
   {
-    AnimationDebutCombat();
-    //TODO attention si pas sauvage peut etre pas de monstre !
-    CombatArriverMonsterSauvage();
-    ctx->Joueur.UnSelectMonster();
-    do
-    {
-      CombatChoiceMonsterAdversaire();
-      CombatChoiceMonster();
-      CombatChoiceAttackAdversaire();
-      CombatChoiceAttack();
-    }while(ResolutionCombat());
-    CombatFinCombat();
-    
-    if(!ctx->Joueur.HaveMonsterOk())
-    {
-      //Fin de partie! 
-      return 99;
-    }
-    
-    return 0;
+    CombatChoiceMonsterAdversaire();
+    CombatChoiceMonster();
+    CombatChoiceAttackAdversaire();
+    CombatChoiceAttack();
   }
+  while(ResolutionCombat());
+  CombatFinCombat();
+
+  if(!ctx->Joueur.HaveMonsterOk())
+  {
+    //Fin de partie! 
+    return 99;
+  }
+
+  return 0;
+}
 
 void AnimationDebutCombat()
 {
@@ -105,9 +106,16 @@ void AnimationDebutCombat()
 void CombatArriverMonsterSauvage()
 {
 
- isCatch=false;
+  isCatch=false;
   uint8_t nbFrame = 60;
-  gb.popup(F("Un spacemon attaque!"),60);
+  if(ctx->Adversaire.IsMonster)
+  {
+    gb.popup(F("Un Futuromon attaque!"),60);
+  }
+  else 
+  {
+    gb.popup(F("Un defi dresseur !"),60);
+  }
   while(true)
   {
     if(gb.update())
@@ -126,7 +134,6 @@ void CombatArriverMonsterSauvage()
       }
       nbFrame--;
       gb.display.drawBitmap(xpos, 0, GetSpriteMonsterByNumero(ctx->Adversaire.GetSelectedMonster()->Numero, true));
-
     }
   }
 }
@@ -172,7 +179,22 @@ void CombatChoiceMonster()
 }
 void CombatChoiceMonsterAdversaire()
 {
-  ctx->Adversaire.SelectMonster(0);
+  if(!ctx->Adversaire.IsSelectedMonster())
+  {
+    byte cpt=0;
+    do
+    {
+      ctx->Adversaire.SelectMonster(cpt);
+      cpt++;
+    }
+    while(!ctx->Adversaire.GetSelectedMonster()->IsAlive() && cpt<ctx->Adversaire.NbMonstre());
+    //gb.popup(F("Choix P2 OK"),20);
+  }
+  if(!monsterVue[ctx->Adversaire.GetSelectedMonster()->Numero])
+  {  
+    monsterVue[ctx->Adversaire.GetSelectedMonster()->Numero] = true;
+    nbVue++;
+  }
 }
 
 
@@ -244,19 +266,19 @@ bool ResolutionCombat()
     {
       CombatResolutionOfCatch();
     }
-    
+
     CombatResolutionAttackAnnimation();
-    
-    if(!ctx->Adversaire.HaveMonsterOk())
+
+    if(!ctx->Adversaire.GetSelectedMonster()->IsAlive())
     {
       cptKill++;
     }
     if(isCatch && isCaptureMode)
     {
-       DysplayEtatFuturomon(*ctx->Adversaire.GetSelectedMonster());
-       ChoixAddMonsterTeam();
+      DysplayEtatFuturomon(*ctx->Adversaire.GetSelectedMonster());
+      ChoixAddMonsterTeam();
     }
-    else if(ctx->Adversaire.GetSelectedMonster()->Vie <= 0 && ctx->Joueur.GetSelectedMonster()->Vie>0)
+    else if(!ctx->Adversaire.GetSelectedMonster()->IsAlive() && ctx->Joueur.GetSelectedMonster()->IsAlive())
     {
       ctx->Joueur.GetSelectedMonster()->Xp += 2  * ctx->Adversaire.GetSelectedMonster()->Niveau;
       if(ctx->Joueur.GetSelectedMonster()->Xp>ctx->Joueur.GetSelectedMonster()->NextNiveau)
@@ -264,9 +286,9 @@ bool ResolutionCombat()
         LevelUpMonster(ctx->Joueur.GetSelectedMonster());
         DysplayEtatFuturomon(*ctx->Joueur.GetSelectedMonster());
       }
-      
+
     }
-    
+
     if(isCatch)
     {
       //on a attraper le futuromon fin du combat
@@ -275,11 +297,11 @@ bool ResolutionCombat()
 
     if(ctx->Joueur.HaveMonsterOk() && ctx->Adversaire.HaveMonsterOk())
     {
-      if(ctx->Adversaire.GetSelectedMonster()->Vie <= 0)
+      if(!ctx->Adversaire.GetSelectedMonster()->IsAlive())
       {
         ctx->Adversaire.UnSelectMonster();
       }
-      if(ctx->Joueur.GetSelectedMonster()->Vie <= 0)
+      if(!ctx->Joueur.GetSelectedMonster()->IsAlive())
       {
         ctx->Joueur.UnSelectMonster();
       }
@@ -311,7 +333,7 @@ void  CombatResolutionAttackAnnimation()
     Player1AnnimCombat();
     if(isPNonInitiativeAlive)
       Player2AnnimCombat();
-    
+
   }
   else
   {
@@ -319,13 +341,13 @@ void  CombatResolutionAttackAnnimation()
     if(isPNonInitiativeAlive)
       Player1AnnimCombat();
   }
-    if(!ctx->Adversaire.GetSelectedMonster()->IsAlive())
-      Player2AnnimMortCombat();
-    else if(!ctx->Joueur.GetSelectedMonster()->IsAlive())
-        Player1AnnimMortCombat();
-  
+  if(!ctx->Adversaire.GetSelectedMonster()->IsAlive())
+    Player2AnnimMortCombat();
+  else if(!ctx->Joueur.GetSelectedMonster()->IsAlive())
+    Player1AnnimMortCombat();
+
   //on deselectionne les attaques
-    ctx->Joueur.GetSelectedMonster()->UnSelectedAttack();
+  ctx->Joueur.GetSelectedMonster()->UnSelectedAttack();
   ctx->Adversaire.GetSelectedMonster()->UnSelectedAttack();
 }
 
@@ -358,7 +380,7 @@ void Player1AnnimCombat()
 
       }
       gb.display.drawBitmap(2, 24, GetSpriteMonsterByNumero(ctx->Joueur.GetSelectedMonster()->Numero, false));
-      
+
       ResolutionAttaqueAnimation(ctx->Joueur.GetSelectedMonster()->SetSelectedAttack(),ctx->Joueur.GetSelectedMonster()->GetPatternAttaque(),true,nbFrame);
       if(nbFrame <= 0)
       {
@@ -395,7 +417,7 @@ void Player2AnnimCombat()
       {
         break;
       }
-      
+
       decrementOldVie(ctx->Joueur.GetSelectedMonster(),nbFrame);
       nbFrame--;
     }
@@ -514,12 +536,13 @@ void CombatResolutionOfCatch()
   isP1First = true;
 
   //CombatAttack(p1->GetSelectedMonster(),p2->GetSelectedMonster());
-  if(random(0,p2->GetSelectedMonster()->Vie) == 0)
+  if(ctx->Adversaire.IsMonster == true && random(0,p2->GetSelectedMonster()->Vie) == 0)
   {
     isPNonInitiativeAlive = false;
     //il est attrape
     MonsterCatch[p2->GetSelectedMonster()->Numero] = true;
     isCatch = true;
+    nbCatch++;
   }
   else
   {
@@ -532,4 +555,5 @@ void CombatResolutionOfCatch()
 
 
 ///FIin resolution combat
+
 
