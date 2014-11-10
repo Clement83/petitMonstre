@@ -10,14 +10,16 @@ Gamebuino gb;
 
 ////declare all the variables needed to make a menu
 //number of items in the menu
-#define STARTMENULENGTH 2
+#define STARTMENULENGTH 3
 //The different strings to put in the menu
 //each string can be used in different menus
-const char strMonsterInfos[] PROGMEM = "Futurodex";
+const char strMonsterInfos[] PROGMEM = "Mon equipe";
+const char strFuturodex[] PROGMEM = "Futurodex";
 const char strChangeGame[] PROGMEM = "Change game";
 //Put all the different items together in a menu (an array of strings actually)
 const char* const menu[STARTMENULENGTH] PROGMEM = {
   strMonsterInfos,
+  strFuturodex,
   strChangeGame,
 };
 
@@ -40,6 +42,8 @@ void CombatAttack(Monster *att, Monster *def);
 void decrementOldVie(Monster *m,int nbframe);
 void GenerateMonsterByLvl(Monster *monsterAgenerer, uint8_t lvl, uint8_t numero);
 void LevelUpMonster(Monster *monsterAgenerer);
+void DysplayEtatFuturomon(Monster monster);
+void AddMonster(Player *p, Monster m, uint8_t pos);
 
 //CoreGame petitMonstreGame;
 IContexte * ctx;
@@ -48,6 +52,8 @@ unsigned  int cptArea;
 unsigned int cptKill; 
 bool monsterVue[Nb_MONSTERS];
 uint8_t nbVue; 
+bool MonsterCatch[Nb_MONSTERS];
+
 void setup()
 {
   // initialize the Gamebuino object
@@ -79,14 +85,11 @@ void InitialisationGame()
   cptArea= 0;
   cptKill = 0;
    state = 0; 
-   //numero vie vitesse force defence
-   ctx->Joueur.AddMonster(0,10,5,3,7,2,2,2);
-   ctx->Joueur.AddMonster(1,10,9,3,7,2,2,2);
-   ctx->Joueur.AddMonster(2,10,15,3,8,2,2,2);
-   ctx->Joueur.AddMonster(3,10,2,3,4,2,2,2);
    
-   for(uint8_t i=0;i<4;i++)
+   for(uint8_t i=0;i<1;i++)
    {
+     //numero vie vitesse force defence
+      ctx->Joueur.AddMonster(0,0,0,0,0,0,0,0);
       Monster *m = ctx->Joueur.GetMonster(i);
       GenerateMonsterByLvl(m, 6-i, i);
    }
@@ -111,9 +114,12 @@ void loop()
         {
           switch(gb.menu(menu, STARTMENULENGTH)){
             case 0: 
-              DysplayEtatFuturomon();
+              DysplayEtatAllFuturomon();
               break;
             case 1: //change game
+              DysplayFuturodex();
+              break;
+            case 2: //change game
               gb.changeGame();
                 gb.popup(F("Change game"),40);
               break;
@@ -177,29 +183,6 @@ uint8_t UpdateModeExploration()
   return ExplorationUpdate();
 }
 
-  uint8_t CombatMonste()
-  {
-    AnimationDebutCombat();
-    //TODO attention si pas sauvage peut etre pas de monstre !
-    CombatArriverMonsterSauvage();
-    ctx->Joueur.UnSelectMonster();
-    do
-    {
-      CombatChoiceMonsterAdversaire();
-      CombatChoiceMonster();
-      CombatChoiceAttackAdversaire();
-      CombatChoiceAttack();
-    }while(ResolutionCombat());
-    CombatFinCombat();
-    
-    if(!ctx->Joueur.HaveMonsterOk())
-    {
-      //Fin de partie! 
-      return 99;
-    }
-    
-    return 0;
-  }
 
 
 

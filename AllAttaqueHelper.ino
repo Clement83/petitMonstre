@@ -1,5 +1,5 @@
 
-#define NB_ATTAQUE_BY_MONSTER 4
+#define NB_ATTAQUE_BY_MONSTER 5
 #define NB_MAX_NUM_ATTAQUE_BY_IA 3
 
 const char strAttkGriffe[] PROGMEM = "Griffe";//0
@@ -12,7 +12,7 @@ const char strAttkElec[] PROGMEM = "Electrique";//6
 
 const char strAttkChangeMonster[] PROGMEM = "Change";//7
 
-const char strAttkCatchMonster[] PROGMEM = "Attrappe";//8
+const char strAttkCatchMonster[] PROGMEM = "Capture";//8
 
 
 //Put all the different items together in a menu (an array of strings actually)
@@ -21,6 +21,7 @@ const char* const attkFeuxPattern[NB_ATTAQUE_BY_MONSTER] PROGMEM = {
 	strAttkCharge,
 	strAttkFeux,
 	strAttkChangeMonster,
+        strAttkCatchMonster,
 };
 
 const char* const attkEauPattern[NB_ATTAQUE_BY_MONSTER] PROGMEM = {
@@ -28,6 +29,7 @@ const char* const attkEauPattern[NB_ATTAQUE_BY_MONSTER] PROGMEM = {
 	strAttkCharge,
 	strAttkEau,
 	strAttkChangeMonster,
+        strAttkCatchMonster,
 };
 
 const char* const attkPlantePattern[NB_ATTAQUE_BY_MONSTER] PROGMEM = {
@@ -35,6 +37,7 @@ const char* const attkPlantePattern[NB_ATTAQUE_BY_MONSTER] PROGMEM = {
 	strAttkCharge,
 	strAttkPlante,
 	strAttkChangeMonster,
+        strAttkCatchMonster,
 };
 
 const char* const attkTerrePattern[NB_ATTAQUE_BY_MONSTER] PROGMEM = {
@@ -42,6 +45,7 @@ const char* const attkTerrePattern[NB_ATTAQUE_BY_MONSTER] PROGMEM = {
 	strAttkCharge,
 	strAttkTerre,
 	strAttkChangeMonster,
+        strAttkCatchMonster,
 };
 
 const char* const attkElecPattern[NB_ATTAQUE_BY_MONSTER] PROGMEM = {
@@ -49,6 +53,7 @@ const char* const attkElecPattern[NB_ATTAQUE_BY_MONSTER] PROGMEM = {
 	strAttkCharge,
 	strAttkElec,
 	strAttkChangeMonster,
+        strAttkCatchMonster,
 };
 
 
@@ -81,6 +86,7 @@ const uint8_t attkFeuxPatternNumero[NB_ATTAQUE_BY_MONSTER] = {
 	1,
 	3,
 	7,
+	8,
 };
 
 const uint8_t attkEauPatternNumero[NB_ATTAQUE_BY_MONSTER] = {
@@ -88,6 +94,7 @@ const uint8_t attkEauPatternNumero[NB_ATTAQUE_BY_MONSTER] = {
 	1,
 	2,
 	7,
+	8,
 };
 
 const uint8_t attkPlantePatternNumero[NB_ATTAQUE_BY_MONSTER] = {
@@ -95,6 +102,7 @@ const uint8_t attkPlantePatternNumero[NB_ATTAQUE_BY_MONSTER] = {
 	1,
 	5,
 	7,
+	8,
 };
 
 const uint8_t attkTerrePatternNumero[NB_ATTAQUE_BY_MONSTER] = {
@@ -102,6 +110,7 @@ const uint8_t attkTerrePatternNumero[NB_ATTAQUE_BY_MONSTER] = {
 	1,
 	4,
 	7,
+	8,
 };
 
 const uint8_t attkElecPatternNumero[NB_ATTAQUE_BY_MONSTER]  = {
@@ -109,6 +118,7 @@ const uint8_t attkElecPatternNumero[NB_ATTAQUE_BY_MONSTER]  = {
 	1,
 	6,
 	7,
+	8,
 };
 
 const uint8_t * GetAttaqueNumeroByNumPattern(uint8_t num)
@@ -139,7 +149,7 @@ const byte Electrique[] PROGMEM = {16,16,0x0,0x80,0x21,0x0,0x30,0x84,0x19,0x82,0
 const byte Feuille[] PROGMEM = {16,16,0x0,0x0,0x7,0xE0,0x8,0x38,0x18,0x6C,0x30,0xC6,0x21,0x82,0x63,0x2,0x46,0x6,0x4C,0xC,0x58,0x38,0x50,0x60,0x70,0xC0,0x43,0x80,0x5E,0x0,0x70,0x0,0x0,0x0,};
 const byte Feux[] PROGMEM = {16,16,0x0,0x0,0xE,0x0,0x7,0x0,0x3,0x80,0x1,0xC0,0x1,0x60,0x1,0x20,0x2,0x20,0x4,0x30,0x4,0x10,0x8,0x10,0x8,0x10,0x4,0x20,0x2,0x40,0x1,0x80,0x0,0x0,};
 const byte GoutteDeau[] PROGMEM = {8,4,0x40,0x60,0x90,0xE0,};
-
+const byte CatchThemAll[] PROGMEM = {16,16,0x3F,0xF8,0x20,0x0,0xAF,0xFC,0xA0,0x4,0xA0,0x74,0xA8,0x14,0xAB,0xD4,0xAA,0x14,0xAA,0x54,0x88,0xD5,0x88,0x11,0x8F,0xD1,0x80,0x5,0xFF,0xD,0x0,0x1,0xF,0xFF,};
 
 void ResolutionAttaqueAnimation(uint8_t numAttaque,uint8_t numPattern,bool isP1,uint8_t nbFrame)
 {
@@ -173,7 +183,7 @@ void ResolutionAttaqueAnimation(uint8_t numAttaque,uint8_t numPattern,bool isP1,
     break;
     case 8 : 
     //Attrape le monstre
-      //AttaqueElectrique(isP1,nbFrame);
+      AttaqueCatch(isP1,nbFrame);
     break;
   }
 }
@@ -367,6 +377,30 @@ void AttaqueElectrique(bool isP1,uint8_t nbFrame)
         uint8_t nbframe1 =  45 - nbFrame;
         gb.display.setColor(INVERT);
         gb.display.drawBitmap(5 + random(-4,4),  28 + random(-4,4) ,Electrique, random(0,4), random(0,4));
+        gb.display.setColor(BLACK);
+      }
+  }
+}
+
+void AttaqueCatch(bool isP1,uint8_t nbFrame)
+{
+  if(isP1)
+  {
+      if(nbFrame>30)
+      {
+        //uint8_t nbframe1 =  45 - nbFrame;
+        gb.display.setColor(INVERT);
+        gb.display.drawBitmap(65 + random(-4,4),  5 + random(-4,4) ,CatchThemAll,random(0,4), random(0,4));
+        gb.display.setColor(BLACK);
+      }
+  }
+  else 
+  {
+      if(nbFrame>30)
+      {
+        uint8_t nbframe1 =  45 - nbFrame;
+        gb.display.setColor(INVERT);
+        gb.display.drawBitmap(5 + random(-4,4),  28 + random(-4,4) ,CatchThemAll, random(0,4), random(0,4));
         gb.display.setColor(BLACK);
       }
   }

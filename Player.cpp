@@ -31,9 +31,9 @@ void Player::AddMonster(uint8_t numero, uint8_t vie,uint8_t vitesse,uint8_t forc
     m1->Defence = defence;
     m1->DefenceMax = m1->Defence;
     
-    m1->Niveau;
-    m1->NextNiveau;
-    m1->Xp;
+    m1->Niveau = lvl;
+    m1->NextNiveau = nextlvl;
+    m1->Xp = xp;
     
     this->nbMonstre++;
   }

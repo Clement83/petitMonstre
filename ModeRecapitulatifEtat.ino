@@ -1,54 +1,97 @@
 
-
-void DysplayEtatFuturomon()
+void DysplayEtatAllFuturomon()
 {
   uint8_t cptMonster = 0;
-  uint8_t offset = 30;
   ctx->Joueur.SelectMonster(cptMonster);
-  while(cptMonster<4)
+  while(cptMonster<ctx->Joueur.NbMonstre())
   {
     if(gb.update())
     {      
-      gb.display.drawBitmap(60  , 0- offset, GetSpriteMonsterByNumero(ctx->Joueur.GetSelectedMonster()->Numero, true));//allSpriteMonstersFront[ctx->Adversaire.GetSelectedMonster()->Numero]);
-      
-      if(offset>0)offset -= 3;
-      
-      gb.display.println(F(""));
-      gb.display.print(F("Vie:"));
-      gb.display.print(ctx->Joueur.GetSelectedMonster()->Vie);
-      gb.display.print(F("/"));
-      gb.display.println(ctx->Joueur.GetSelectedMonster()->VieMax);
-
-      gb.display.print(F("Vit:"));
-      gb.display.print(ctx->Joueur.GetSelectedMonster()->Vitesse);
-      gb.display.print(F("/"));
-      gb.display.println(ctx->Joueur.GetSelectedMonster()->VitesseMax);
-
-      gb.display.print(F("For:"));
-      gb.display.print(ctx->Joueur.GetSelectedMonster()->Force);
-      gb.display.print(F("/"));
-      gb.display.println(ctx->Joueur.GetSelectedMonster()->ForceMax);
-
-      gb.display.print(F("Def:"));
-      gb.display.print(ctx->Joueur.GetSelectedMonster()->Defence);
-      gb.display.print(F("/"));
-      gb.display.println(ctx->Joueur.GetSelectedMonster()->DefenceMax);
-      gb.display.print(F("LvL:"));
-      gb.display.println(ctx->Joueur.GetSelectedMonster()->Niveau);
-      gb.display.print(F("XP :"));
-      gb.display.print(ctx->Joueur.GetSelectedMonster()->Xp);
-      gb.display.print(F("/"));
-      gb.display.println(ctx->Joueur.GetSelectedMonster()->NextNiveau);
-      
-      if(gb.buttons.pressed(BTN_A))
-      {
+        DysplayEtatFuturomon(*ctx->Joueur.GetSelectedMonster());
         cptMonster++;
         ctx->Joueur.SelectMonster(cptMonster);
-        offset = 30;
-      }
     }
   }
   ctx->Joueur.UnSelectMonster();
 }
+
+
+void DysplayFuturodex()
+{
+  uint8_t cptMonster = 0;
+  while(cptMonster<ctx->Joueur.NbMonstre())
+  {
+    while(!monsterVue[cptMonster] && cptMonster<Nb_MONSTERS)cptMonster++;
+    if(gb.update())
+    {    
+        if(monsterVue[cptMonster])
+        {
+          Monster tempM;
+          tempM.Numero = cptMonster;
+          DysplayEtatFuturomon(tempM);
+        }
+        else 
+        {
+          gb.popup(F("Aucune entree"),40);
+        }
+    }
+  }
+  ctx->Joueur.UnSelectMonster();
+}
+
+
+void DysplayEtatFuturomon(Monster monster)
+{
+  uint8_t offset = 30;
+  
+  while(true)
+  {
+    if(gb.update())
+    {      
+      gb.display.drawBitmap(60  , 0- offset, GetSpriteMonsterByNumero(monster.Numero, true));
+      
+      if(offset>0)offset -= 3;
+      
+      gb.display.println(F(""));
+      
+      gb.display.print(F("LvL:"));
+      gb.display.println(monster.Niveau);
+      
+      gb.display.print(F("Vie:"));
+      gb.display.print(monster.Vie);
+      gb.display.print(F("/"));
+      gb.display.println(monster.VieMax);
+
+      gb.display.print(F("Vit:"));
+      gb.display.print(monster.Vitesse);
+      gb.display.print(F("/"));
+      gb.display.println(monster.VitesseMax);
+
+      gb.display.print(F("For:"));
+      gb.display.print(monster.Force);
+      gb.display.print(F("/"));
+      gb.display.println(monster.ForceMax);
+
+      gb.display.print(F("Def:"));
+      gb.display.print(monster.Defence);
+      gb.display.print(F("/"));
+      gb.display.println(monster.DefenceMax);
+      
+      gb.display.print(F("XP :"));
+      gb.display.print(monster.Xp);
+      gb.display.print(F("/"));
+      gb.display.println(monster.NextNiveau);
+      
+      if(gb.buttons.pressed(BTN_A))
+      {
+       break;
+      }
+    }
+  }
+}
+
+
+
+
 
 
