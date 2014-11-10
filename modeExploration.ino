@@ -258,7 +258,7 @@ bool updatePerso(){
   if(random(0,NbChanceAppearMonster)==0)
   {
     initialiseNbChance();
-    //isDresseur = true;
+    isDresseur = false;
     return false;
   }
   else if(random(0,NbChanceAppearMonster*2)==0)

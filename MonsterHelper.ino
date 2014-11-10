@@ -31,10 +31,12 @@ void GenerateMonsterByLvl(Monster *monsterAgenerer, uint8_t lvl, uint8_t numero)
     if(numero<4)
     {
       monsterAgenerer->SetPatternAttaque(numero);
+      monsterAgenerer->Type = numero;  
     }
     else
     {
       monsterAgenerer->SetPatternAttaque(numero%5);
+      monsterAgenerer->Type = numero%5;
     }
 }
 

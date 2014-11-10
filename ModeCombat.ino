@@ -364,11 +364,22 @@ void decrementOldVie(Monster *m,int nbframe)
 void Player1AnnimCombat()
 {
   uint8_t nbFrame = 45;
+  
   while(true)//nbFrame>0)
   {
     if(gb.update())
     {
 
+      
+      if(HaveBonusAttak(ctx->Joueur.GetSelectedMonster()->GetSelectedAttack(),ctx->Joueur.GetSelectedMonster()->GetPatternAttaque(),ctx->Adversaire.GetSelectedMonster()->Type))
+      {
+         gb.popup(F("Super efficace!"),30);
+      }
+      if(HaveBonusAttak(ctx->Adversaire.GetSelectedMonster()->GetSelectedAttack(),ctx->Adversaire.GetSelectedMonster()->GetPatternAttaque(),ctx->Joueur.GetSelectedMonster()->Type))
+      {
+         gb.popup(F("Pas efficace..."),30);
+      }
+      
       drawHud();
       if(nbFrame<25 && nbFrame%4>1 && nbFrame>5 )
       {
@@ -381,7 +392,7 @@ void Player1AnnimCombat()
       }
       gb.display.drawBitmap(2, 24, GetSpriteMonsterByNumero(ctx->Joueur.GetSelectedMonster()->Numero, false));
 
-      ResolutionAttaqueAnimation(ctx->Joueur.GetSelectedMonster()->SetSelectedAttack(),ctx->Joueur.GetSelectedMonster()->GetPatternAttaque(),true,nbFrame);
+      ResolutionAttaqueAnimation(ctx->Joueur.GetSelectedMonster()->GetSelectedAttack(),ctx->Joueur.GetSelectedMonster()->GetPatternAttaque(),true,nbFrame);
       if(nbFrame <= 0)
       {
         break;
@@ -399,6 +410,14 @@ void Player2AnnimCombat()
   {
     if(gb.update())
     {
+      if(HaveBonusAttak(ctx->Adversaire.GetSelectedMonster()->GetSelectedAttack(),ctx->Adversaire.GetSelectedMonster()->GetPatternAttaque(),ctx->Joueur.GetSelectedMonster()->Type))
+      {
+         gb.popup(F("++"),10);
+      }
+      if(HaveBonusAttak(ctx->Joueur.GetSelectedMonster()->GetSelectedAttack(),ctx->Joueur.GetSelectedMonster()->GetPatternAttaque(),ctx->Adversaire.GetSelectedMonster()->Type))
+      {
+         gb.popup(F("--"),10);
+      }
 
       drawHud();
       if(nbFrame<25 && nbFrame%4>1 && nbFrame>5 )
@@ -412,7 +431,7 @@ void Player2AnnimCombat()
       }
       gb.display.drawBitmap(60, 0, GetSpriteMonsterByNumero(ctx->Adversaire.GetSelectedMonster()->Numero, true));
 
-      ResolutionAttaqueAnimation(ctx->Adversaire.GetSelectedMonster()->SetSelectedAttack(),ctx->Adversaire.GetSelectedMonster()->GetPatternAttaque(),false,nbFrame);
+      ResolutionAttaqueAnimation(ctx->Adversaire.GetSelectedMonster()->GetSelectedAttack(),ctx->Adversaire.GetSelectedMonster()->GetPatternAttaque(),false,nbFrame);
       if(nbFrame <= 0)
       {
         break;
@@ -478,7 +497,18 @@ void CombatAttack(Monster *att, Monster *def)
   //TODO faire avec le choix des attaque !
   def->OldVie = def->Vie;
   int8_t dmg = (att->Force - def->Defence);
-  if(dmg<=0) dmg = 1;
+  if(HaveBonusAttak(att->GetSelectedAttack(),att->GetPatternAttaque(),def->Type))
+  {
+     dmg += TirrageDes(dmg);
+     //gb.popup(F("Super efficace!"),40);
+  }
+  if(HaveBonusAttak(def->GetSelectedAttack(),def->GetPatternAttaque(),def->Type))
+  {
+     dmg = dmg / TirrageDes(dmg - dmg/2);
+     //gb.popup(F("Pas efficace..."),40);
+  }
+  
+  if(dmg<=0) dmg = 1;  
   def->Vie = def->Vie - dmg;
   if(def->Vie<0) def->Vie = 0;
 }

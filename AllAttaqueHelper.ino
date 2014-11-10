@@ -1,6 +1,7 @@
 
 #define NB_ATTAQUE_BY_MONSTER 5
 #define NB_MAX_NUM_ATTAQUE_BY_IA 3
+#define NB_PATTERN_ATTAQUE 5
 
 const char strAttkGriffe[] PROGMEM = "Griffe";//0
 const char strAttkCharge[] PROGMEM = "Charge";//1
@@ -14,6 +15,14 @@ const char strAttkChangeMonster[] PROGMEM = "Change";//7
 
 const char strAttkCatchMonster[] PROGMEM = "Capture";//8
 
+const int8_t TypeIsFaibleAttk[NB_PATTERN_ATTAQUE] PROGMEM = 
+{
+  2,//Feux
+  0,//Eau
+  1,//Plante
+  4,//Terre
+  2,//Elec
+};
 
 //Put all the different items together in a menu (an array of strings actually)
 const char* const attkFeuxPattern[NB_ATTAQUE_BY_MONSTER] PROGMEM = {
@@ -186,6 +195,18 @@ void ResolutionAttaqueAnimation(uint8_t numAttaque,uint8_t numPattern,bool isP1,
       AttaqueCatch(isP1,nbFrame);
     break;
   }
+}
+
+bool HaveBonusAttak(uint8_t numAttaque,uint8_t numPattern,uint8_t typeDef)
+{
+  uint8_t numAttk =  GetAttaqueNumeroByNumPattern(numPattern)[numAttaque];
+  
+  if(numAttk - 2>0 && numAttk - 2<7)
+  {
+    return TypeIsFaibleAttk[numAttk - 2];
+  }
+  return false;
+  
 }
 
 void AttaqueGriffe(bool isP1,uint8_t nbFrame)

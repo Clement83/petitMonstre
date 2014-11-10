@@ -31,7 +31,7 @@ class Monster
     bool IsAlive();
     bool IsSelectedAttack();
     void SetSelectedAttack(uint8_t num);
-    uint8_t SetSelectedAttack();
+    uint8_t GetSelectedAttack();
     void UnSelectedAttack();
     uint8_t GetPourcentVieRestant();
   protected:

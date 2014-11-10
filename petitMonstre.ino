@@ -45,6 +45,7 @@ void LevelUpMonster(Monster *monsterAgenerer);
 void DysplayEtatFuturomon(Monster monster);
 void DysplayFuturoDex(Monster monster);
 void AddMonster(Player *p, Monster m, uint8_t pos);
+bool HaveBonusAttak(uint8_t numAttaque,uint8_t numPattern,uint8_t typeDef);
 
 //CoreGame petitMonstreGame;
 IContexte * ctx;
