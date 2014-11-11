@@ -73,8 +73,6 @@ void DysplayEtatFuturomon(Monster monster)
       
       if(offset>0)offset -= 3;
       
-      gb.display.println(F(""));
-      
       gb.display.print(F("LvL:"));
       gb.display.println(monster.Niveau);
       

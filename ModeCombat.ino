@@ -318,7 +318,7 @@ void drawHud()
 {
   gb.display.drawBitmap(2, 0, sprBarreViej2);
   gb.display.fillRect(3, 1,GetWidthBarreVie(ctx->Adversaire.GetSelectedMonster()->GetPourcentVieRestant() ,43), 6);
-  gb.display.drawBitmap(39, 32, sprBarreViej1);
+  gb.display.drawBitmap(39, 41, sprBarreViej1);
   uint8_t wdBarrevie = GetWidthBarreVie(ctx->Joueur.GetSelectedMonster()->GetPourcentVieRestant() ,43);
   gb.display.fillRect(40 + (43 - wdBarrevie), 41,wdBarrevie, 6);
 }
