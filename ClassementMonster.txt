@@ -1,0 +1,34 @@
+MechebizardFront = 0;
+FlottilleFront = 1;
+ChampiDureBack = 2;
+TerrabafleBack = 3;
+BigFootBotBack = 4;
+DalekomonBack = 5;
+EpargnomonBack = 6;
+MantyBack = 7;
+OctoSpaceBack = 8;
+PsymonBack = 9;
+ReactoromonBack = 10;
+BigEyesBack = 11;
+BigFeetBack = 12;
+BlouyeateBack = 13;
+ChicFortBack = 14;
+CubeCrocBack = 15;
+ElectromignonBack = 16;
+EscargotBack = 17;
+GetLineBack = 18;
+LapiDodoBack = 19;
+MittraillatorBack = 20;
+MonoBotBack =21;
+PolsanBack = 22;
+RacinoideBack = 23;
+SaloeoyeBack=24;
+TechElecBack =25;
+VielleBrancheBack = 26;
+---------------------
+ Feux : 0,19,20,6
+ Eau : 1,15,17
+ terre : 4,7,11,12,24
+ Plante : 2,3,13,23,26
+ Elec: 5,10,16,18,21,25
+ psy:8,9,14,22
