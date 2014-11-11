@@ -7,6 +7,16 @@ uint8_t CombatMonste()
 {
   AnimationDebutCombat();
   //TODO attention si pas sauvage peut etre pas de monstre !
+  
+  if(ctx->Adversaire.IsMonster)
+  {
+    gb.popup(F("Un Futuromon attaque!"),30);
+  }
+  else 
+  {
+    gb.popup(F("Un defi dresseur!"),30);
+  }
+  
   CombatArriverMonsterSauvage();
   ctx->Joueur.UnSelectMonster();
   do
@@ -108,14 +118,6 @@ void CombatArriverMonsterSauvage()
 
   isCatch=false;
   uint8_t nbFrame = 60;
-  if(ctx->Adversaire.IsMonster)
-  {
-    gb.popup(F("Un Futuromon attaque!"),60);
-  }
-  else 
-  {
-    gb.popup(F("Un defi dresseur !"),60);
-  }
   while(true)
   {
     if(gb.update())
@@ -189,6 +191,7 @@ void CombatChoiceMonsterAdversaire()
     }
     while(!ctx->Adversaire.GetSelectedMonster()->IsAlive() && cpt<ctx->Adversaire.NbMonstre());
     //gb.popup(F("Choix P2 OK"),20);
+    CombatArriverMonsterSauvage();
   }
   if(!monsterVue[ctx->Adversaire.GetSelectedMonster()->Numero])
   {  
@@ -316,9 +319,9 @@ bool ResolutionCombat()
 
 void drawHud()
 {
-  gb.display.drawBitmap(2, 0, sprBarreViej2);
+  gb.display.drawBitmap(2, 0, sprBareVie);
   gb.display.fillRect(3, 1,GetWidthBarreVie(ctx->Adversaire.GetSelectedMonster()->GetPourcentVieRestant() ,43), 6);
-  gb.display.drawBitmap(39, 41, sprBarreViej1);
+  gb.display.drawBitmap(39, 41, sprBareVie);
   uint8_t wdBarrevie = GetWidthBarreVie(ctx->Joueur.GetSelectedMonster()->GetPourcentVieRestant() ,43);
   gb.display.fillRect(40 + (43 - wdBarrevie), 41,wdBarrevie, 6);
 }
@@ -477,17 +480,9 @@ void CombatAttack(Monster *att, Monster *def)
 {
   //TODO faire avec le choix des attaque !
   def->OldVie = def->Vie;
-  int8_t dmg = (att->Force - def->Defence);
-  if(HaveBonusAttak(att->GetSelectedAttack(),att->GetPatternAttaque(),def->Type))
-  {
-     dmg += TirrageDes(dmg);
-     //gb.popup(F("Super efficace!"),40);
-  }
-  if(HaveBonusAttak(def->GetSelectedAttack(),def->GetPatternAttaque(),def->Type))
-  {
-     dmg = dmg / TirrageDes(dmg - dmg/2);
-     //gb.popup(F("Pas efficace..."),40);
-  }
+  int8_t dmg = att->GetSelectedAttack() == 1 ? random((att->Force/2, att->Force + att->Force/4 ) - def->Defence)   :(att->Force - def->Defence);
+  
+  dmg += TirrageDes(dmg) * HaveBonusAttak(att->GetSelectedAttack(),att->GetPatternAttaque(),def->Type);
   
   if(dmg<=0) dmg = 1;  
   def->Vie = def->Vie - dmg;
@@ -547,7 +542,7 @@ void CombatResolutionOfCatch()
   isP1First = true;
 
   //CombatAttack(p1->GetSelectedMonster(),p2->GetSelectedMonster());
-  if(ctx->Adversaire.IsMonster == true && random(0,p2->GetSelectedMonster()->Vie) == 0)
+  if(ctx->Adversaire.IsMonster == true && random(0,(p2->GetSelectedMonster()->Vie/2)+1) == 0)
   {
     isPNonInitiativeAlive = false;
     //il est attrape

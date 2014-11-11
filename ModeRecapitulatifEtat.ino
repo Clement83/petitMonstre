@@ -114,10 +114,12 @@ void DisplayEtatgame()
       gb.display.setFont(font3x5);
       gb.display.print(strArea);
       gb.display.print(cptArea);
+          gb.display.print(" ");
       gb.display.print(strKill);
       gb.display.println(cptKill);
       gb.display.print(strVue);
       gb.display.print(nbVue);
+          gb.display.print(" ");
       gb.display.print(strCatch);
       gb.display.println(nbCatch);
       
@@ -126,7 +128,15 @@ void DisplayEtatgame()
         gb.display.print(strArea);
         gb.display.print(i+1);
         gb.display.print(F(" "));
-        gb.display.println(DresseurByTheme[i]);
+        if(i%2==0)
+        {
+          gb.display.print(DresseurByTheme[i]);
+          gb.display.print(" ");
+        }
+        else 
+        {
+          gb.display.println(DresseurByTheme[i]);
+        }
       }
 }
 

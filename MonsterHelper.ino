@@ -115,14 +115,14 @@ void GenerateMonsterByLvlAndNumZone(Monster *monsterAgenerer, uint8_t lvl, uint8
 void GenerateStartMonster(Monster *monsterAgenerer)
 {
     monsterAgenerer->Numero = 0;
-    monsterAgenerer->Force = 2*5+random(0,10);
+    monsterAgenerer->Force = 15;
     monsterAgenerer->ForceMax = monsterAgenerer->Force;
-    monsterAgenerer->Vie = 2*5+random(0,10);
+    monsterAgenerer->Vie = 17;
     monsterAgenerer->VieMax = monsterAgenerer->Vie;
     monsterAgenerer->OldVie = monsterAgenerer->Vie;
-    monsterAgenerer->Vitesse = 2*5+random(0,10);
+    monsterAgenerer->Vitesse = 17;
     monsterAgenerer->VitesseMax = monsterAgenerer->Vitesse;
-    monsterAgenerer->Defence = 2*5+random(0,10);
+    monsterAgenerer->Defence = 20;
     monsterAgenerer->DefenceMax = monsterAgenerer->Defence;
     monsterAgenerer->Niveau = 5;
     monsterAgenerer->NextNiveau = (5*5)/2;
@@ -167,6 +167,8 @@ void AddMonster(Player *p, Monster m, uint8_t pos)
     monsterAgenerer->Niveau = m.NextNiveau;
     monsterAgenerer->NextNiveau = m.NextNiveau;
     monsterAgenerer->Xp = m.Xp;
+    monsterAgenerer->Type = m.Type;
+    monsterAgenerer->SetPatternAttaque(m.GetPatternAttaque());
 }
 
 void ChoixAddMonsterTeam()
@@ -184,7 +186,8 @@ void ChoixAddMonsterTeam()
       else 
       {
         Monster mCatch = *ctx->Adversaire.GetSelectedMonster();
-        ctx->Joueur.AddMonster(mCatch.Numero, mCatch.VieMax,mCatch.VitesseMax,mCatch.ForceMax,mCatch.DefenceMax,mCatch.Niveau,mCatch.NextNiveau,mCatch.Xp); 
+        ctx->Joueur.AddMonster(0,0,0,0,0,0,0,0); 
+        AddMonster(&ctx->Joueur, *ctx->Adversaire.GetSelectedMonster(), (ctx->Joueur.NbMonstre()-1));
       }
       
       break;

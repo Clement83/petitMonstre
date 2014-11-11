@@ -1,14 +1,14 @@
 
 #define NB_ATTAQUE_BY_MONSTER 5
 #define NB_MAX_NUM_ATTAQUE_BY_IA 3
-#define NB_PATTERN_ATTAQUE 5
+#define NB_PATTERN_ATTAQUE 6
 #define NUMERO_ATTAQUE_CHANGE 8
 #define NUMERO_ATTAQUE_CAPTURE 9
 
 const char strAttkGriffe[] PROGMEM = "Griffe";//0
 const char strAttkCharge[] PROGMEM = "Charge";//1
-const char strAttkEau[] PROGMEM = "Eau";//2
-const char strAttkFeux[] PROGMEM = "Feux";//3
+const char strAttkFeux[] PROGMEM = "Feux";//2
+const char strAttkEau[] PROGMEM = "Eau";//3
 const char strAttkTerre[] PROGMEM = "terre";//4
 const char strAttkPlante[] PROGMEM = "Plante";//5
 const char strAttkElec[] PROGMEM = "Elec";//6
@@ -18,13 +18,22 @@ const char strAttkChangeMonster[] PROGMEM = "->";//8
 
 const char strAttkCatchMonster[] PROGMEM = "Catch";//9
 
+/*
+ byte TypeFeux[] = { 0,19,20,6};//0
+ byte TypeEau []  = { 8,1,15,17};//1
+ byte Typeterre[]  = { 4,7,11,12,24};//2
+ byte TypePlante[]  = { 2,3,13,23,26};//3
+ byte TypeElec[]  = { 5,10,16,18,21};//4
+ byte Typepsy[]  = { 9,14,22,25};//5
+*/
 const int8_t TypeIsFaibleAttk[NB_PATTERN_ATTAQUE] PROGMEM = 
 {
-  2,//Feux
+  3,//Feux
   0,//Eau
-  1,//Plante
+  5,//Plante
   4,//Terre
-  2,//Elec
+  1,//Elec
+  2,//Psy
 };
 
 //Put all the different items together in a menu (an array of strings actually)
@@ -107,7 +116,7 @@ const char* const * GetAttakByPatternNumero(uint8_t num)
 const uint8_t attkFeuxPatternNumero[NB_ATTAQUE_BY_MONSTER] = {
  	0,
 	1,
-	3,
+	2,
 	NUMERO_ATTAQUE_CHANGE,
 	NUMERO_ATTAQUE_CAPTURE,
 };
@@ -115,15 +124,7 @@ const uint8_t attkFeuxPatternNumero[NB_ATTAQUE_BY_MONSTER] = {
 const uint8_t attkEauPatternNumero[NB_ATTAQUE_BY_MONSTER] = {
  	0,
 	1,
-	2,
-	NUMERO_ATTAQUE_CHANGE,
-	NUMERO_ATTAQUE_CAPTURE,
-};
-
-const uint8_t attkPlantePatternNumero[NB_ATTAQUE_BY_MONSTER] = {
- 	0,
-	1,
-	5,
+	3,
 	NUMERO_ATTAQUE_CHANGE,
 	NUMERO_ATTAQUE_CAPTURE,
 };
@@ -132,6 +133,14 @@ const uint8_t attkTerrePatternNumero[NB_ATTAQUE_BY_MONSTER] = {
  	0,
 	1,
 	4,
+	NUMERO_ATTAQUE_CHANGE,
+	NUMERO_ATTAQUE_CAPTURE,
+};
+
+const uint8_t attkPlantePatternNumero[NB_ATTAQUE_BY_MONSTER] = {
+ 	0,
+	1,
+	5,
 	NUMERO_ATTAQUE_CHANGE,
 	NUMERO_ATTAQUE_CAPTURE,
 };
@@ -199,10 +208,10 @@ void ResolutionAttaqueAnimation(uint8_t numAttaque,uint8_t numPattern,bool isP1,
       AttaqueCharge(isP1,nbFrame);
     break;
     case 2 : 
-      AttaqueEau(isP1,nbFrame);
+      AttaqueFeux(isP1,nbFrame);
     break;
     case 3 : 
-      AttaqueFeux(isP1,nbFrame);
+      AttaqueEau(isP1,nbFrame);
     break;
     case 4 : 
       AttaqueTerre(isP1,nbFrame);
@@ -226,15 +235,18 @@ void ResolutionAttaqueAnimation(uint8_t numAttaque,uint8_t numPattern,bool isP1,
   }
 }
 
-bool HaveBonusAttak(uint8_t numAttaque,uint8_t numPattern,uint8_t typeDef)
+uint8_t HaveBonusAttak(uint8_t numAttaque,uint8_t numPattern,uint8_t typeDef)
 {
   uint8_t numAttk =  GetAttaqueNumeroByNumPattern(numPattern)[numAttaque];
-  
-  if(numAttk - 2>0 && numAttk - 2<7)
+
+  if(numAttk - 2>0 && numAttk - 2<8)
   {
-    return TypeIsFaibleAttk[numAttk - 2];
+    if(TypeIsFaibleAttk[numAttk - 2] == typeDef)
+      return 1;//j'ai mal
+    else if(TypeIsFaibleAttk[typeDef] == numAttk - 2)
+      return -1;//je resiste
   }
-  return false;
+  return 0;//rien
   
 }
 
