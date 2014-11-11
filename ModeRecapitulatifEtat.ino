@@ -1,4 +1,9 @@
 
+char * strVue = "Vue:";
+char * strArea = "Area:";
+char * strCatch = "Catch:";
+char * strKill = "Kill:";
+
 void DysplayEtatAllFuturomon()
 {
   uint8_t cptMonster = 0;
@@ -93,7 +98,7 @@ void DysplayEtatFuturomon(Monster monster)
       gb.display.print(F("/"));
       gb.display.println(monster.DefenceMax);
       
-      gb.display.print(F("XP :"));
+      gb.display.print(F("XP:"));
       gb.display.print(monster.Xp);
       gb.display.print(F("/"));
       gb.display.println(monster.NextNiveau);
@@ -108,20 +113,19 @@ void DysplayEtatFuturomon(Monster monster)
 
 void DisplayEtatgame()
 {
-  
       gb.display.setFont(font3x5);
-      gb.display.print(F("Area :"));
+      gb.display.print(strArea);
       gb.display.print(cptArea);
-      gb.display.print(F(" Kill :"));
+      gb.display.print(strKill);
       gb.display.println(cptKill);
-      gb.display.print(F("Vue  :"));
+      gb.display.print(strVue);
       gb.display.print(nbVue);
-      gb.display.print(F(" Attrape  :"));
+      gb.display.print(strCatch);
       gb.display.println(nbCatch);
       
       for(byte i =0; i<NB_THEMES;i++)
       {
-        gb.display.print(F("Zone "));
+        gb.display.print(strArea);
         gb.display.print(i+1);
         gb.display.print(F(" "));
         gb.display.println(DresseurByTheme[i]);
@@ -139,13 +143,14 @@ void DysplayFuturoDex(Monster monster)
       
          if(MonsterCatch[monster.Numero])
          {
-           gb.display.print(F("Capture"));
+           gb.display.print(strCatch);
          }
          else
          {
-           gb.display.print(F("Vue"));
+           gb.display.print(strVue);
          }
-      gb.display.drawBitmap(60  , 0- offset, GetSpriteMonsterByNumero(monster.Numero, true));
+      gb.display.drawBitmap(60  , 10- offset, GetSpriteMonsterByNumero(monster.Numero, true));
+      gb.display.drawBitmap(30  , 10- offset, GetSpriteMonsterByNumero(monster.Numero, false));
       
       if(offset>0)offset -= 3;
       

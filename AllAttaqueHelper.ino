@@ -11,12 +11,12 @@ const char strAttkEau[] PROGMEM = "Eau";//2
 const char strAttkFeux[] PROGMEM = "Feux";//3
 const char strAttkTerre[] PROGMEM = "terre";//4
 const char strAttkPlante[] PROGMEM = "Plante";//5
-const char strAttkElec[] PROGMEM = "Electrique";//6
+const char strAttkElec[] PROGMEM = "Elec";//6
 const char strAttkPsy[] PROGMEM = "Psy";//7
 
-const char strAttkChangeMonster[] PROGMEM = "Change";//8
+const char strAttkChangeMonster[] PROGMEM = "->";//8
 
-const char strAttkCatchMonster[] PROGMEM = "Capture";//9
+const char strAttkCatchMonster[] PROGMEM = "Catch";//9
 
 const int8_t TypeIsFaibleAttk[NB_PATTERN_ATTAQUE] PROGMEM = 
 {

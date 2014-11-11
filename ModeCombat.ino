@@ -237,9 +237,9 @@ void  CombatFinCombat()
 
   int cptFrame = 35;
   if(ctx->Joueur.HaveMonsterOk())
-    gb.popup(F("C'est gagne!"),cptFrame);
+    gb.popup(F("Youpy!"),cptFrame);
   else 
-    gb.popup(F("Perdu..."),cptFrame);
+    gb.popup(F("..."),cptFrame);
   while(cptFrame>0)
   {
     if(gb.update())
@@ -369,17 +369,6 @@ void Player1AnnimCombat()
   {
     if(gb.update())
     {
-
-      
-      if(HaveBonusAttak(ctx->Joueur.GetSelectedMonster()->GetSelectedAttack(),ctx->Joueur.GetSelectedMonster()->GetPatternAttaque(),ctx->Adversaire.GetSelectedMonster()->Type))
-      {
-         gb.popup(F("Super efficace!"),30);
-      }
-      if(HaveBonusAttak(ctx->Adversaire.GetSelectedMonster()->GetSelectedAttack(),ctx->Adversaire.GetSelectedMonster()->GetPatternAttaque(),ctx->Joueur.GetSelectedMonster()->Type))
-      {
-         gb.popup(F("Pas efficace..."),30);
-      }
-      
       drawHud();
       if(nbFrame<25 && nbFrame%4>1 && nbFrame>5 )
       {
@@ -410,14 +399,6 @@ void Player2AnnimCombat()
   {
     if(gb.update())
     {
-      if(HaveBonusAttak(ctx->Adversaire.GetSelectedMonster()->GetSelectedAttack(),ctx->Adversaire.GetSelectedMonster()->GetPatternAttaque(),ctx->Joueur.GetSelectedMonster()->Type))
-      {
-         gb.popup(F("++"),10);
-      }
-      if(HaveBonusAttak(ctx->Joueur.GetSelectedMonster()->GetSelectedAttack(),ctx->Joueur.GetSelectedMonster()->GetPatternAttaque(),ctx->Adversaire.GetSelectedMonster()->Type))
-      {
-         gb.popup(F("--"),10);
-      }
 
       drawHud();
       if(nbFrame<25 && nbFrame%4>1 && nbFrame>5 )

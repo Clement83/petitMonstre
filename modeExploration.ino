@@ -9,9 +9,11 @@ byte world[WORLD_W][WORLD_H];
 byte getSpriteID(byte x, byte y){
   return world[x][y] & B00111111;
 }
+
 byte getRotation(byte x, byte y){
   return (world[x][y] >> 6)  & B00000011;
 }
+
 void setTile(byte x, byte y, byte spriteID, byte rotation){
   world[x][y] = (rotation << 6) + spriteID;
 }
@@ -46,7 +48,7 @@ uint8_t ExplorationUpdate(){
        ctx->Adversaire.SelectMonster(0);
        (&ctx->Adversaire)->IsMonster = true;
         Monster *m = ctx->Adversaire.GetSelectedMonster();
-        GenerateMonsterByLvl(m, random(cptArea/2,cptArea+cptArea/2), numM);
+        GenerateMonsterByLvlAndNumZone(m, random(cptArea/2,cptArea+cptArea/2), currentTheme);
           //New monster !
       }
       else 
@@ -57,7 +59,8 @@ uint8_t ExplorationUpdate(){
             int numM = random(0,Nb_MONSTERS);
            ctx->Adversaire.AddMonster(0,0,0,0,0,0,0,0);
             Monster *m = ctx->Adversaire.GetMonster(i);
-            GenerateMonsterByLvl(m, random(cptArea/2,cptArea+cptArea/2), numM);
+        //    GenerateMonsterByLvl(m, random(cptArea/2,cptArea+cptArea/2), numM);
+          GenerateMonsterByLvlAndNumZone(m, random(cptArea/2,cptArea+cptArea/2), currentTheme);
         }
        ctx->Adversaire.SelectMonster(0 );
       }
@@ -264,7 +267,7 @@ bool updatePerso(){
   else if(random(0,NbChanceAppearMonster*2)==0)
   {
     //Bonnus
-    gb.popup(F("Ho vie max!"),60);
+    gb.popup(F("Vie max!"),60);
     for(byte i=0;i<ctx->Joueur.NbMonstre();i++)
     {
       ctx->Joueur.GetMonster(i)->Vie = ctx->Joueur.GetMonster(i)->VieMax;

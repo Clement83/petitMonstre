@@ -11,10 +11,90 @@ const char* const OuiNonMenu[2] PROGMEM = {
 
 
 
-void GenerateMonsterByLvl(Monster *monsterAgenerer, uint8_t lvl, uint8_t numero)
+
+/*
+DARK = 0
+FUTUR = 1
+NEW = 2
+EXT = 3
+Space = 4
+ELEC = 5
+*/
+
+ byte TypeFeux[] = { 0,19,20,6};//0
+ byte TypeEau []  = { 8,1,15,17};//1
+ byte Typeterre[]  = { 4,7,11,12,24};//2
+ byte TypePlante[]  = { 2,3,13,23,26};//3
+ byte TypeElec[]  = { 5,10,16,18,21};//4
+ byte Typepsy[]  = { 9,14,22,25};//5
+void getnumMonsterByNumZone(uint8_t numZone, Monster *m)
+{
+  switch(numZone)
+  {
+    case 0 :
+      m->Numero = Typepsy[random(0,4)];
+     m->Type = 5;
+   break;
+    case 1 :
+    if(random(0,2)==0)
+    {
+      m->Numero =  TypeElec[random(0,5)];
+     m->Type = 4;
+    }
+    else 
+    {
+      m->Numero =   TypeFeux[random(0,4)];
+     m->Type = 0;
+    }
+   break;
+    case 2 :
+    if(random(0,2)==0)
+    {
+      m->Numero =   Typeterre[random(0,5)];
+     m->Type = 2;
+    }
+    else 
+    {
+      m->Numero =   TypeEau[random(0,4)];
+     m->Type = 1;
+    }
+   break;
+    case 3 :
+    if(random(0,2)==0)
+    {
+      m->Numero =   Typeterre[random(0,5)];
+     m->Type = 2;
+    }
+    else 
+    {
+      m->Numero =   TypePlante[random(0,5)];
+     m->Type = 3;
+    }
+   break;
+    case 4 :
+    if(random(0,2)==0)
+    {
+      m->Numero =   TypeEau[random(0,4)];
+     m->Type = 1;
+    }
+    else 
+    {
+      m->Numero =   TypeFeux[random(0,4)];
+     m->Type = 0;
+    }
+   break; 
+    case 5 :
+      m->Numero =   TypeElec[random(0,5)];
+     m->Type = 4;
+   break;
+    
+  }
+}
+
+void GenerateMonsterByLvlAndNumZone(Monster *monsterAgenerer, uint8_t lvl, uint8_t numeroZone)
 {
     if(lvl<2)lvl = 2;
-    monsterAgenerer->Numero = numero;
+   // monsterAgenerer->Numero = numero;
     monsterAgenerer->Force = 2*lvl+random(0,10);
     monsterAgenerer->ForceMax = monsterAgenerer->Force;
     monsterAgenerer->Vie = 2*lvl+random(0,10);
@@ -28,21 +108,44 @@ void GenerateMonsterByLvl(Monster *monsterAgenerer, uint8_t lvl, uint8_t numero)
     monsterAgenerer->NextNiveau = (lvl*lvl)/2;
     monsterAgenerer->Xp = 0;
     
-    if(numero<4)
-    {
-      monsterAgenerer->SetPatternAttaque(numero);
-      monsterAgenerer->Type = numero;  
-    }
-    else
-    {
-      monsterAgenerer->SetPatternAttaque(numero%5);
-      monsterAgenerer->Type = numero%5;
-    }
+    getnumMonsterByNumZone(numeroZone,monsterAgenerer);
+    monsterAgenerer->SetPatternAttaque(monsterAgenerer->Type);
+}
+
+void GenerateStartMonster(Monster *monsterAgenerer)
+{
+    monsterAgenerer->Numero = 0;
+    monsterAgenerer->Force = 2*5+random(0,10);
+    monsterAgenerer->ForceMax = monsterAgenerer->Force;
+    monsterAgenerer->Vie = 2*5+random(0,10);
+    monsterAgenerer->VieMax = monsterAgenerer->Vie;
+    monsterAgenerer->OldVie = monsterAgenerer->Vie;
+    monsterAgenerer->Vitesse = 2*5+random(0,10);
+    monsterAgenerer->VitesseMax = monsterAgenerer->Vitesse;
+    monsterAgenerer->Defence = 2*5+random(0,10);
+    monsterAgenerer->DefenceMax = monsterAgenerer->Defence;
+    monsterAgenerer->Niveau = 5;
+    monsterAgenerer->NextNiveau = (5*5)/2;
+    monsterAgenerer->Xp = 0;
+  
+    monsterAgenerer->SetPatternAttaque(0);
+    monsterAgenerer->Type = 0;  
 }
 
 void LevelUpMonster(Monster *monsterAgenerer)
-{
-  GenerateMonsterByLvl(monsterAgenerer,monsterAgenerer->Niveau+1,monsterAgenerer->Numero);
+{    
+    monsterAgenerer->ForceMax += random(1,5) ; 
+    monsterAgenerer->Force = monsterAgenerer->ForceMax;
+    monsterAgenerer->VieMax += random(1,5);
+    monsterAgenerer->Vie = monsterAgenerer->VieMax;
+    monsterAgenerer->OldVie = monsterAgenerer->VieMax;
+    monsterAgenerer->VitesseMax+= random(1,5);
+    monsterAgenerer->Vitesse = monsterAgenerer->VitesseMax;
+    monsterAgenerer->DefenceMax += random(1,5);
+    monsterAgenerer->Defence = monsterAgenerer->DefenceMax;
+    monsterAgenerer->Niveau++;
+    monsterAgenerer->Xp = monsterAgenerer->Xp - monsterAgenerer->NextNiveau;
+    monsterAgenerer->NextNiveau = (monsterAgenerer->Niveau*monsterAgenerer->Niveau)/2;
 }
 
 
