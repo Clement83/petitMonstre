@@ -153,7 +153,7 @@ void drawWorld(){
     gb.display.print(cptArea);
         gb.display.print(F(".Kill:"));
         gb.display.print(cptKill);
-        gb.display.print(F(".Vue:"));
+        gb.display.print(F(".View:"));
         gb.display.print(nbVue);
     gb.display.setFont(font3x5);
     
@@ -267,7 +267,7 @@ bool updatePerso(){
   else if(random(0,NbChanceAppearMonster*2)==0)
   {
     //Bonnus
-    gb.popup(F("Vie max!"),60);
+    gb.popup(F("Medikit"),60);
     for(byte i=0;i<ctx->Joueur.NbMonstre();i++)
     {
       ctx->Joueur.GetMonster(i)->Vie = ctx->Joueur.GetMonster(i)->VieMax;

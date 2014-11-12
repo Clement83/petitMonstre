@@ -5,14 +5,14 @@
 #define NUMERO_ATTAQUE_CHANGE 8
 #define NUMERO_ATTAQUE_CAPTURE 9
 
-const char strAttkGriffe[] PROGMEM = "Griffe";//0
-const char strAttkCharge[] PROGMEM = "Charge";//1
-const char strAttkFeux[] PROGMEM = "Feux";//2
-const char strAttkEau[] PROGMEM = "Eau";//3
-const char strAttkTerre[] PROGMEM = "terre";//4
-const char strAttkPlante[] PROGMEM = "Plante";//5
-const char strAttkElec[] PROGMEM = "Elec";//6
-const char strAttkPsy[] PROGMEM = "Psy";//7
+const char strAttkGriffe[] PROGMEM = "claw";//0
+const char strAttkCharge[] PROGMEM = "onslaught";//1
+const char strAttkFeux[] PROGMEM = "Fire";//2
+const char strAttkEau[] PROGMEM = "Water";//3
+const char strAttkTerre[] PROGMEM = "ground";//4
+const char strAttkPlante[] PROGMEM = "plant";//5
+const char strAttkElec[] PROGMEM = "électrique";//6
+const char strAttkPsy[] PROGMEM = "psychic";//7
 
 const char strAttkChangeMonster[] PROGMEM = "->";//8
 

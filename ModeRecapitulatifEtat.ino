@@ -1,5 +1,5 @@
 
-char * strVue = "Vue:";
+char * strVue = "View:";
 char * strArea = "Area:";
 char * strCatch = "Catch:";
 char * strKill = "Kill:";
@@ -52,7 +52,7 @@ void DysplayFuturodex()
         }
         else 
         {
-          gb.popup(F("Fin"),40);
+          gb.popup(F("End"),40);
         }
         cptMonster++;
     }
@@ -76,12 +76,12 @@ void DysplayEtatFuturomon(Monster monster)
       gb.display.print(F("LvL:"));
       gb.display.println(monster.Niveau);
       
-      gb.display.print(F("Vie:"));
+      gb.display.print(F("Hp:"));
       gb.display.print(monster.Vie);
       gb.display.print(F("/"));
       gb.display.println(monster.VieMax);
 
-      gb.display.print(F("Vit:"));
+      gb.display.print(F("Speed:"));
       gb.display.print(monster.Vitesse);
       gb.display.print(F("/"));
       gb.display.println(monster.VitesseMax);

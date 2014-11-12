@@ -10,11 +10,11 @@ uint8_t CombatMonste()
   
   if(ctx->Adversaire.IsMonster)
   {
-    gb.popup(F("Un Futuromon attaque!"),30);
+    gb.popup(F("a wild Futuromon!"),30);
   }
   else 
   {
-    gb.popup(F("Un defi dresseur!"),30);
+    gb.popup(F("A champion"),30);
   }
   
   CombatArriverMonsterSauvage();
@@ -152,7 +152,7 @@ void CombatChoiceMonster()
     while(ctx->Joueur.GetSelectedMonster()->Vie <= 0);
 
     uint8_t nbFrame = 60;
-    gb.popup(F("En avant!"),60);
+    gb.popup(F("Go!"),60);
     while(true)
     {
       if(gb.update())

@@ -13,7 +13,7 @@ Gamebuino gb;
 #define STARTMENULENGTH 3
 //The different strings to put in the menu
 //each string can be used in different menus
-const char strMonsterInfos[] PROGMEM = "Mon equipe";
+const char strMonsterInfos[] PROGMEM = "Team";
 const char strFuturodex[] PROGMEM = "Futurodex";
 const char strChangeGame[] PROGMEM = "Change game";
 //Put all the different items together in a menu (an array of strings actually)
@@ -93,7 +93,7 @@ void InitialisationGame()
   cptArea= 0;
   cptKill = 0;
    state = 0; 
-   
+   ctx->Joueur.ClearMonster();
    for(uint8_t i=0;i<1;i++)
    {
      //numero vie vitesse force defence

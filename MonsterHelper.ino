@@ -1,6 +1,6 @@
 
-const char strOui[] PROGMEM = "Oui";
-const char strNon[] PROGMEM = "Non";
+const char strOui[] PROGMEM = "Yes";
+const char strNon[] PROGMEM = "No";
 
 
 //Put all the different items together in a menu (an array of strings actually)
@@ -173,13 +173,13 @@ void AddMonster(Player *p, Monster m, uint8_t pos)
 
 void ChoixAddMonsterTeam()
 {
-    gb.popup(F("Ajout du futuromon?"),40);
+    gb.popup(F("Add to team?"),40);
     switch(gb.menu(OuiNonMenu, 2))
     {
       case 0:
       if(ctx->Joueur.IsFull())
       {
-          gb.popup(F("Quel place?"),40);
+          gb.popup(F("Switch"),40);
           
          AddMonster(&ctx->Joueur,*ctx->Adversaire.GetSelectedMonster(), gb.menu(allMonsters, NB_MONSTER_EQUIPE));
       }
