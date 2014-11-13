@@ -22,14 +22,14 @@ void Player::AddMonster(uint8_t numero, uint8_t vie,uint8_t vitesse,uint8_t forc
     Monster *m1 = &this->Monsters[this->nbMonstre];
     m1->Numero = numero;
     m1->Force = force;
-    m1->ForceMax = m1->Force;
+    //m1->ForceMax = m1->Force;
     m1->Vie = vie;
     m1->VieMax = m1->Vie;
     m1->OldVie = m1->Vie;
     m1->Vitesse = vitesse;
-    m1->VitesseMax = m1->Vitesse;
+    //m1->VitesseMax = m1->Vitesse;
     m1->Defence = defence;
-    m1->DefenceMax = m1->Defence;
+    //m1->DefenceMax = m1->Defence;
     
     m1->Niveau = lvl;
     m1->NextNiveau = nextlvl;
@@ -48,13 +48,13 @@ void Player::Remove(Monster monster)
     Monster *m1 = &this->Monsters[i];
     m1->Numero = m2->Numero;
     m1->Force = m2->Force;
-    m1->ForceMax = m2->Force;
+    //m1->ForceMax = m2->Force;
     m1->Vie = m2->Vie;
     m1->VieMax = m2->Vie;
     m1->Vitesse = m2->Vitesse;
-    m1->VitesseMax = m2->Vitesse;
+   // m1->VitesseMax = m2->Vitesse;
     m1->Defence = m2->Defence;
-    m1->DefenceMax = m2->Defence;
+    //m1->DefenceMax = m2->Defence;
   }
 
 }

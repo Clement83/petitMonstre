@@ -83,18 +83,18 @@ void DysplayEtatFuturomon(Monster monster)
 
       gb.display.print(F("Speed:"));
       gb.display.print(monster.Vitesse);
-      gb.display.print(F("/"));
-      gb.display.println(monster.VitesseMax);
+      //gb.display.print(F("/"));
+      //gb.display.println(monster.VitesseMax);
 
       gb.display.print(F("For:"));
       gb.display.print(monster.Force);
-      gb.display.print(F("/"));
-      gb.display.println(monster.ForceMax);
+      //gb.display.print(F("/"));
+      //gb.display.println(monster.ForceMax);
 
       gb.display.print(F("Def:"));
       gb.display.print(monster.Defence);
-      gb.display.print(F("/"));
-      gb.display.println(monster.DefenceMax);
+      //gb.display.print(F("/"));
+      //gb.display.println(monster.DefenceMax);
       
       gb.display.print(F("XP:"));
       gb.display.print(monster.Xp);
