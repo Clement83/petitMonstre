@@ -21,73 +21,73 @@ Space = 4
 ELEC = 5
 */
 
- byte TypeFeux[] = { 0,19,20,6};//0
- byte TypeEau []  = { 8,1,15,17};//1
- byte Typeterre[]  = { 4,7,11,12,24};//2
- byte TypePlante[]  = { 2,3,13,23,26};//3
- byte TypeElec[]  = { 5,10,16,18,21};//4
- byte Typepsy[]  = { 9,14,22,25};//5
+ byte TypeFeux[] = { 5};//0
+ byte TypeEau []  = { 4,6};//1
+ byte Typeterre[]  = { 0};//2
+ byte TypePlante[]  = { 8,1};//3
+ byte TypeElec[]  = {3,2 };//4
+ byte Typepsy[]  = {7,9};//5
+ 
+ 
 void getnumMonsterByNumZone(uint8_t numZone, Monster *m)
 {
   uint8_t rdm2 = random(0,2);
-  uint8_t rdm4 = random(0,4);
-  uint8_t rdm5 = random(0,5);
   switch(numZone)
   {
     case 0 :
-      m->Numero = Typepsy[rdm4];
+      m->Numero = Typepsy[rdm2];
      m->Type = 5;
    break;
     case 1 :
     if(rdm2==0)
     {
-      m->Numero =  TypeElec[rdm5];
+      m->Numero =  TypeElec[rdm2];
      m->Type = 4;
     }
     else 
     {
-      m->Numero =   TypeFeux[rdm4];
+      m->Numero =   TypeFeux[0];
      m->Type = 0;
     }
    break;
     case 2 :
     if(rdm2==0)
     {
-      m->Numero =   Typeterre[rdm5];
+      m->Numero =   Typeterre[0];
      m->Type = 2;
     }
     else 
     {
-      m->Numero =   TypeEau[rdm4];
+      m->Numero =   TypeEau[0];
      m->Type = 1;
     }
    break;
     case 3 :
     if(rdm2==0)
     {
-      m->Numero =   Typeterre[rdm5];
+      m->Numero =   Typeterre[0];
      m->Type = 2;
     }
     else 
     {
-      m->Numero =   TypePlante[rdm5];
+      m->Numero =   TypePlante[rdm2];
      m->Type = 3;
     }
    break;
     case 4 :
     if(rdm2==0)
     {
-      m->Numero =   TypeEau[rdm4];
+      m->Numero =   TypeEau[0];
      m->Type = 1;
     }
     else 
     {
-      m->Numero =   TypeFeux[rdm4];
+      m->Numero =   TypeFeux[0];
      m->Type = 0;
     }
    break; 
     case 5 :
-      m->Numero =   TypeElec[rdm5];
+      m->Numero =   TypeElec[rdm2];
      m->Type = 4;
    break;
     
@@ -98,16 +98,12 @@ void GenerateMonsterByLvlAndNumZone(Monster *monsterAgenerer, uint8_t lvl, uint8
 {
     if(lvl<2)lvl = 2;
     uint8_t rdmAdd = 2*lvl+random(0,10);
-   // monsterAgenerer->Numero = numero;
     monsterAgenerer->Force = rdmAdd;
-    //monsterAgenerer->ForceMax = monsterAgenerer->Force;
-    monsterAgenerer->Vie =rdmAdd;// 2*lvl+random(0,10);
-    monsterAgenerer->VieMax = rdmAdd;//monsterAgenerer->Vie;
-    monsterAgenerer->OldVie = rdmAdd;//monsterAgenerer->Vie;
-    monsterAgenerer->Vitesse = rdmAdd;//2*lvl+random(0,10);
-   // monsterAgenerer->VitesseMax = monsterAgenerer->Vitesse;
-    monsterAgenerer->Defence = rdmAdd;//2*lvl+random(0,10);
-    //monsterAgenerer->DefenceMax = monsterAgenerer->Defence;
+    monsterAgenerer->Vie =rdmAdd;
+    monsterAgenerer->VieMax = rdmAdd;
+    monsterAgenerer->OldVie = rdmAdd;
+    monsterAgenerer->Vitesse = rdmAdd;
+    monsterAgenerer->Defence = rdmAdd;
     monsterAgenerer->Niveau = lvl;
     monsterAgenerer->NextNiveau = (lvl*lvl)/2;
     monsterAgenerer->Xp = 0;
@@ -120,33 +116,27 @@ void GenerateStartMonster(Monster *monsterAgenerer)
 {
     monsterAgenerer->Numero = 0;
     monsterAgenerer->Force = 15;
-    //monsterAgenerer->ForceMax = monsterAgenerer->Force;
     monsterAgenerer->Vie = 17;
     monsterAgenerer->VieMax = monsterAgenerer->Vie;
     monsterAgenerer->OldVie = monsterAgenerer->Vie;
     monsterAgenerer->Vitesse = 17;
-    //monsterAgenerer->VitesseMax = monsterAgenerer->Vitesse;
     monsterAgenerer->Defence = 20;
-    //monsterAgenerer->DefenceMax = monsterAgenerer->Defence;
     monsterAgenerer->Niveau = 5;
-    monsterAgenerer->NextNiveau = (5*5)/2;
+    monsterAgenerer->NextNiveau = 12;
     monsterAgenerer->Xp = 0;
   
-    monsterAgenerer->SetPatternAttaque(0);
-    monsterAgenerer->Type = 0;  
+    monsterAgenerer->SetPatternAttaque(2);
+    monsterAgenerer->Type = 2;  
 }
 
 void LevelUpMonster(Monster *monsterAgenerer)
-{    
-    //monsterAgenerer->ForceMax += random(1,5) ; 
-    monsterAgenerer->Force += 2;//random(1,5) ; //monsterAgenerer->ForceMax;
-    monsterAgenerer->VieMax += 2;//random(1,5);
+{    byte rdm = random(1,3);
+    monsterAgenerer->Force += rdm;
+    monsterAgenerer->VieMax += rdm;
     monsterAgenerer->Vie = monsterAgenerer->VieMax;
     monsterAgenerer->OldVie = monsterAgenerer->VieMax;
-    //monsterAgenerer->VitesseMax+= random(1,5);
-    monsterAgenerer->Vitesse += 2;//random(1,5);//monsterAgenerer->VitesseMax;
-    //monsterAgenerer->DefenceMax += random(1,5);
-    monsterAgenerer->Defence += 2;//random(1,5);//monsterAgenerer->DefenceMax;
+    monsterAgenerer->Vitesse += rdm;
+    monsterAgenerer->Defence += rdm;
     monsterAgenerer->Niveau++;
     monsterAgenerer->Xp = monsterAgenerer->Xp - monsterAgenerer->NextNiveau;
     monsterAgenerer->NextNiveau = (monsterAgenerer->Niveau*monsterAgenerer->Niveau)/2;
@@ -160,14 +150,10 @@ void AddMonster(Player *p, Monster m, uint8_t pos)
   
     monsterAgenerer->Numero = m.Numero;
     monsterAgenerer->Force = m.Force;
-    //monsterAgenerer->ForceMax = m.ForceMax;
     monsterAgenerer->Vie = m.VieMax;
     monsterAgenerer->VieMax = m.VieMax;
     monsterAgenerer->OldVie = m.VieMax;
     monsterAgenerer->Vitesse = m.Vitesse;
-    //monsterAgenerer->VitesseMax = m.VitesseMax;
-    //monsterAgenerer->Defence = m.Defence;
-    //monsterAgenerer->DefenceMax = m.DefenceMax;
     monsterAgenerer->Niveau = m.NextNiveau;
     monsterAgenerer->NextNiveau = m.NextNiveau;
     monsterAgenerer->Xp = m.Xp;

@@ -62,6 +62,8 @@ uint8_t nbCatch;
 byte DresseurByTheme[NB_THEMES];
 byte currentTheme;
 
+int camera_x, camera_y;
+
 void setup()
 {
   // initialize the Gamebuino object

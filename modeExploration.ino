@@ -20,7 +20,6 @@ void setTile(byte x, byte y, byte spriteID, byte rotation){
 
 // cursor
 int cursor_x, cursor_y,cursor_x_T, cursor_y_T;
-int camera_x, camera_y;
 byte directionPerso;
 bool isMove;
 int NbChanceAppearMonster;
@@ -117,6 +116,7 @@ void initWorld(){
   setTile(WORLD_W/2, WORLD_H-1, 2, 0);
   setTile(0, WORLD_H/2, 2, 1);
   setTile(WORLD_W-1, WORLD_H/2, 2, 1);
+  GenerteAllBonus();
    initialiseNbChance();
 }
 
@@ -138,8 +138,8 @@ void drawWorld(){
         continue; // don't draw sprites which are out of the screen
       }
       
-      int x_screenP = cursor_x_T*8 - camera_x;
-      int y_screenP = cursor_y_T*8 - camera_y;
+     // int x_screenP = cursor_x_T*8 - camera_x;
+      //int y_screenP = cursor_y_T*8 - camera_y;
       /*if(x_screenP == x_screen && y_screenP == y_screen)
       {
         continue;//posjoueur
@@ -147,6 +147,7 @@ void drawWorld(){
       gb.display.drawBitmap(x_screen, y_screen, sprites[spriteID], rotation, 0);
     }
   }
+   drawAllBonus();
   
     gb.display.setFont(font3x3);
         gb.display.print(F("Area:"));
@@ -227,6 +228,11 @@ bool updatePerso(){
       cursor_y_T = last_cursor_y;
       spriteID = getSpriteID(cursor_x_T,cursor_y_T);
     }
+    
+    if(gb.buttons.pressed(BTN_A))
+    {
+     TestGetBonus(cursor_x_T,cursor_y_T);
+    }
   
   
     if(last_cursor_x != cursor_x_T || last_cursor_y != cursor_y_T)
@@ -263,15 +269,6 @@ bool updatePerso(){
     initialiseNbChance();
     isDresseur = false;
     return false;
-  }
-  else if(random(0,NbChanceAppearMonster*2)==0)
-  {
-    //Bonnus
-    gb.popup(F("Medikit"),60);
-    for(byte i=0;i<ctx->Joueur.NbMonstre();i++)
-    {
-      ctx->Joueur.GetMonster(i)->Vie = ctx->Joueur.GetMonster(i)->VieMax;
-    }
   }
   else if(random(0,NbChanceAppearMonster*3)==0)
   {
