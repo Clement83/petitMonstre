@@ -11,23 +11,23 @@ void DysplayEtatAllFuturomon()
   while(cptMonster<ctx->Joueur.NbMonstre())
   {
     if(gb.update())
-    {      
-        DysplayEtatFuturomon(*ctx->Joueur.GetSelectedMonster());
-        cptMonster++;
-        ctx->Joueur.SelectMonster(cptMonster);
+    {
+      DysplayEtatFuturomon(*ctx->Joueur.GetSelectedMonster());
+      cptMonster++;
+      ctx->Joueur.SelectMonster(cptMonster);
     }
   }
   while(true)
   {
     if(gb.update())
-    {  
+    {
       DisplayEtatgame();
       if(gb.buttons.pressed(BTN_A))
       {
-       break;
+        break;
       }
     }
-    
+
   }
   ctx->Joueur.UnSelectMonster();
 }
@@ -39,22 +39,22 @@ void DysplayFuturodex()
   while(cptMonster<Nb_MONSTERS)
   {
     if(gb.update())
-    {    
-        while(!monsterVue[cptMonster] && cptMonster<Nb_MONSTERS)
-          cptMonster++;
-          
-         
-        if(monsterVue[cptMonster] && cptMonster<Nb_MONSTERS)
-        {
-          Monster tempM;
-          tempM.Numero = cptMonster;
-          DysplayFuturoDex(tempM);
-        }
-        else 
-        {
-          gb.popup(F("End"),40);
-        }
+    {
+      while(!monsterVue[cptMonster] && cptMonster<Nb_MONSTERS)
         cptMonster++;
+
+
+      if(monsterVue[cptMonster] && cptMonster<Nb_MONSTERS)
+      {
+        Monster tempM;
+        tempM.Numero = cptMonster;
+        DysplayFuturoDex(tempM);
+      }
+      else
+      {
+        gb.popup(F("End"),40);
+      }
+      cptMonster++;
     }
   }
   ctx->Joueur.UnSelectMonster();
@@ -64,18 +64,18 @@ void DysplayFuturodex()
 void DysplayEtatFuturomon(Monster monster)
 {
   uint8_t offset = 30;
-  
+
   while(true)
   {
     if(gb.update())
-    {      
+    {
       gb.display.drawBitmap(60  , 0- offset, GetSpriteMonsterByNumero(monster.Numero, true));
-      
+
       if(offset>0)offset -= 3;
-      
+
       gb.display.print(F("LvL:"));
       gb.display.println(monster.Niveau);
-      
+
       gb.display.print(F("Hp:"));
       gb.display.print(monster.Vie);
       gb.display.print(F("/"));
@@ -89,15 +89,15 @@ void DysplayEtatFuturomon(Monster monster)
 
       gb.display.print(F("Def:"));
       gb.display.println(monster.Defence);
-      
+
       gb.display.print(F("XP:"));
       gb.display.print(monster.Xp);
       gb.display.print(F("/"));
       gb.display.println(monster.NextNiveau);
-      
+
       if(gb.buttons.pressed(BTN_A))
       {
-       break;
+        break;
       }
     }
   }
@@ -105,64 +105,56 @@ void DysplayEtatFuturomon(Monster monster)
 
 void DisplayEtatgame()
 {
-      gb.display.setFont(font3x5);
-      gb.display.print(strArea);
-      gb.display.print(cptArea);
-          gb.display.print(" ");
-      gb.display.print(strKill);
-      gb.display.println(cptKill);
-      gb.display.print(strVue);
-      gb.display.print(nbVue);
-          gb.display.print(" ");
-      gb.display.print(strCatch);
-      gb.display.println(nbCatch);
-      
-      for(byte i =0; i<NB_THEMES;i++)
-      {
-        gb.display.print(strArea);
-        gb.display.print(i+1);
-        gb.display.print(F(" "));
-        if(i%2==0)
-        {
-          gb.display.print(DresseurByTheme[i]);
-          gb.display.print(" ");
-        }
-        else 
-        {
-          gb.display.println(DresseurByTheme[i]);
-        }
-      }
+  gb.display.setFont(font3x5);
+  gb.display.print(strArea);
+  gb.display.print(cptArea);
+  gb.display.print(" ");
+  gb.display.print(strKill);
+  gb.display.println(cptKill);
+  gb.display.print(strVue);
+  gb.display.print(nbVue);
+  gb.display.print(" ");
+  gb.display.print(strCatch);
+  gb.display.println(nbCatch);
+  gb.display.print(F("Champion kill : "));
+
+  uint8_t nbD = 0;
+  for(byte i =0; i<NB_THEMES;i++)
+  {
+    nbD+=DresseurByTheme[i];
+  }
+  gb.display.println(nbD);
 }
 
 void DysplayFuturoDex(Monster monster)
 {
   uint8_t offset = 30;
-  
+
   while(true)
   {
     if(gb.update())
-    {      
-      
-         if(MonsterCatch[monster.Numero])
-         {
-           gb.display.print(strCatch);
-         }
-         else
-         {
-           gb.display.print(strVue);
-         }
+    {
+      if(MonsterCatch[monster.Numero])
+      {
+        gb.display.print(strCatch);
+      }
+      else
+      {
+        gb.display.print(strVue);
+      }
       gb.display.drawBitmap(60  , 10- offset, GetSpriteMonsterByNumero(monster.Numero, true));
       gb.display.drawBitmap(30  , 10- offset, GetSpriteMonsterByNumero(monster.Numero, false));
-      
+
       if(offset>0)offset -= 3;
-      
+
       if(gb.buttons.pressed(BTN_A))
       {
-       break;
+        break;
       }
     }
   }
 }
+
 
 
 

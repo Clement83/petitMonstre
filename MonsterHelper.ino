@@ -154,7 +154,8 @@ void AddMonster(Player *p, Monster m, uint8_t pos)
     monsterAgenerer->VieMax = m.VieMax;
     monsterAgenerer->OldVie = m.VieMax;
     monsterAgenerer->Vitesse = m.Vitesse;
-    monsterAgenerer->Niveau = m.NextNiveau;
+    monsterAgenerer->Defence = m.Defence;
+    monsterAgenerer->Niveau = m.Niveau;
     monsterAgenerer->NextNiveau = m.NextNiveau;
     monsterAgenerer->Xp = m.Xp;
     monsterAgenerer->Type = m.Type;

@@ -145,7 +145,7 @@ void TestGetBonus(byte x, byte y,uint8_t directionPerso)
       {
         for(byte i=0;i<ctx->Joueur.NbMonstre();i++)
         {
-          ctx->Joueur.GetMonster(i)->Vie = ctx->Joueur.GetMonster(i)->VieMax;
+          ctx->Joueur.GetMonster(i)->Vie = ctx->Joueur.GetMonster(i)->OldVie = ctx->Joueur.GetMonster(i)->VieMax;
         }
       }
     }
