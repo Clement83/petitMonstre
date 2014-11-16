@@ -115,11 +115,11 @@ void GenerateMonsterByLvlAndNumZone(Monster *monsterAgenerer, uint8_t lvl, uint8
 void GenerateStartMonster(Monster *monsterAgenerer)
 {
     monsterAgenerer->Numero = 0;
-    monsterAgenerer->Force = 15;
+    monsterAgenerer->Force = 19;
     monsterAgenerer->Vie = 17;
     monsterAgenerer->VieMax = monsterAgenerer->Vie;
     monsterAgenerer->OldVie = monsterAgenerer->Vie;
-    monsterAgenerer->Vitesse = 17;
+    monsterAgenerer->Vitesse = 18;
     monsterAgenerer->Defence = 20;
     monsterAgenerer->Niveau = 5;
     monsterAgenerer->NextNiveau = 12;

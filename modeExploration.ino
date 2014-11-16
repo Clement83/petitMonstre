@@ -4,7 +4,11 @@
 
 #define WORLD_W 16
 #define WORLD_H 16
+
+
 byte world[WORLD_W][WORLD_H];
+
+bool testGetDresseur(uint8_t x,uint8_t y,uint8_t directionPerso);
 
 byte getSpriteID(byte x, byte y){
   return world[x][y] & B00111111;
@@ -22,62 +26,63 @@ void setTile(byte x, byte y, byte spriteID, byte rotation){
 int cursor_x, cursor_y,cursor_x_T, cursor_y_T;
 byte directionPerso;
 bool isMove;
+bool isDresseurKill;
 int NbChanceAppearMonster;
 
 bool isDresseur=false;
 uint8_t ExplorationUpdate(){
 
-    if(updatePerso())
+  if(updatePerso())
+  {
+    drawWorld();
+    drawPerso();
+    return 0;
+  }
+  else
+  {
+    if(!isDresseur)
     {
-      drawWorld();
-      drawPerso();
-      return 0;
+      int numM = random(0,Nb_MONSTERS);
+      /*if(!monsterVue[numM])
+       {
+       monsterVue[numM] = true;
+       nbVue++;
+       }*/
+      ctx->Adversaire.AddMonster(0,0,0,0,0,0,0,0);
+      ctx->Adversaire.SelectMonster(0);
+      (&ctx->Adversaire)->IsMonster = true;
+      Monster *m = ctx->Adversaire.GetSelectedMonster();
+      GenerateMonsterByLvlAndNumZone(m, random(cptArea/2,cptArea+cptArea/2), currentTheme);
+      //New monster !
     }
-    else 
+    else
     {
-      if(!isDresseur)
+      (&ctx->Adversaire)->IsMonster = false;
+      for(int i=0;i<4;i++)
       {
         int numM = random(0,Nb_MONSTERS);
-        /*if(!monsterVue[numM])
-        {  
-          monsterVue[numM] = true;
-          nbVue++;
-        }*/
-       ctx->Adversaire.AddMonster(0,0,0,0,0,0,0,0);
-       ctx->Adversaire.SelectMonster(0);
-       (&ctx->Adversaire)->IsMonster = true;
-        Monster *m = ctx->Adversaire.GetSelectedMonster();
-        GenerateMonsterByLvlAndNumZone(m, random(cptArea/2,cptArea+cptArea/2), currentTheme);
-          //New monster !
-      }
-      else 
-      {
-           (&ctx->Adversaire)->IsMonster = false;
-        for(int i=0;i<4;i++)
-        {
-            int numM = random(0,Nb_MONSTERS);
-           ctx->Adversaire.AddMonster(0,0,0,0,0,0,0,0);
-            Monster *m = ctx->Adversaire.GetMonster(i);
+        ctx->Adversaire.AddMonster(0,0,0,0,0,0,0,0);
+        Monster *m = ctx->Adversaire.GetMonster(i);
         //    GenerateMonsterByLvl(m, random(cptArea/2,cptArea+cptArea/2), numM);
-          GenerateMonsterByLvlAndNumZone(m, random(cptArea/2,cptArea+cptArea/2), currentTheme);
-        }
-       ctx->Adversaire.SelectMonster(0 );
+        GenerateMonsterByLvlAndNumZone(m, random(cptArea/2,cptArea+cptArea/2), currentTheme);
       }
-      return 1;
+      ctx->Adversaire.SelectMonster(0 );
     }
+    return 1;
+  }
 }
 
 void initGame(){
   //gb.titleScreen(F("DYNAMIC TILE MAP DEMO"));
   gb.pickRandomSeed(); //pick a different random seed each time for games to be different
   initWorld();
- cursor_x_T  = random(WORLD_W/4,WORLD_W/2);
+  cursor_x_T  = random(WORLD_W/4,WORLD_W/2);
   cursor_y_T = random(WORLD_H/4,WORLD_H/2);
   cursor_x = cursor_x_T*8;
-    cursor_y = cursor_y_T*8;
+  cursor_y = cursor_y_T*8;
   directionPerso = 0;//0bas , 1 droite , 2 haut , 3 gauche
-      isMove = false;
-      NbChanceAppearMonster = 500;
+  isMove = false;
+  NbChanceAppearMonster = 500;
   //gb.popup(F("\25:change \26:rotate"),60);
 }
 
@@ -85,18 +90,18 @@ void initWorld(){
   cptArea++;
   currentTheme  = random(0,NB_THEMES);
   byte add = currentTheme * 4;
-  
+
   //Contour
   for(byte y = 0; y < WORLD_H; y++){
-    setTile(0, y, 3+add, random(0,4)); 
-    setTile(WORLD_W-1, y, 3+add, random(0,4)); 
+    setTile(0, y, 3+add, random(0,4));
+    setTile(WORLD_W-1, y, 3+add, random(0,4));
   }
-    for(byte x = 0; x < WORLD_W; x++){
-      setTile(x, 0, 3+add, random(0,4));
-      setTile(x, WORLD_H-1, 3+add, random(0,4)); 
-    }
+  for(byte x = 0; x < WORLD_W; x++){
+    setTile(x, 0, 3+add, random(0,4));
+    setTile(x, WORLD_H-1, 3+add, random(0,4));
+  }
   //Choix du sol
-   byte spId = random(0,2)+add;
+  byte spId = random(0,2)+add;
   //on pose le sol
   for(byte y = 1; y < WORLD_H-1; y++){
     for(byte x = 1; x < WORLD_W-1; x++){
@@ -105,7 +110,7 @@ void initWorld(){
         //de temps a autre on pause un block
         setTile(x, y, 3+add, 0);
       }
-      else 
+      else
       {
         setTile(x, y, spId, random(0,4));
       }
@@ -117,13 +122,40 @@ void initWorld(){
   setTile(0, WORLD_H/2, 2, 1);
   setTile(WORLD_W-1, WORLD_H/2, 2, 1);
   GenerteAllBonus();
-   initialiseNbChance();
+  spawnDresseur();
+  initialiseNbChance();
+}
+
+void spawnDresseur()
+{
+  if(DresseurByTheme[currentTheme]<NB_DRESSEUR_THEME && random(0,3)==0)
+  {
+    (&ctx->Adversaire)->PosX = random(1,15);
+    (&ctx->Adversaire)->PosY = random(1,15);
+
+    isDresseurKill= false;
+  }
+  else
+  {
+    isDresseurKill= true;
+    (&ctx->Adversaire)->PosX = 212;
+    (&ctx->Adversaire)->PosY = 212;
+  }
+}
+
+void GenerteAllBonus()
+{
+  for(byte i=0;i<NB_BONUS;i++)
+  {
+    uint8_t x =random(0,15);
+    uint8_t y =random(0,15);
+    setBonus(x,y,random(0,4),i);
+  }
 }
 
 void initialiseNbChance()
 {
-        NbChanceAppearMonster = random(50,500);
-        // NbChanceAppearMonster -= cptArea* cptArea;
+  NbChanceAppearMonster = random(max(300 - (2*cptArea),50),500);
 }
 
 void drawWorld(){
@@ -134,35 +166,31 @@ void drawWorld(){
       //coordinates on the screen depending on the camera position
       int x_screen = x*8 - camera_x;
       int y_screen = y*8 - camera_y;
-      if(x_screen < -8 || x_screen > LCDWIDTH || y_screen < -8 || y_screen > LCDHEIGHT){
+      if(x_screen < -8 || x_screen > LCDWIDTH || y_screen < -8 || y_screen > LCDHEIGHT || IsCaseBonus(x , y) || (ctx->Adversaire.PosX == x && ctx->Adversaire.PosY == y) ){
         continue; // don't draw sprites which are out of the screen
       }
-      
-     // int x_screenP = cursor_x_T*8 - camera_x;
-      //int y_screenP = cursor_y_T*8 - camera_y;
-      /*if(x_screenP == x_screen && y_screenP == y_screen)
-      {
-        continue;//posjoueur
-      }*/
+
       gb.display.drawBitmap(x_screen, y_screen, sprites[spriteID], rotation, 0);
     }
+
   }
-   drawAllBonus();
-  
-    gb.display.setFont(font3x3);
-        gb.display.print(F("Area:"));
-    gb.display.print(cptArea);
-        gb.display.print(F(".Kill:"));
-        gb.display.print(cptKill);
-        gb.display.print(F(".View:"));
-        gb.display.print(nbVue);
-    gb.display.setFont(font3x5);
-    
-    
+  drawAllBonus();
+  DrawDresseur();
+
+  gb.display.setFont(font3x3);
+  gb.display.print(F("Area:"));
+  gb.display.print(cptArea);
+  gb.display.print(F(".Kill:"));
+  gb.display.print(cptKill);
+  gb.display.print(F(".View:"));
+  gb.display.print(nbVue);
+  gb.display.setFont(font3x5);
+
+
 }
 
 bool updatePerso(){
-  
+
   if(isMove)
   {
     if(cursor_x != cursor_x_T*8)
@@ -171,7 +199,7 @@ bool updatePerso(){
       {
         cursor_x++;
       }
-      else 
+      else
       {
         cursor_x--;
       }
@@ -182,23 +210,23 @@ bool updatePerso(){
       {
         cursor_y++;
       }
-      else 
+      else
       {
         cursor_y--;
       }
     }
-    
+
     if(cursor_y == cursor_y_T*8 && cursor_x == cursor_x_T*8)
     {
       isMove = false;
     }
   }
-  
+
   if(!isMove)
   {
     int last_cursor_x = cursor_x_T;
     int last_cursor_y = cursor_y_T;
-    
+
     if(gb.buttons.repeat(BTN_RIGHT, 4)){
       cursor_x_T = wrap(cursor_x_T+1, WORLD_W);
       directionPerso = 1;
@@ -206,35 +234,30 @@ bool updatePerso(){
     }
     if(gb.buttons.repeat(BTN_LEFT, 4)){
       cursor_x_T = wrap(cursor_x_T-1, WORLD_W);
-          directionPerso = 3;
+      directionPerso = 3;
       //gb.sound.playTick();
     }
     if(gb.buttons.repeat(BTN_DOWN, 4)){
       cursor_y_T = wrap(cursor_y_T+1, WORLD_H);
-          directionPerso = 0;
+      directionPerso = 0;
       //gb.sound.playTick();
     }
     if(gb.buttons.repeat(BTN_UP, 4)){
       cursor_y_T = wrap(cursor_y_T-1, WORLD_H);
-          directionPerso = 2;
+      directionPerso = 2;
       //gb.sound.playTick();
     }
     byte spriteID = getSpriteID(cursor_x_T,cursor_y_T);
-    
-    if((spriteID+1) %4 == 0)
+
+    if((spriteID+1) %4 == 0 || (cursor_x_T == ctx->Adversaire.PosX && cursor_y_T == ctx->Adversaire.PosY))
     {
-      //rocher deplacement impossible
+      //rocher deplacement impossible ou adversaire
       cursor_x_T= last_cursor_x;
       cursor_y_T = last_cursor_y;
       spriteID = getSpriteID(cursor_x_T,cursor_y_T);
     }
-    
-    if(gb.buttons.pressed(BTN_A))
-    {
-     TestGetBonus(cursor_x_T,cursor_y_T);
-    }
-  
-  
+
+
     if(last_cursor_x != cursor_x_T || last_cursor_y != cursor_y_T)
     {
       isMove = true;
@@ -263,6 +286,21 @@ bool updatePerso(){
       }
     }
   }
+
+  if(gb.buttons.pressed(BTN_A))
+  {
+    TestGetBonus(cursor_x_T,cursor_y_T,directionPerso);
+    if(!isDresseurKill && testGetDresseur(cursor_x_T,cursor_y_T,directionPerso))
+    {
+      //Dresseur
+      isDresseur = true;
+      initialiseNbChance();
+      DresseurByTheme[currentTheme]++;
+      isDresseurKill= true;
+      return false;
+    }
+  }
+
   //on peut en rencontrer partou !
   if(random(0,NbChanceAppearMonster)==0)
   {
@@ -270,22 +308,11 @@ bool updatePerso(){
     isDresseur = false;
     return false;
   }
-  else if(random(0,NbChanceAppearMonster*3)==0)
-  {
-    if(DresseurByTheme[currentTheme]<NB_DRESSEUR_THEME)
-    {
-      //Dresseur
-      isDresseur = true;
-      initialiseNbChance();
-      DresseurByTheme[currentTheme]++;
-      return false;
-    }
-  }
-  else 
+  else
   {
     NbChanceAppearMonster--;
   }
-  
+
   //target position of the camera for the cursor to be centered
   int camera_x_target = cursor_x - LCDWIDTH/2 + 8;
   int camera_y_target = cursor_y - LCDHEIGHT/2 + 8;
@@ -295,18 +322,25 @@ bool updatePerso(){
   return true;
 }
 
+void DrawDresseur()
+{
+  int x_screen = (ctx->Adversaire.PosX)*8 - camera_x;
+  int y_screen = (ctx->Adversaire.PosY)*8 - camera_y;
+  gb.display.drawBitmap(x_screen, y_screen, spritesDresseur[0]);
+}
+
 void drawPerso(){
   int x_screen = cursor_x - camera_x;
   int y_screen = cursor_y - camera_y;
   if(!(x_screen < -16 || x_screen > LCDWIDTH || y_screen < -16 || y_screen > LCDHEIGHT)){
     //gb.display.drawRect(x_screen, y_screen, 8, 8);
-//    gb.display.setColor(INVERT);
+    //    gb.display.setColor(INVERT);
 
     byte index=directionPerso;
     if(isMove)
     {
-     index =  index+directionPerso+4; //Ou 5
-      
+      index =  index+directionPerso+4; //Ou 5
+
       int count = gb.frameCount;
       if(count%8 >3)
       {
@@ -317,4 +351,32 @@ void drawPerso(){
     //gb.display.setColor(BLACK);
   }
 }
+
+bool testGetDresseur(uint8_t x,uint8_t y,uint8_t directionPerso)
+{
+  //0bas , 1 droite , 2 haut , 3 gauche
+  if( directionPerso == 0)
+  {
+    y += 1;
+  }
+  else if(directionPerso == 1)
+  {
+    x+=1;
+  }
+  else if(directionPerso == 2)
+  {
+    y-=1;
+  }
+  else if(directionPerso == 3)
+  {
+    x-=1;
+  }
+  if(ctx->Adversaire.PosX == x && ctx->Adversaire.PosY == y)
+    return true;
+
+  return false;
+}
+
+
+
 
