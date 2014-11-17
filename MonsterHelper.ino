@@ -94,16 +94,20 @@ void getnumMonsterByNumZone(uint8_t numZone, Monster *m)
   }
 }
 
+uint8_t wrapRdm()
+{
+  return random(-2,2);
+}
+
 void GenerateMonsterByLvlAndNumZone(Monster *monsterAgenerer, uint8_t lvl, uint8_t numeroZone)
 {
     if(lvl<2)lvl = 2;
-    uint8_t rdmAdd = 2*lvl+random(0,10);
-    monsterAgenerer->Force = rdmAdd;
-    monsterAgenerer->Vie =rdmAdd;
-    monsterAgenerer->VieMax = rdmAdd;
-    monsterAgenerer->OldVie = rdmAdd;
-    monsterAgenerer->Vitesse = rdmAdd;
-    monsterAgenerer->Defence = rdmAdd;
+    monsterAgenerer->Force = 2*lvl+wrapRdm();
+    monsterAgenerer->Vie =2*lvl+wrapRdm();
+    monsterAgenerer->VieMax = monsterAgenerer->Vie;
+    monsterAgenerer->OldVie = monsterAgenerer->Vie;
+    monsterAgenerer->Vitesse = 2*lvl+wrapRdm();
+    monsterAgenerer->Defence = 2*lvl+wrapRdm();
     monsterAgenerer->Niveau = lvl;
     monsterAgenerer->NextNiveau = (lvl*lvl)/2;
     monsterAgenerer->Xp = 0;
@@ -112,25 +116,25 @@ void GenerateMonsterByLvlAndNumZone(Monster *monsterAgenerer, uint8_t lvl, uint8
     monsterAgenerer->SetPatternAttaque(monsterAgenerer->Type);
 }
 
-void GenerateStartMonster(Monster *monsterAgenerer)
+void GenerateStartMonster(Monster *monsterAgenerer, uint8_t  numero)
 {
-    monsterAgenerer->Numero = 0;
-    monsterAgenerer->Force = 19;
-    monsterAgenerer->Vie = 17;
+    monsterAgenerer->Numero = numero;
+    monsterAgenerer->Force =  numero == 0 ? 20 : 18 ;
+    monsterAgenerer->Vie = numero == 1 ? 20 : 18 ;
     monsterAgenerer->VieMax = monsterAgenerer->Vie;
     monsterAgenerer->OldVie = monsterAgenerer->Vie;
     monsterAgenerer->Vitesse = 18;
-    monsterAgenerer->Defence = 20;
+    monsterAgenerer->Defence = numero == 2 ? 20 : 18 ;
     monsterAgenerer->Niveau = 5;
     monsterAgenerer->NextNiveau = 12;
     monsterAgenerer->Xp = 0;
   
-    monsterAgenerer->SetPatternAttaque(2);
-    monsterAgenerer->Type = 2;  
+    monsterAgenerer->Type = numero+2;
+    monsterAgenerer->SetPatternAttaque(monsterAgenerer->Type);  
 }
 
 void LevelUpMonster(Monster *monsterAgenerer)
-{    byte rdm = random(1,3);
+{   byte rdm = random(1,3);
     monsterAgenerer->Force += rdm;
     monsterAgenerer->VieMax += rdm;
     monsterAgenerer->Vie = monsterAgenerer->VieMax;

@@ -42,17 +42,12 @@ uint8_t ExplorationUpdate(){
   {
     if(!isDresseur)
     {
-      int numM = random(0,Nb_MONSTERS);
-      /*if(!monsterVue[numM])
-       {
-       monsterVue[numM] = true;
-       nbVue++;
-       }*/
+      int numM =  WrapRdm0N(Nb_MONSTERS);
       ctx->Adversaire.AddMonster(0,0,0,0,0,0,0,0);
       ctx->Adversaire.SelectMonster(0);
       (&ctx->Adversaire)->IsMonster = true;
       Monster *m = ctx->Adversaire.GetSelectedMonster();
-      GenerateMonsterByLvlAndNumZone(m, random(cptArea/2,cptArea+cptArea/2), currentTheme);
+      GenerateMonsterByLvlAndNumZone(m, random(cptArea, cptArea+(uint8_t)(cptArea/4)), currentTheme);
       //New monster !
     }
     else
@@ -60,17 +55,17 @@ uint8_t ExplorationUpdate(){
       (&ctx->Adversaire)->IsMonster = false;
       for(int i=0;i<4;i++)
       {
-        int numM = random(0,Nb_MONSTERS);
         ctx->Adversaire.AddMonster(0,0,0,0,0,0,0,0);
         Monster *m = ctx->Adversaire.GetMonster(i);
-        //    GenerateMonsterByLvl(m, random(cptArea/2,cptArea+cptArea/2), numM);
-        GenerateMonsterByLvlAndNumZone(m, random(cptArea/2,cptArea+cptArea/2), currentTheme);
+        GenerateMonsterByLvlAndNumZone(m, random(cptArea,cptArea+(uint8_t)(cptArea/2)), currentTheme);
       }
       ctx->Adversaire.SelectMonster(0 );
     }
     return 1;
   }
 }
+
+
 
 void initGame(){
   //gb.titleScreen(F("DYNAMIC TILE MAP DEMO"));
@@ -88,31 +83,31 @@ void initGame(){
 
 void initWorld(){
   cptArea++;
-  currentTheme  = random(0,NB_THEMES);
+  currentTheme  = WrapRdm0N(NB_THEMES);
   byte add = currentTheme * 4;
 
   //Contour
   for(byte y = 0; y < WORLD_H; y++){
-    setTile(0, y, 3+add, random(0,4));
-    setTile(WORLD_W-1, y, 3+add, random(0,4));
+    setTile(0, y, 3+add, WrapRdm0N(4));
+    setTile(WORLD_W-1, y, 3+add, WrapRdm0N(4));
   }
   for(byte x = 0; x < WORLD_W; x++){
-    setTile(x, 0, 3+add, random(0,4));
-    setTile(x, WORLD_H-1, 3+add, random(0,4));
+    setTile(x, 0, 3+add, WrapRdm0N(4));
+    setTile(x, WORLD_H-1, 3+add, WrapRdm0N(4));
   }
   //Choix du sol
-  byte spId = random(0,2)+add;
+  byte spId = WrapRdm0N(2)+add;
   //on pose le sol
   for(byte y = 1; y < WORLD_H-1; y++){
     for(byte x = 1; x < WORLD_W-1; x++){
-      if( y>1 && y<WORLD_H-2 && x>1 && x<WORLD_W-2 &&  random(0,5)==0)
+      if( y>1 && y<WORLD_H-2 && x>1 && x<WORLD_W-2 &&  WrapRdm0N(5)==0)
       {
         //de temps a autre on pause un block
         setTile(x, y, 3+add, 0);
       }
       else
       {
-        setTile(x, y, spId, random(0,4));
+        setTile(x, y, spId, WrapRdm0N(4));
       }
     }
   }
@@ -128,10 +123,10 @@ void initWorld(){
 
 void spawnDresseur()
 {
-  if(DresseurByTheme[currentTheme]<NB_DRESSEUR_THEME && random(0,3)==0)
+  if(DresseurByTheme[currentTheme]<NB_DRESSEUR_THEME && WrapRdm0N(3)==0)
   {
-    (&ctx->Adversaire)->PosX = random(1,15);
-    (&ctx->Adversaire)->PosY = random(1,15);
+    (&ctx->Adversaire)->PosX = WrapRdm0N(14)+1;
+    (&ctx->Adversaire)->PosY = WrapRdm0N(14)+1;
 
     isDresseurKill= false;
   }
@@ -147,9 +142,9 @@ void GenerteAllBonus()
 {
   for(byte i=0;i<NB_BONUS;i++)
   {
-    uint8_t x =random(0,15);
-    uint8_t y =random(0,15);
-    setBonus(x,y,random(0,4),i);
+    uint8_t x =WrapRdm0N(15);
+    uint8_t y =WrapRdm0N(15);
+    setBonus(x,y,WrapRdm0N(4),i);
   }
 }
 
@@ -302,7 +297,7 @@ bool updatePerso(){
   }
 
   //on peut en rencontrer partou !
-  if(random(0,NbChanceAppearMonster)==0)
+  if(WrapRdm0N(NbChanceAppearMonster)==0)
   {
     initialiseNbChance();
     isDresseur = false;
@@ -375,6 +370,11 @@ bool testGetDresseur(uint8_t x,uint8_t y,uint8_t directionPerso)
     return true;
 
   return false;
+}
+
+uint8_t WrapRdm0N(uint8_t n)
+{
+  return random(0,n);
 }
 
 

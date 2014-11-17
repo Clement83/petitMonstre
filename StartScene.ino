@@ -1,4 +1,5 @@
 
+const byte Fleche[] PROGMEM = {8,5,B00100000,B01100000,B11111100,B01100000,B00100000,};
 
 uint8_t StartScene()
 {
@@ -33,5 +34,47 @@ uint8_t StartScene()
 
 uint8_t ChoixMonsterDebut()
 {
+  int8_t cptChoix = 0;
+  int8_t offset = 0;
+  while(true)
+  {
+     if(gb.update())
+    {
+        gb.display.drawBitmap(5,10,Fleche);
+        gb.display.drawBitmap(75,10,Fleche,NOROT,FLIPH);
+        gb.display.drawBitmap(30 + offset, 24, GetSpriteMonsterByNumero(cptChoix, true));
+      
+        if(offset>0) offset -=8; else if(offset<0) offset +=8;
+      
+        if(gb.buttons.pressed(BTN_LEFT))
+        {
+          cptChoix++;
+          cptChoix = cptChoix%3;
+          offset = 40;
+        }
+        if(gb.buttons.pressed(BTN_RIGHT))
+        {
+          cptChoix--;
+          cptChoix = cptChoix<0 ? 2 : cptChoix;
+          offset = -40;
+        }
+        
+        if(gb.buttons.pressed(BTN_A))
+        {
+          break;
+        }
+    }
+  }
+  
+  
+    ctx->Joueur.AddMonster(0,0,0,0,0,0,0,0);
+    Monster *m = ctx->Joueur.GetMonster(0);
+    GenerateStartMonster(m,cptChoix);
+
+    monsterVue[cptChoix] = true;
+    MonsterCatch[cptChoix] = true;
+    nbVue++;
+    nbCatch++;
+  
   return 0;
 }

@@ -41,7 +41,7 @@ extern const byte font5x7[]; //a large, comfy font
 void CombatAttack(Monster *att, Monster *def);
 void decrementOldVie(Monster *m,int nbframe);
 void GenerateMonsterByLvlAndNumZone(Monster *monsterAgenerer, uint8_t lvl, uint8_t numeroZone);
-void GenerateStartMonster(Monster *monsterAgenerer);
+void GenerateStartMonster(Monster *monsterAgenerer, uint8_t  numero);
 void LevelUpMonster(Monster *monsterAgenerer);
 void DysplayEtatFuturomon(Monster monster);
 void DysplayFuturoDex(Monster monster);
@@ -91,19 +91,6 @@ void InitialisationGame()
   cptKill = 0;
   state = 50;
   ctx->Joueur.ClearMonster();
-  for(uint8_t i=0;i<1;i++)
-  {
-    //numero vie vitesse force defence
-    ctx->Joueur.AddMonster(0,0,0,0,0,0,0,0);
-    Monster *m = ctx->Joueur.GetMonster(i);
-    GenerateStartMonster(m);
-
-    monsterVue[i] = true;
-    MonsterCatch[i] = true;
-    nbVue++;
-    nbCatch++;
-  }
-
 
   initGame();
 }

@@ -237,13 +237,24 @@ void ResolutionAttaqueAnimation(uint8_t numAttaque,uint8_t numPattern,bool isP1,
 
 uint8_t HaveBonusAttak(uint8_t numAttaque,uint8_t numPattern,uint8_t typeDef)
 {
-  uint8_t numAttk =  GetAttaqueNumeroByNumPattern(numPattern)[numAttaque];
+  /*  
+  3,//Feux
+  0,//Eau
+  5,//Plante
+  4,//Terre
+  1,//Elec
+  2,//Psy
+  */
+  
+  uint8_t numAttk =  GetAttaqueNumeroByNumPattern(numPattern)[numAttaque] - 2;
 
-  if(numAttk - 2>0 && numAttk - 2<8)
+  if(numAttk >0 && numAttk <8)
   {
-    if(TypeIsFaibleAttk[numAttk - 2] == typeDef)
+    if(TypeIsFaibleAttk[numAttk] == typeDef)
       return 1;//j'ai mal
-    else if(TypeIsFaibleAttk[typeDef] == numAttk - 2)
+    else if(TypeIsFaibleAttk[typeDef] == numAttk)
+      return -1;//je resiste
+    else if(typeDef == numAttk )
       return -1;//je resiste
   }
   return 0;//rien

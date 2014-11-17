@@ -531,9 +531,6 @@ uint8_t TirrageDes(uint8_t maximun)
 
 void CombatResolutionOfCatch()
 {
-  int v1 = ctx->Joueur.GetSelectedMonster()->Vitesse + TirrageDes(ctx->Joueur.GetSelectedMonster()->Vitesse);
-  int v2 = ctx->Adversaire.GetSelectedMonster()->Vitesse + TirrageDes(ctx->Adversaire.GetSelectedMonster()->Vitesse);
-
   Player *p1;
   Player *p2;
   //Initiative
